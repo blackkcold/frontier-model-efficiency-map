@@ -2,13 +2,13 @@
 
 A static, interactive comparison of current frontier LLMs across **capability × reasoning effort × task cost × subscription plan**.
 
-**Data snapshot:** 2026-10-04
+**Data snapshot:** 2026-10-05
 
 ## Providers / model families
 
 - OpenAI — GPT-6 Luna, GPT-6 Sol (deprecated, optional), GPT-6.1 Sol, GPT-6 Astra
-- Anthropic — Claude Sonnet 5.5, Claude Opus 5.5
-- Google — Gemini 3.8 Flash
+- Anthropic — Claude Sonnet 5.5, Claude Opus 5.5, Claude Fable 5.1
+- Google — Gemini 3.8 Flash, Gemini 4 Argon (limited rollout)
 - DeepSeek — DeepSeek V4.1 Flash
 - Z.ai — GLM-5.3, GLM-5.3 Flash
 - Kimi — Kimi K3
@@ -62,6 +62,12 @@ They can be hidden in the UI.
 The **frontier value** recommendation first applies a capability floor (AA Index ≥48, ~83% of the global leader in this snapshot), then selects the lowest measured task cost. This avoids the common error of calling an ultra-cheap but materially weaker model the “best value” merely because its denominator is tiny.
 
 Result for this snapshot: **GPT-6.1 Sol Medium**.
+
+## October 2026 model-status notes
+
+- **Claude Fable 5.1** is generally available. Anthropic kept standard token pricing at $10/M input and $50/M output while cutting cache reads to $0.25/M. Artificial Analysis currently places Fable 5.1 Max at 53 on the Intelligence Index; it is included as a measured frontier point.
+- **Claude Mythos 5.1** shares the same underlying model as Fable 5.1 but is restricted to vetted cyberdefense/life-sciences programs, so it is not plotted as a generally selectable consumer/API model.
+- **Gemini 4 Argon** was announced September 30 and is rolling out to selected users. Artificial Analysis measures High at 53 and $1.99 per Intelligence Index task under introductory pricing. It is included with a limited-rollout status rather than treated as broadly available.
 
 ## GitHub Pages
 
