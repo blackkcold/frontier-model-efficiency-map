@@ -1,118 +1,170 @@
-# Frontier Model Efficiency Map
+<p align="center">
+  <img src="assets/logo.svg" alt="Frontier Model Efficiency Map logo" width="128" />
+</p>
 
-A static, interactive comparison of current frontier LLMs across **capability × reasoning effort × task cost × subscription plan**.
+<h1 align="center">Frontier Model Efficiency Map</h1>
 
-**Live site:** https://blackkcold.github.io/frontier-model-efficiency-map/
+<p align="center">
+  把 <strong>模型能力 × Reasoning 档位 × 单任务消耗 × 订阅 Plan</strong> 放到同一张交互地图里。
+</p>
 
-**Data snapshot:** 2026-10-05
+<p align="center">
+  <a href="https://blackkcold.github.io/frontier-model-efficiency-map/"><strong>Open Live Map ↗</strong></a>
+  ·
+  <a href="#怎么读这张图">How to read</a>
+  ·
+  <a href="#方法论">Methodology</a>
+  ·
+  <a href="LICENSE">MIT</a>
+</p>
 
-## Providers / model families
+<p align="center">
+  Data snapshot: <strong>2026-10-05</strong> · 6 providers · AA v4.3.2 · No tracking
+</p>
 
-- OpenAI — GPT-6 Luna, GPT-6 Sol (deprecated, optional), GPT-6.1 Sol, GPT-6 Astra
-- Anthropic — Claude Sonnet 5.5, Claude Opus 5.5, Claude Fable 5.1
-- Google — Gemini 3.8 Flash, Gemini 4 Argon (limited rollout)
-- DeepSeek — DeepSeek V4.1 Flash
-- Z.ai — GLM-5.3, GLM-5.3 Flash
-- Kimi — Kimi K3
+---
 
-## Methodology
+## 先看体验
 
-### Capability
+<p align="center">
+  <a href="https://blackkcold.github.io/frontier-model-efficiency-map/">
+    <img src="assets/readme-overview.svg" alt="Frontier Model Efficiency Map interface preview" width="100%" />
+  </a>
+</p>
 
-The primary Y-axis uses the current **Artificial Analysis Intelligence Index v4.3.2** for cross-provider comparability. The default display normalizes it as:
+这不是一个“模型排行榜”，而是一张**决策地图**：
 
-`normalized capability = AA Intelligence Index / 58 × 100`
+- 顶部三张卡片直接给出当前的 **前沿性价比 / 绝对能力 / 开放权重性价比**。
+- 主图把能力放在纵轴、任务消耗放在横轴，**越靠左上越优**。
+- Provider、Reasoning 档位、Log 横轴、估算点、历史模型都可以即时筛选。
+- 排名表、Plan 推荐与方法论继续向下展开，不需要在多个 benchmark 页面之间来回切换。
 
-58 is the highest measured point in this snapshot (Claude Opus 5.5 Max).
+> 当前前沿性价比推荐：**GPT-6.1 Sol · Medium**。  
+> 当前绝对能力最高点：**Claude Opus 5.5 · Max**。
 
-### Consumption
+## 交互细节
 
-Cross-vendor subscription allowances are not directly comparable. The primary X-axis therefore uses **Artificial Analysis Cost per Intelligence Index Task**, which incorporates input, cache, reasoning and answer token costs over the same evaluation suite.
+<p align="center">
+  <img src="assets/readme-interaction.svg" alt="Model detail and compact tooltip preview" width="100%" />
+</p>
 
-Default normalized consumption:
+图表交互刻意做得更克制：
 
-`consumption ratio = corrected task cost / corrected GPT-6 Luna Max task cost`
+- **Hover / 点击 / 触摸模型点**：图内只保留 `Model ID + 消耗倍率`，避免 tooltip 挡住附近点。
+- **完整详情固定显示**在筛选器与图表之间，包括 AA Intelligence、归一化能力、AA 单任务成本、修正后倍率、实测 / 估算状态。
+- 点击后信息保持，手机端也不依赖 hover；如果筛选条件把当前模型隐藏，详情会自动清空。
 
-GPT-6 Luna Max remains exactly **1.0×**.
+## 当前覆盖
 
-Optional long-agent correction, intended as a user-experience/session-burn overlay rather than an official billing multiplier:
+| Provider | 当前模型族 |
+| --- | --- |
+| OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6 Sol（历史） |
+| Anthropic | Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.1 |
+| Google | Gemini 3.8 Flash · Gemini 4 Argon |
+| DeepSeek | DeepSeek V4.1 Flash |
+| Z.ai | GLM-5.3 · GLM-5.3 Flash |
+| Kimi | Kimi K3 |
 
-- Low: 1.00×
-- Medium: 1.00×
-- High: 1.05×
-- XHigh: 1.10×
-- Max: 1.18×
+### 当前快照的三个锚点
 
-AA's task cost already includes measured reasoning-token use, so this correction is intentionally optional.
+| 目标 | 推荐 | AA Index | AA task cost | 备注 |
+| --- | --- | ---: | ---: | --- |
+| 前沿性价比 | **GPT-6.1 Sol · Medium** | 48 | $0.21 | 能力门槛之上的最低实测任务成本 |
+| 绝对能力 | **Claude Opus 5.5 · Max** | 58 | $5.98 | 当前页面统一能力口径最高点 |
+| 开放权重性价比 | **GLM-5.3 Flash** | 42 | $0.25 | 开放权重阵营中靠近 Pareto 前沿 |
 
-### Estimated points
+## 怎么读这张图
 
-Cross-shaped hollow points are estimates only. They are used when:
-1. the provider officially exposes the reasoning tier; and
-2. current AA v4.3.2 has measured endpoints but not that intermediate tier/cost.
+### 1. 纵轴：能力
 
-Current estimated points:
-- Gemini 3.8 Flash Low cost only
-- DeepSeek V4.1 Flash Low / High
-- GLM-5.3 High
-- Kimi K3 High
+默认使用 **Artificial Analysis Intelligence Index v4.3.2**，并把当前最高点线性归一为 100：
 
-They can be hidden in the UI.
+```text
+normalized capability = AA Intelligence Index / 58 × 100
+```
 
-## Recommendation rule
+这样不同 Provider 不需要混用各自的厂商 benchmark。
 
-The **frontier value** recommendation first applies a capability floor (AA Index ≥48, ~83% of the global leader in this snapshot), then selects the lowest measured task cost. This avoids the common error of calling an ultra-cheap but materially weaker model the “best value” merely because its denominator is tiny.
+### 2. 横轴：单任务消耗
 
-Result for this snapshot: **GPT-6.1 Sol Medium**.
+默认使用 Artificial Analysis 的 **Cost per Intelligence Index Task**，再以 GPT-6 Luna Max 作为 1× 基准：
 
-## October 2026 model-status notes
+```text
+consumption ratio = corrected task cost / corrected GPT-6 Luna Max task cost
+```
 
-- **Claude Fable 5.1** is generally available. Anthropic kept standard token pricing at $10/M input and $50/M output while cutting cache reads to $0.25/M. Artificial Analysis currently places Fable 5.1 Max at 53 on the Intelligence Index; it is included as a measured frontier point.
-- **Claude Mythos 5.1** shares the same underlying model as Fable 5.1 but is restricted to vetted cyberdefense/life-sciences programs, so it is not plotted as a generally selectable consumer/API model.
-- **Gemini 4 Argon** was announced September 30 and is rolling out to selected users. Artificial Analysis measures High at 53 and $1.99 per Intelligence Index task under introductory pricing. It is included with a limited-rollout status rather than treated as broadly available.
+跨厂商的 ChatGPT allowance、Claude session cap、Kimi credits 等内部额度并不等价，所以主图不直接把订阅额度强行换算到同一条轴上。
 
-## GitHub Pages
+### 3. 长 Agent 修正
 
-**Live:** https://blackkcold.github.io/frontier-model-efficiency-map/
+AA 的 task cost 已包含 reasoning token；页面额外提供一个**可关闭的长任务修正层**，用于近似持续 Agent loop 的订阅额度体感：
 
-A Pages workflow is included at `.github/workflows/pages.yml`.
+| Effort | 修正 |
+| --- | ---: |
+| Low | 1.00× |
+| Medium | 1.00× |
+| High | 1.05× |
+| XHigh | 1.10× |
+| Max | 1.18× |
 
-1. Create a public repository.
-2. Push these files to `main`.
-3. In **Settings → Pages**, select **GitHub Actions** as the source if GitHub does not enable it automatically.
-4. Push/dispatch the workflow.
+它不是厂商官方计费倍率。
 
-## Sources
+## 数据可信度
 
-Source links are listed in the site's **Methodology & Sources** section and in `data.js`. Official provider documentation is used for model/effort availability and subscription plans; Artificial Analysis is used for the unified cross-provider capability/cost measurements.
+页面把三类信息明确区分：
 
-## Notes
+**官方信息**  
+用于确认模型是否存在、Reasoning / Effort 档位、订阅 Plan、价格、额度和产品政策。
 
-- Plan limits and promotions change frequently; verify checkout pages before purchase.
-- GPT-6 Sol is retained as a historical comparison point but is hidden by default because GPT-6.1 Sol supersedes it.
-- This project has no analytics or tracking.
+**统一第三方实测**  
+Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 
-## Repository governance
+**显式估算**  
+只有在“官方确认该档位存在、但当前 AA 没有对应统一测量”时才补点；UI 使用叉形空心点，并允许一键隐藏。
 
-The repository includes:
+当前估算点包括 Gemini 3.8 Flash Low、DeepSeek V4.1 Flash Low / High、GLM-5.3 High、Kimi K3 High。
 
-- MIT license (`LICENSE`)
-- CODEOWNERS with `@blackkcold` as the default owner
-- Pull-request checklist
-- Read-only PR validation workflow (`Static validation`)
-- GitHub Pages deployment workflow
-- `SECURITY.md` and `CONTRIBUTING.md`
+## 方法论
 
-Recommended `main` ruleset:
+“前沿性价比”不是简单做 **能力 ÷ 价格**。极便宜但能力明显偏低的模型会在这种公式里被数学性放大，因此本项目采用：
 
-- require pull requests before merging;
-- require 1 approval;
-- dismiss stale approvals after new commits;
-- require CODEOWNER review;
-- require all conversations to be resolved;
-- require the `Static validation` status check;
-- require the branch to be up to date before merge;
-- block force pushes and branch deletion;
-- apply the rules to administrators as well.
+1. 先设能力门槛：当前为 **AA Index ≥ 48**；
+2. 再在满足门槛的实测点中寻找最低任务成本；
+3. 估算点不参与“最高能力”结论；
+4. Plan 推荐与 API task cost 分开处理。
 
-For merge policy, **Squash merge** is recommended for this small data-and-static-site repository, with merge commits disabled to keep history linear.
+这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-10 快照变化
+
+- **Claude Fable 5.1**：已加入当前实测前沿点。
+- **Gemini 4 Argon**：以 limited rollout / preview 状态纳入，不视为全面可用。
+- **GPT-6 Sol**：保留历史对比，但默认隐藏，由 GPT-6.1 Sol 取代当前位置。
+
+更完整的来源链接在网页的 **Methodology & Sources** 区域以及 `data.js` 中。
+
+## 本地运行
+
+这是纯静态站点，不需要构建步骤：
+
+```bash
+python3 -m http.server 8000
+```
+
+然后打开 `http://localhost:8000`。
+
+## Project
+
+- Live site: https://blackkcold.github.io/frontier-model-efficiency-map/
+- License: [MIT](LICENSE)
+- Contribution: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security: [SECURITY.md](SECURITY.md)
+- Validation: `Static validation`
+- Deployment: GitHub Pages
+- Governance: CODEOWNERS + protected `main`
+
+---
+
+<p align="center">
+  <sub>Static site · No analytics · No tracking · Built for GitHub Pages</sub>
+</p>
