@@ -1,5 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title desc">
-<title id="title">Frontier Model Efficiency Map logo</title>
-<desc id="desc">Neon efficiency frontier scatter chart icon.</desc>
-<image href="data:image/png;base64,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..." x="0" y="0" width="192" height="192"/>
+  <title id="title">Frontier Model Efficiency Map</title>
+  <desc id="desc">A dark glass chart icon with neon frontier curve and colored model points.</desc>
+  <defs>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162238"/>
+      <stop offset=".55" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#120c1d"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#27a4ff"/>
+      <stop offset=".44" stop-color="#526eff"/>
+      <stop offset=".72" stop-color="#ffb23d"/>
+      <stop offset="1" stop-color="#d84fb5"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#4bb7ff"/>
+      <stop offset=".6" stop-color="#88b8ff"/>
+      <stop offset="1" stop-color="#ffe187"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="2.4"/></filter>
+  </defs>
+  <rect width="192" height="192" rx="42" fill="#020306"/>
+  <rect x="12" y="10" width="168" height="172" rx="38" fill="url(#glass)" stroke="url(#rim)" stroke-width="2.6"/>
+  <rect x="15" y="13" width="162" height="166" rx="35" fill="none" stroke="#fff" stroke-opacity=".1"/>
+  <g stroke="#7ea4d7" stroke-opacity=".18" stroke-width="1" stroke-dasharray="5 6">
+    <path d="M46 45v103M78 45v103M110 45v103M142 45v103"/>
+    <path d="M31 66h132M31 98h132M31 130h132"/>
+  </g>
+  <g fill="none" stroke="#98b8e8" stroke-width="2.4" stroke-linecap="round">
+    <path d="M29 151V39"/>
+    <path d="M29 151h131"/>
+  </g>
+  <path d="M29 39l-5 9h10zM160 151l-9-5v10z" fill="#b5cff2"/>
+  <path d="M30 150C47 121 61 105 82 88C104 70 125 58 154 49" fill="none" stroke="#5aa9ff" stroke-opacity=".35" stroke-width="8" filter="url(#soft)"/>
+  <path d="M30 150C47 121 61 105 82 88C104 70 125 58 154 49" fill="none" stroke="url(#curve)" stroke-width="3.2" stroke-linecap="round"/>
+  <g fill="none" stroke="#8aa9d6" stroke-opacity=".34" stroke-width="1.2" stroke-dasharray="6 5">
+    <path d="M29 112C47 76 75 52 127 38"/>
+    <path d="M29 131C60 91 92 69 157 57"/>
+  </g>
+  <g>
+    <g fill="#39a8ff"><circle cx="46" cy="125" r="8" opacity=".22" filter="url(#glow)"/><circle cx="46" cy="125" r="5.2"/><circle cx="55" cy="143" r="3.7"/><circle cx="64" cy="132" r="4.3"/><circle cx="74" cy="142" r="3.4"/></g>
+    <g fill="#ff9a43"><circle cx="78" cy="100" r="8" opacity=".22" filter="url(#glow)"/><circle cx="78" cy="100" r="5.3"/><circle cx="91" cy="113" r="4.1"/><circle cx="100" cy="124" r="4.2"/></g>
+    <g fill="#48d7ad"><circle cx="106" cy="80" r="8" opacity=".22" filter="url(#glow)"/><circle cx="106" cy="80" r="5.4"/><circle cx="113" cy="98" r="4.2"/><circle cx="124" cy="121" r="4"/></g>
+    <g fill="#8e63ff"><circle cx="132" cy="62" r="8" opacity=".24" filter="url(#glow)"/><circle cx="132" cy="62" r="5.2"/><circle cx="136" cy="82" r="4.1"/><circle cx="124" cy="100" r="3.5"/></g>
+    <g fill="#df4e9c"><circle cx="151" cy="105" r="4.4"/><circle cx="142" cy="122" r="3.9"/><circle cx="148" cy="92" r="3.6"/></g>
+    <g fill="#ffc84d"><circle cx="158" cy="48" r="8" opacity=".25" filter="url(#glow)"/><circle cx="158" cy="48" r="5.2"/><circle cx="157" cy="74" r="3.8"/><circle cx="165" cy="81" r="3.8"/></g>
+  </g>
 </svg>
