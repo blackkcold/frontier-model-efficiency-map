@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<title id="title">Frontier Model Efficiency Map interface overview</title>
+<desc id="desc">Interface preview with recommendation cards and the capability versus consumption scatter chart.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#05070b"/></linearGradient>
+  <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141922"/><stop offset="1" stop-color="#0b0f15"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000" flood-opacity=".35"/></filter>
+  <style>.h1{font:700 42px Arial,sans-serif;fill:#f4f7fb}.h2{font:700 27px Arial,sans-serif;fill:#f4f7fb}.p{font:400 18px Arial,sans-serif;fill:#aab4c4}.mini{font:600 13px Arial,sans-serif;fill:#93a0b4;letter-spacing:.08em}.small{font:500 14px Arial,sans-serif;fill:#aab4c4}.tiny{font:600 12px Arial,sans-serif;fill:#aab4c4}</style>
+</defs>
+<rect width="1440" height="900" fill="#05070b"/>
+<rect x="40" y="32" rx="24" width="1360" height="836" fill="url(#bg)" stroke="#202736" filter="url(#shadow)"/>
+<rect x="40" y="32" rx="24" width="1360" height="64" fill="#0c1118" stroke="#202736"/>
+<circle cx="84" cy="64" r="8" fill="#ff5f57"/><circle cx="108" cy="64" r="8" fill="#febc2e"/><circle cx="132" cy="64" r="8" fill="#28c840"/>
+<rect x="180" y="50" rx="12" width="420" height="28" fill="#121823" stroke="#252d3a"/><text x="200" y="69" class="small">blackkcold.github.io/frontier-model-efficiency-map</text>
+<g transform="translate(94,128)">
+  <image href="logo.svg" x="0" y="0" width="68" height="68"/>
+  <text x="88" y="27" class="mini">FRONTIER MODEL EFFICIENCY MAP</text>
+  <text x="88" y="70" class="h1">能力 × 消耗 × Plan 的前沿模型地图</text>
+  <text x="88" y="104" class="p">跨厂商统一比较模型能力、reasoning 档位、单任务成本与订阅 Plan。</text>
+  <g transform="translate(0,142)">
+    <rect x="0" width="382" height="142" rx="18" fill="url(#panel)" stroke="#273041"/><rect x="0" width="382" height="4" rx="18" fill="#4f7cff"/>
+    <rect x="402" width="382" height="142" rx="18" fill="url(#panel)" stroke="#273041"/><rect x="402" width="382" height="4" rx="18" fill="#e28a52"/>
+    <rect x="804" width="382" height="142" rx="18" fill="url(#panel)" stroke="#273041"/><rect x="804" width="382" height="4" rx="18" fill="#e2b24f"/>
+    <text x="24" y="34" class="mini">前沿性价比</text><text x="24" y="72" class="h2">GPT-6.1 Sol · Medium</text><text x="24" y="105" class="small">能力门槛之上，当前实测任务成本最低</text><text x="24" y="127" class="tiny">48 AA · $0.21/task · ≈2.54× Luna Max</text>
+    <text x="426" y="34" class="mini">绝对能力</text><text x="426" y="72" class="h2">Claude Opus 5.5 · Max</text><text x="426" y="105" class="small">当前统一能力口径中的最高点</text><text x="426" y="127" class="tiny">58 AA · $5.98/task</text>
+    <text x="828" y="34" class="mini">开放权重性价比</text><text x="828" y="72" class="h2">GLM-5.3 Flash</text><text x="828" y="105" class="small">开放权重阵营中贴近 Pareto 前沿</text><text x="828" y="127" class="tiny">42 AA · $0.25/task</text>
+  </g>
+  <g transform="translate(0,316)">
+    <rect width="1186" height="370" rx="22" fill="url(#panel)" stroke="#273041"/>
+    <text x="24" y="34" class="mini">INTERACTIVE SCATTER</text><text x="24" y="72" class="h2">能力 × 消耗</text><text x="24" y="99" class="small">越靠左上越优；可筛选 Provider / Reasoning，并切换 Log 与长任务修正。</text>
+    <g transform="translate(28,122)">
+      <rect width="1130" height="214" rx="18" fill="#0b1016" stroke="#1d2634"/>
+      <g stroke="#273041" stroke-dasharray="8 8" opacity=".8"><line x1="120" y1="22" x2="120" y2="192"/><line x1="308" y1="22" x2="308" y2="192"/><line x1="496" y1="22" x2="496" y2="192"/><line x1="684" y1="22" x2="684" y2="192"/><line x1="872" y1="22" x2="872" y2="192"/><line x1="48" y1="52" x2="1060" y2="52"/><line x1="48" y1="108" x2="1060" y2="108"/><line x1="48" y1="164" x2="1060" y2="164"/></g>
+      <polyline fill="none" stroke="#95c8ff" stroke-width="6" points="54,184 160,136 294,86 456,64 656,30 930,20 1054,24"/>
+      <polyline fill="none" stroke="#7388b4" stroke-width="2" stroke-dasharray="10 8" opacity=".6" points="54,184 120,88 308,42 580,30 906,20"/>
+      <circle cx="160" cy="136" r="14" fill="#49a0ff"/><circle cx="294" cy="86" r="14" fill="#ffaa4f"/><circle cx="456" cy="64" r="14" fill="#50dd9c"/><circle cx="656" cy="30" r="14" fill="#9f77ff"/><circle cx="930" cy="20" r="14" fill="#ffd34d"/>
+      <circle cx="380" cy="150" r="10" fill="#ffaa4f"/><circle cx="512" cy="148" r="10" fill="#50dd9c"/><circle cx="724" cy="116" r="10" fill="#d566a8"/><circle cx="856" cy="132" r="10" fill="#d566a8"/>
+      <line x1="54" y1="184" x2="54" y2="18" stroke="#7a86a0" stroke-width="3"/><line x1="54" y1="184" x2="1072" y2="184" stroke="#7a86a0" stroke-width="3"/>
+    </g>
+  </g>
+</g>
+</svg>
