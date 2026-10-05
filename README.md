@@ -2,6 +2,8 @@
 
 A static, interactive comparison of current frontier LLMs across **capability × reasoning effort × task cost × subscription plan**.
 
+**Live site:** https://blackkcold.github.io/frontier-model-efficiency-map/
+
 **Data snapshot:** 2026-10-05
 
 ## Providers / model families
@@ -70,6 +72,8 @@ Result for this snapshot: **GPT-6.1 Sol Medium**.
 - **Gemini 4 Argon** was announced September 30 and is rolling out to selected users. Artificial Analysis measures High at 53 and $1.99 per Intelligence Index task under introductory pricing. It is included with a limited-rollout status rather than treated as broadly available.
 
 ## GitHub Pages
+
+**Live:** https://blackkcold.github.io/frontier-model-efficiency-map/
 
 A Pages workflow is included at `.github/workflows/pages.yml`.
 
