@@ -12,6 +12,7 @@
     logScale: true,
     xMetric: "ratio",
     yMetric: "normalized",
+    selectedModel: null,
     sort: { key: "intelligence", dir: -1 }
   };
 
@@ -25,6 +26,32 @@
   function normalized(d) { return d.intelligence / leader * 100; }
   function xValue(d) { return state.xMetric === "ratio" ? ratio(d) : correctedCost(d); }
   function yValue(d) { return state.yMetric === "normalized" ? normalized(d) : d.intelligence; }
+
+  function renderModelDetail(d) {
+    const el = q("modelDetail");
+    if (!d) {
+      el.innerHTML = '<div class="model-detail-empty">悬停或点击图中的模型点查看详细信息</div>';
+      return;
+    }
+    const dataTag = d.measured
+      ? '<span class="tag">第三方统一实测</span>'
+      : '<span class="tag est">估算 / 插值</span>';
+    const statusTag = d.status === "deprecated" ? '<span class="tag dep">已弃用</span>' : '';
+    const note = d.estimateNote
+      || (d.measured ? '能力与单任务成本采用 Artificial Analysis 当前统一实测口径。' : '该点为官方存在档位的估算值，不作为最高能力结论依据。');
+    el.innerHTML = `
+      <div class="model-detail-main">
+        <div class="card-label">MODEL DETAIL</div>
+        <h3>${d.family} · ${effortLabel[d.effort]}</h3>
+        <p>${d.provider} ${dataTag} ${statusTag}</p>
+      </div>
+      <div class="detail-metric"><span>AA Intelligence</span><b>${d.intelligence}</b></div>
+      <div class="detail-metric"><span>综合能力</span><b>${normalized(d).toFixed(1)}</b></div>
+      <div class="detail-metric"><span>AA 单任务成本</span><b>${d.cost.toFixed(d.cost < 0.01 ? 4 : 2)}</b></div>
+      <div class="detail-metric"><span>调整后消耗倍率</span><b>${ratio(d).toFixed(2)}×</b></div>
+      <div class="detail-note">${note}</div>
+    `;
+  }
 
   function visibleModels() {
     return D.models.filter(d => state.providers.has(d.provider)
@@ -104,7 +131,8 @@
         backgroundColor: arr.map(d=>d.measured?`${color}d9`:'rgba(0,0,0,0)'),
         pointStyle: arr.map(d=>d.measured?st.pointStyle:'crossRot'),
         pointRadius: arr.map(d=>d.effort==='max'?7:d.effort==='xhigh'?6.5:6),
-        pointHoverRadius: 9
+        pointHoverRadius: 9,
+        pointHitRadius: 10
       };
     });
     const p = pareto(points.filter(d=>d.measured));
@@ -119,21 +147,28 @@
     const xTitle = state.xMetric === 'ratio' ? '任务消耗倍率（GPT‑6 Luna Max = 1×）' : 'AA 单任务成本（USD，含可选长任务修正）';
     const yTitle = state.yMetric === 'normalized' ? '综合能力（当前最高 = 100）' : 'Artificial Analysis Intelligence Index';
     return {
-      responsive:true, maintainAspectRatio:false, interaction:{mode:'nearest',intersect:false},
+      responsive:true, maintainAspectRatio:false, interaction:{mode:'nearest',intersect:true},
       animation:{duration:260},
+      onHover(event,elements,chartRef){
+        if(!elements.length)return;
+        const hit=elements[0],dataset=chartRef.data.datasets[hit.datasetIndex];
+        if(dataset?._pareto)return;
+        const d=dataset?._raw?.[hit.index];
+        if(d){state.selectedModel=d;renderModelDetail(d);}
+      },
+      onClick(event,elements,chartRef){
+        if(!elements.length)return;
+        const hit=elements[0],dataset=chartRef.data.datasets[hit.datasetIndex];
+        if(dataset?._pareto)return;
+        const d=dataset?._raw?.[hit.index];
+        if(d){state.selectedModel=d;renderModelDetail(d);}
+      },
       plugins:{
         legend:{display:true,position:'bottom',labels:{color:'#aab1bc',boxWidth:10,boxHeight:10,usePointStyle:true,padding:18,font:{size:11},filter:item=>item.text!=="Pareto frontier"}},
-        tooltip:{backgroundColor:'rgba(12,14,18,.96)',borderColor:'#303642',borderWidth:1,titleColor:'#fff',bodyColor:'#c5cbd5',padding:12,
+        tooltip:{backgroundColor:'rgba(12,14,18,.96)',borderColor:'#303642',borderWidth:1,bodyColor:'#e7ebf2',padding:9,displayColors:false,
           callbacks:{
-            title(items){const d=items[0]?.raw?.raw; return d?`${d.family} · ${effortLabel[d.effort]}`:'';},
-            label(ctx){const d=ctx.raw.raw;if(!d)return'';return [
-              `Provider: ${d.provider}`,
-              `AA Intelligence: ${d.intelligence}  ·  能力 ${normalized(d).toFixed(1)}`,
-              `AA task cost: $${d.cost.toFixed(d.cost<0.01?4:2)}`,
-              `调整后消耗: ${ratio(d).toFixed(2)}× Luna Max`,
-              `${d.measured?'实测':'估算'}${d.status==='deprecated'?' · 已弃用':''}`,
-              d.estimateNote || ''
-            ].filter(Boolean);}
+            title(){return '';},
+            label(ctx){const d=ctx.raw.raw;return d?`${ratio(d).toFixed(2)}× Luna Max`:'';}
           }
         }
       },
@@ -178,7 +213,13 @@
     q('sources').innerHTML=D.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noreferrer">${s.label}</a>`).join('');
   }
 
-  function update(){renderChart();renderTable();}
+  function update(){
+    const visible=visibleModels();
+    if(state.selectedModel && !visible.includes(state.selectedModel)) state.selectedModel=null;
+    renderChart();
+    renderTable();
+    renderModelDetail(state.selectedModel);
+  }
   function bind(){
     q('agentCorrection').onchange=e=>{state.correction=e.target.checked;update();};
     q('logScale').onchange=e=>{state.logScale=e.target.checked;update();};
