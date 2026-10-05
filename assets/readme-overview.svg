@@ -13,7 +13,12 @@
 <circle cx="84" cy="64" r="8" fill="#ff5f57"/><circle cx="108" cy="64" r="8" fill="#febc2e"/><circle cx="132" cy="64" r="8" fill="#28c840"/>
 <rect x="180" y="50" rx="12" width="420" height="28" fill="#121823" stroke="#252d3a"/><text x="200" y="69" class="small">blackkcold.github.io/frontier-model-efficiency-map</text>
 <g transform="translate(94,128)">
-  <image href="logo.svg" x="0" y="0" width="68" height="68"/>
+  <g transform="translate(0,0)">
+  <rect width="68" height="68" rx="16" fill="#0b1220" stroke="#4f7cff" stroke-width="2"/>
+  <g stroke="#6f83a8" stroke-opacity=".35" stroke-dasharray="3 3"><path d="M17 20v36M34 20v36M51 20v36"/><path d="M10 31h49M10 44h49"/></g>
+  <path d="M10 56C19 41 28 34 38 28C47 23 54 19 59 18" fill="none" stroke="#8cc7ff" stroke-width="2.4"/>
+  <circle cx="22" cy="40" r="3.5" fill="#49a0ff"/><circle cx="36" cy="29" r="3.5" fill="#50dd9c"/><circle cx="50" cy="22" r="3.5" fill="#9f77ff"/><circle cx="58" cy="18" r="3.5" fill="#ffd34d"/>
+</g>
   <text x="88" y="27" class="mini">FRONTIER MODEL EFFICIENCY MAP</text>
   <text x="88" y="70" class="h1">能力 × 消耗 × Plan 的前沿模型地图</text>
   <text x="88" y="104" class="p">跨厂商统一比较模型能力、reasoning 档位、单任务成本与订阅 Plan。</text>
