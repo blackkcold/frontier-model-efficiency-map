@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title desc">
+  <title id="title">Frontier Model Efficiency Map</title>
+  <desc id="desc">A dark glass chart icon with neon frontier curve and colored model points.</desc>
+  <defs>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162238"/>
+      <stop offset=".55" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#120c1d"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#27a4ff"/>
+      <stop offset=".44" stop-color="#526eff"/>
+      <stop offset=".72" stop-color="#ffb23d"/>
+      <stop offset="1" stop-color="#d84fb5"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#4bb7ff"/>
+      <stop offset=".6" stop-color="#88b8ff"/>
+      <stop offset="1" stop-color="#ffe187"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="2.4"/></filter>
+  </defs>
+  <rect width="192" height="192" rx="42" fill="#020306"/>
+  <rect x="12" y="10" width="168" height="172" rx="38" fill="url(#glass)" stroke="url(#rim)" stroke-width="2.6"/>
+  <rect x="15" y="13" width="162" height="166" rx="35" fill="none" stroke="#fff" stroke-opacity=".1"/>
+  <g stroke="#7ea4d7" stroke-opacity=".18" stroke-width="1" stroke-dasharray="5 6">
+    <path d="M46 45v103M78 45v103M110 45v103M142 45v103"/>
+    <path d="M31 66h132M31 98h132M31 130h132"/>
+  </g>
+  <g fill="none" stroke="#98b8e8" stroke-width="2.4" stroke-linecap="round">
+    <path d="M29 151V39"/>
+    <path d="M29 151h131"/>
+  </g>
+  <path d="M29 39l-5 9h10zM160 151l-9-5v10z" fill="#b5cff2"/>
+  <path d="M30 150C47 121 61 105 82 88C104 70 125 58 154 49" fill="none" stroke="#5aa9ff" stroke-opacity=".35" stroke-width="8" filter="url(#soft)"/>
+  <path d="M30 150C47 121 61 105 82 88C104 70 125 58 154 49" fill="none" stroke="url(#curve)" stroke-width="3.2" stroke-linecap="round"/>
+  <g fill="none" stroke="#8aa9d6" stroke-opacity=".34" stroke-width="1.2" stroke-dasharray="6 5">
+    <path d="M29 112C47 76 75 52 127 38"/>
+    <path d="M29 131C60 91 92 69 157 57"/>
+  </g>
+  <g>
+    <g fill="#39a8ff"><circle cx="46" cy="125" r="8" opacity=".22" filter="url(#glow)"/><circle cx="46" cy="125" r="5.2"/><circle cx="55" cy="143" r="3.7"/><circle cx="64" cy="132" r="4.3"/><circle cx="74" cy="142" r="3.4"/></g>
+    <g fill="#ff9a43"><circle cx="78" cy="100" r="8" opacity=".22" filter="url(#glow)"/><circle cx="78" cy="100" r="5.3"/><circle cx="91" cy="113" r="4.1"/><circle cx="100" cy="124" r="4.2"/></g>
+    <g fill="#48d7ad"><circle cx="106" cy="80" r="8" opacity=".22" filter="url(#glow)"/><circle cx="106" cy="80" r="5.4"/><circle cx="113" cy="98" r="4.2"/><circle cx="124" cy="121" r="4"/></g>
+    <g fill="#8e63ff"><circle cx="132" cy="62" r="8" opacity=".24" filter="url(#glow)"/><circle cx="132" cy="62" r="5.2"/><circle cx="136" cy="82" r="4.1"/><circle cx="124" cy="100" r="3.5"/></g>
+    <g fill="#df4e9c"><circle cx="151" cy="105" r="4.4"/><circle cx="142" cy="122" r="3.9"/><circle cx="148" cy="92" r="3.6"/></g>
+    <g fill="#ffc84d"><circle cx="158" cy="48" r="8" opacity=".25" filter="url(#glow)"/><circle cx="158" cy="48" r="5.2"/><circle cx="157" cy="74" r="3.8"/><circle cx="165" cy="81" r="3.8"/></g>
+  </g>
+</svg>
