@@ -165,10 +165,16 @@
       },
       plugins:{
         legend:{display:true,position:'bottom',labels:{color:'#aab1bc',boxWidth:10,boxHeight:10,usePointStyle:true,padding:18,font:{size:11},filter:item=>item.text!=="Pareto frontier"}},
-        tooltip:{backgroundColor:'rgba(12,14,18,.96)',borderColor:'#303642',borderWidth:1,bodyColor:'#e7ebf2',padding:9,displayColors:false,
+        tooltip:{backgroundColor:'rgba(12,14,18,.96)',borderColor:'#303642',borderWidth:1,titleColor:'#fff',bodyColor:'#e7ebf2',padding:9,displayColors:false,
           callbacks:{
-            title(){return '';},
-            label(ctx){const d=ctx.raw.raw;return d?`${ratio(d).toFixed(2)}× Luna Max`:'';}
+            title(items){
+              const d=items[0]?.raw?.raw;
+              return d?`${d.family} · ${effortLabel[d.effort]}`:'';
+            },
+            label(ctx){
+              const d=ctx.raw.raw;
+              return d?`${ratio(d).toFixed(2)}× Luna Max`:'';
+            }
           }
         }
       },
