@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-05</strong> · 6 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-08</strong> · 6 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -59,7 +59,7 @@
 | Provider | 当前模型族 |
 | --- | --- |
 | OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6 Sol（历史） |
-| Anthropic | Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.1 |
+| Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.1 |
 | Google | Gemini 3.8 Flash · Gemini 4 Argon |
 | DeepSeek | DeepSeek V4.1 Flash |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
@@ -137,9 +137,16 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 
 ## 2026-10 快照变化
 
-- **Claude Fable 5.1**：已加入当前实测前沿点。
-- **Gemini 4 Argon**：以 limited rollout / preview 状态纳入，不视为全面可用。
+- **Claude Haiku 5.5（10/7）**：新增 Low / Medium / High / XHigh / Max 五个 AA 实测点；AA Index 29 → 43，AA task cost $0.02 → $0.21。官方定价（≤100K prompt）为 $0.10/M input、$0.50/M output、$0.01/M cache read。
+- **Claude Sonnet 5.5（10/7）**：Anthropic 将 cache read 从 $0.20/M 下调到 $0.10/M；按当前 AA 统一口径刷新后，Low / Medium / High / XHigh / Max task cost 约为 $0.35 / $0.48 / $0.88 / $2.01 / $5.46。
+- **Claude Max / Team（10/7）**：Max 5x / 20x 新增 $100 / $200 每月 Claude Platform API credit；Team 按席位发放并共享池化，最高 $500/月。该 credit 不能用于 Claude 或 Claude Code 的额外交互用量。
+- **GPT-6 in ChatGPT（10/7）**：Plus / Pro / Business / Enterprise 的 Chat 默认进入 GPT-6 Sol；Pro 的 Pro reasoning 继续使用 GPT-6 Astra。Work / Codex 模型未因这次 Chat 发布而替换。
+- **OpenAI Pro policy**：Pro 200 已重新开放新订阅；官方同时注明非 grandfathered 的新 Pro 订阅内含用量低于旧档。Pro 500 仍是唯一包含 Astra Ultrafast 的自助 Pro 档。
+- **Claude Fable 5.1**：继续保留当前实测前沿点。
+- **Gemini 4 Argon**：继续以 limited rollout / preview 状态纳入，不视为全面可用。
 - **GPT-6 Sol**：保留历史对比，但默认隐藏，由 GPT-6.1 Sol 取代当前位置。
+
+**推荐结论未变化**：前沿性价比仍为 **GPT-6.1 Sol · Medium**；绝对能力仍为 **Claude Opus 5.5 · Max**。Plan 分类不改，但 Claude Max 5x / 20x 因新增 API credit 的实际价值提高。
 
 更完整的来源链接在网页的 **Methodology & Sources** 区域以及 `data.js` 中。
 
