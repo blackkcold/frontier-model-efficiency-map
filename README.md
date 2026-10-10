@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-08</strong> · 6 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-10</strong> · 6 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -137,6 +137,11 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 
 ## 2026-10 快照变化
 
+- **Google AI Ultra（已于 2026-05 宣布，本次修正旧快照）**：不再是单一 $249.99/月；美国官网现列 **Ultra 5x $99.99/月**、**Ultra 20x $199.99/月**，分别提供约 AI Pro 的 5x / 20x Gemini App 与 Antigravity 用量。Google AI Plus 为 $4.99/月、Google AI Pro 为 $19.99/月（美国官网月价）。
+- **Gemini App 个人账号（2026-10-09 起逐步实施）**：Google 专项通知列出 Free 手动可选 Flash-Lite；AI Plus 可选 Flash-Lite / Flash、不再提供手动 Pro；AI Pro 与 Ultra 可选 Flash-Lite / Flash / Pro。AI Plus 生效时间由 Google 单独邮件通知。*通用帮助页仍描述 Auto 自动模型路由/动态访问，故“手动不可选”不等于证明后台绝不使用高级模型；此限制也不等同 Gemini Developer API 政策。*
+- **Gemini reasoning 档位**：官方 Gemini App 帮助文档列出 Low / Medium / High，可手动选择时由账户权限与模型决定。高 thinking level 可能占用更多订阅额度；这是 **Gemini App 产品设置**，未当作独立的 API 模型 benchmark 点。<https://support.google.com/gemini/answer/18648722?hl=en>
+- **来源**：[Google AI 订阅官网](https://gemini.google.com/advanced) · [Google 2026 I/O 官方公告](https://blog.google/products-and-platforms/products/google-one/google-ai-subscriptions/) · [Google Gemini 访问政策](https://support.google.com/gemini/answer/17004136?hl=en) · [通用额度文档](https://support.google.com/gemini/answer/16275805?hl=en)
+
 - **Claude Haiku 5.5（10/7）**：新增 Low / Medium / High / XHigh / Max 五个 AA 实测点；AA Index 29 → 43，AA task cost $0.02 → $0.21。官方定价（≤100K prompt）为 $0.10/M input、$0.50/M output、$0.01/M cache read。
 - **Claude Sonnet 5.5（10/7）**：Anthropic 将 cache read 从 $0.20/M 下调到 $0.10/M；按当前 AA 统一口径刷新后，Low / Medium / High / XHigh / Max task cost 约为 $0.35 / $0.48 / $0.88 / $2.01 / $5.46。
 - **Claude Max / Team（10/7）**：Max 5x / 20x 新增 $100 / $200 每月 Claude Platform API credit；Team 按席位发放并共享池化，最高 $500/月。该 credit 不能用于 Claude 或 Claude Code 的额外交互用量。
@@ -146,7 +151,7 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 - **Gemini 4 Argon**：继续以 limited rollout / preview 状态纳入，不视为全面可用。
 - **GPT-6 Sol**：保留历史对比，但默认隐藏，由 GPT-6.1 Sol 取代当前位置。
 
-**推荐结论未变化**：前沿性价比仍为 **GPT-6.1 Sol · Medium**；绝对能力仍为 **Claude Opus 5.5 · Max**。Plan 分类不改，但 Claude Max 5x / 20x 因新增 API credit 的实际价值提高。
+**推荐结论未变化**：前沿性价比仍为 **GPT-6.1 Sol · Medium**；绝对能力仍为 **Claude Opus 5.5 · Max**。原有跨厂商 Plan 推荐不变；Google 的新 Ultra 5x 现在提供介于 AI Pro 与最高 Ultra 之间的重度使用选项。Claude Max 新增 API credit 价值仍保留。
 
 更完整的来源链接在网页的 **Methodology & Sources** 区域以及 `data.js` 中。
 
