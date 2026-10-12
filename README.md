@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-10</strong> · 6 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-12</strong> · 6 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -134,6 +134,12 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 4. Plan 推荐与 API task cost 分开处理。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-10-12 官方政策补录（AA 实测值沿用 10/10 快照）
+
+- **OpenAI GPT-6.1 Sol Ultrafast（10/8）**：这是 GPT-6.1 Sol 的低延迟服务档位，**不是新模型或新 reasoning 档位**。官方 API 定价 $12/M input、$60/M output，为 Standard 的 6×；不能把官方最高可达 8× 速度提升当作能力分数。Work / Codex 仅 Pro $500、符合条件的 Enterprise / Edu 支持；Pro $500 内含使用量按 Standard 的 8× 扣减，额度用尽后 credits 按 Standard 的 6× 扣减。Plus、Pro $100/$200 和 Business 暂不支持（购买 credits 也不解锁）。对应第三方 AA 能力/单任务成本数据未改变，**不新增虚构的 Ultrafast 测试点**。[官方产品文档](https://developers.openai.com/api/docs/models/gpt-6.1-sol) · [官方 Work/Codex 用量政策](https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex) · [官方推出公告](https://community.openai.com/t/ultrafast-is-rolling-out-today-for-gpt-6-1-sol-in-the-api-codex-and-chatgpt-work/1404475)
+- **Google Gemini API 生命周期（10/8）**：`gemini-3.7-flash` 已弃用并自动路由至 `gemini-3.8-flash`，`gemini-3.5-flash` 已弃用并自动路由至 `gemini-3.6-flash`；`deep-research-pro-preview-12-2025` 已弃用，计划 **10/23 停止服务**，应迁移至 `deep-research-preview-04-2026` 或 `deep-research-max-preview-04-2026`。当前图表未包含上述已弃用旧型号，故不新增对比点。[官方 Gemini API release notes](https://ai.google.dev/gemini-api/docs/changelog)
+- **推荐未调整**：前沿性价比仍为 GPT-6.1 Sol · Medium，绝对能力为 Claude Opus 5.5 · Max；订阅 Plan 推荐不变。Ultrafast 的速度、购买资格与额度消耗单独披露，不得混入同一 AA 成本/能力坐标。
 
 ## 2026-10 快照变化
 
