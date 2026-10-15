@@ -19,6 +19,48 @@
   const effortLabel = {none:"None",low:"Low",medium:"Medium",high:"High",xhigh:"XHigh",max:"Max",default:"Default"};
   const q = id => document.getElementById(id);
 
+
+  const themeMedia = window.matchMedia("(prefers-color-scheme: light)");
+  let themeChoice = "system";
+  try {
+    const saved = window.localStorage.getItem("frontier-theme-v1");
+    if (["light", "dark", "system"].includes(saved)) themeChoice = saved;
+  } catch (_) { /* Local storage may be unavailable in privacy mode. */ }
+  function closeThemeMenu() {
+    q("themeMenu").hidden = true;
+    q("themeToggle").setAttribute("aria-expanded", "false");
+  }
+  function applyTheme() {
+    const resolved = themeChoice === "system" ? (themeMedia.matches ? "light" : "dark") : themeChoice;
+    document.documentElement.dataset.theme = resolved;
+    document.querySelector('meta[name="theme-color"]').content = resolved === "light" ? "#f4f7fc" : "#08090c";
+    q("themeCurrentLabel").textContent = ({light:"浅色",dark:"深色",system:"跟随系统"})[themeChoice];
+    document.querySelectorAll("[data-theme-choice]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.themeChoice === themeChoice)));
+    if (chart) renderChart();
+  }
+  function bindTheme() {
+    q("themeToggle").addEventListener("click", () => {
+      const opening = q("themeMenu").hidden;
+      q("themeMenu").hidden = !opening;
+      q("themeToggle").setAttribute("aria-expanded", String(opening));
+    });
+    document.querySelectorAll("[data-theme-choice]").forEach(button => button.addEventListener("click", () => {
+      themeChoice = button.dataset.themeChoice;
+      try { window.localStorage.setItem("frontier-theme-v1", themeChoice); } catch (_) { /* Nonessential preference. */ }
+      applyTheme();
+      closeThemeMenu();
+      q("themeToggle").focus();
+    }));
+    document.addEventListener("pointerdown", event => {
+      if (!q("themeSwitcher").contains(event.target)) closeThemeMenu();
+    });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeThemeMenu(); });
+    const changeHandler = () => { if (themeChoice === "system") applyTheme(); };
+    if (themeMedia.addEventListener) themeMedia.addEventListener("change", changeHandler);
+    else if (themeMedia.addListener) themeMedia.addListener(changeHandler);
+    applyTheme();
+  }
+
   function corr(d) { return state.correction ? (D.correction[d.effort] || 1) : 1; }
   function correctedCost(d) { return d.cost * corr(d); }
   function baselineCost() { return baselineRaw * (state.correction ? D.correction.max : 1); }
@@ -42,7 +84,7 @@
     el.innerHTML = `
       <div class="model-detail-main">
         <div class="card-label">MODEL DETAIL</div>
-        <h3>${d.family} · ${effortLabel[d.effort]}</h3>
+        <h3>${d.family} · ${effortLabel[d.effort]}</h3>${d.modelId ? `<small class="model-id">${d.modelId}</small>` : ""}
         <p>${d.provider} ${dataTag} ${statusTag}</p>
       </div>
       <div class="detail-metric"><span>AA Intelligence</span><b>${d.intelligence}</b></div>
@@ -97,6 +139,7 @@
     id:"featuredLabels",
     afterDatasetsDraw(chart) {
       const {ctx} = chart; ctx.save(); ctx.font='600 11px Inter, sans-serif'; ctx.textBaseline='middle';
+      const light = document.documentElement.dataset.theme === 'light';
       chart.data.datasets.forEach((dataset, di) => {
         if (dataset._pareto) return;
         const meta = chart.getDatasetMeta(di);
@@ -107,9 +150,9 @@
           const w = ctx.measureText(txt).width + 12;
           let x = el.x + 9, y = el.y - 13;
           if (x + w > chart.chartArea.right) x = el.x - w - 9;
-          ctx.fillStyle='rgba(7,8,10,.86)'; ctx.strokeStyle='rgba(130,140,156,.45)'; ctx.lineWidth=1;
+          ctx.fillStyle=light?'rgba(255,255,255,.96)':'rgba(7,8,10,.86)'; ctx.strokeStyle=light?'rgba(135,151,178,.55)':'rgba(130,140,156,.45)'; ctx.lineWidth=1;
           ctx.beginPath(); ctx.roundRect(x,y-10,w,20,6); ctx.fill(); ctx.stroke();
-          ctx.fillStyle='#e8ebf1'; ctx.fillText(txt,x+6,y);
+          ctx.fillStyle=light?'#1b2b43':'#e8ebf1'; ctx.fillText(txt,x+6,y);
         });
       }); ctx.restore();
     }
@@ -127,7 +170,7 @@
       return {
         label: family, _raw: arr, data: arr.map(d=>({x:xValue(d),y:yValue(d),raw:d})),
         parsing:false, showLine:false, borderWidth: arr.map(d=>d.measured?1.5:2.2),
-        borderColor: arr.map(d=>d.measured?color:'#d8dde6'),
+        borderColor: arr.map(d=>d.measured?color:(document.documentElement.dataset.theme === 'light'?'#5c6b85':'#d8dde6')),
         backgroundColor: arr.map(d=>d.measured?`${color}d9`:'rgba(0,0,0,0)'),
         pointStyle: arr.map(d=>d.measured?st.pointStyle:'crossRot'),
         pointRadius: arr.map(d=>d.effort==='max'?7:d.effort==='xhigh'?6.5:6),
@@ -138,7 +181,7 @@
     const p = pareto(points.filter(d=>d.measured));
     if(p.length>1) sets.push({
       label:"Pareto frontier", _pareto:true, data:p.map(d=>({x:xValue(d),y:yValue(d),raw:d})), parsing:false,
-      borderColor:'rgba(210,218,231,.42)', borderDash:[6,5], borderWidth:1.2, pointRadius:0, pointHoverRadius:0, showLine:true, tension:.05, order:99
+      borderColor:document.documentElement.dataset.theme === 'light'?'rgba(78,100,141,.55)':'rgba(210,218,231,.42)', borderDash:[6,5], borderWidth:1.2, pointRadius:0, pointHoverRadius:0, showLine:true, tension:.05, order:99
     });
     return sets;
   }
@@ -146,6 +189,10 @@
   function chartOptions() {
     const xTitle = state.xMetric === 'ratio' ? '任务消耗倍率（GPT‑6 Luna Max = 1×）' : 'AA 单任务成本（USD，含可选长任务修正）';
     const yTitle = state.yMetric === 'normalized' ? '综合能力（当前最高 = 100）' : 'Artificial Analysis Intelligence Index';
+    const light = document.documentElement.dataset.theme === 'light';
+    const axisColor = light ? '#5a6982' : '#8e96a3';
+    const axisTitleColor = light ? '#52617a' : '#7e8794';
+    const gridColor = light ? 'rgba(90,112,147,.18)' : 'rgba(95,105,120,.12)';
     return {
       responsive:true, maintainAspectRatio:false, interaction:{mode:'nearest',intersect:true},
       animation:{duration:260},
@@ -164,8 +211,8 @@
         if(d){state.selectedModel=d;renderModelDetail(d);}
       },
       plugins:{
-        legend:{display:true,position:'bottom',labels:{color:'#aab1bc',boxWidth:10,boxHeight:10,usePointStyle:true,padding:18,font:{size:11},filter:item=>item.text!=="Pareto frontier"}},
-        tooltip:{backgroundColor:'rgba(12,14,18,.96)',borderColor:'#303642',borderWidth:1,titleColor:'#fff',bodyColor:'#e7ebf2',padding:9,displayColors:false,
+        legend:{display:true,position:'bottom',labels:{color:axisColor,boxWidth:10,boxHeight:10,usePointStyle:true,padding:18,font:{size:11},filter:item=>item.text!=="Pareto frontier"}},
+        tooltip:{backgroundColor:light?'rgba(255,255,255,.97)':'rgba(12,14,18,.96)',borderColor:light?'#cbd6e5':'#303642',borderWidth:1,titleColor:light?'#18263c':'#fff',bodyColor:light?'#33445d':'#e7ebf2',padding:9,displayColors:false,
           callbacks:{
             title(items){
               const d=items[0]?.raw?.raw;
@@ -179,8 +226,8 @@
         }
       },
       scales:{
-        x:{type:state.logScale?'logarithmic':'linear',title:{display:true,text:xTitle,color:'#7e8794'},grid:{color:'rgba(95,105,120,.12)'},ticks:{color:'#8e96a3',callback:v=>state.xMetric==='ratio'?`${Number(v).toPrecision(2)}×`:`$${v}`}},
-        y:{title:{display:true,text:yTitle,color:'#7e8794'},grid:{color:'rgba(95,105,120,.12)'},ticks:{color:'#8e96a3'},suggestedMin:state.yMetric==='normalized'?25:15,suggestedMax:state.yMetric==='normalized'?102:60}
+        x:{type:state.logScale?'logarithmic':'linear',title:{display:true,text:xTitle,color:axisTitleColor},grid:{color:gridColor},ticks:{color:axisColor,callback:v=>state.xMetric==='ratio'?`${Number(v).toPrecision(2)}×`:`$${v}`}},
+        y:{title:{display:true,text:yTitle,color:axisTitleColor},grid:{color:gridColor},ticks:{color:axisColor},suggestedMin:state.yMetric==='normalized'?25:15,suggestedMax:state.yMetric==='normalized'?102:60}
       }
     };
   }
@@ -236,7 +283,7 @@
     q('modelTable').querySelectorAll('th[data-sort]').forEach(th=>th.onclick=()=>{const k=th.dataset.sort;if(state.sort.key===k)state.sort.dir*=-1;else{state.sort.key=k;state.sort.dir=k==='provider'||k==='family'||k==='effort'?1:-1;}renderTable();});
   }
 
-  makeFilters(); bind(); renderPlans(); renderSources(); update();
+  makeFilters(); bind(); bindTheme(); renderPlans(); renderSources(); update();
   const rec = D.models.find(d=>d.featured==='frontier-value');
   if(rec) q('frontierRatio').textContent=`≈${ratio(rec).toFixed(2)}× Luna Max`;
 })();

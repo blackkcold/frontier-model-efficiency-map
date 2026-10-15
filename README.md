@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-12</strong> · 6 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-15</strong> · 7 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -50,6 +50,7 @@
 
 图表交互刻意做得更克制：
 
+- **外观设置**：右上角可选择「浅色 / 深色 / 跟随系统」；本地保存偏好，系统模式会响应系统配色变化；图表、卡片与数据表同步调整。
 - **Hover / 点击 / 触摸模型点**：图内只保留 `Model ID + 消耗倍率`，避免 tooltip 挡住附近点。
 - **完整详情固定显示**在筛选器与图表之间，包括 AA Intelligence、归一化能力、AA 单任务成本、修正后倍率、实测 / 估算状态。
 - 点击后信息保持，手机端也不依赖 hover；如果筛选条件把当前模型隐藏，详情会自动清空。
@@ -64,6 +65,7 @@
 | DeepSeek | DeepSeek V4.1 Flash |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
 | Kimi | Kimi K3 |
+| Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
 
 ### 当前快照的三个锚点
 
@@ -71,7 +73,7 @@
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · Medium** | 48 | $0.21 | 能力门槛之上的最低实测任务成本 |
 | 绝对能力 | **Claude Opus 5.5 · Max** | 58 | $5.98 | 当前页面统一能力口径最高点 |
-| 开放权重性价比 | **GLM-5.3 Flash** | 42 | $0.25 | 开放权重阵营中靠近 Pareto 前沿 |
+| 开放权重性价比 | **MiMo V2.6 Pro** | 46 | $0.13 | AA 实测，能力高且成本低于原 GLM-5.3 Flash 推荐 |
 
 ## 怎么读这张图
 
@@ -134,6 +136,15 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 4. Plan 推荐与 API task cost 分开处理。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-10-15 小米 MiMo V2.6 与主题升级
+
+- **MiMo V2.6（官方 9/22 发布）**：新增 Xiaomi 第七家 Provider；AA 独立实测 MiMo V2.6 Flash（AA Index **38**，**$0.06/task**）及 Pro（**46**，**$0.13/task**）。两者只设置 `Default`，因为官方虽允许传入 `reasoning.effort`，但实际仅支持开启或关闭深度思考，无法将 low/medium/high/xhigh/max 当作独立推理强度。**不人为插值生成未测试的档位**。[AA 实测](https://artificialanalysis.ai/models/comparisons/mimo-v2-6-flash-vs-mimo-v2-6-pro) · [官方推理参数](https://mimo.mi.com/docs/en-US/api/chat/responses)
+- **Pro UltraSpeed**：官方提供最高 **20× 输出速度**，API 海外实时输入 **$4.35/M**、输出 **$8.70/M**（普通 Pro 的 10×）；无独立 AA 单任务能力和成本测量，因此仅在模型说明区披露，不创建虚构的数据点。[官方 API 价格](https://mimo.mi.com/docs/pricing)
+- **模型生命周期**：MiMo V2.5-Pro / V2.5 自 10/14 起自动路由至 V2.6 Pro / Flash，旧 ID 将于 **2026-10-21 10:00（北京时间）** 停用。[官方文档](https://mimo.mi.com/docs/en-US)
+- **Token Plan**：加入 Lite（$6 / ¥39；4.1B Credits）、Standard（$16 / ¥99；11B）、Pro（$50 / ¥329；38B）、Max（$100 / ¥659；82B）。这些属于编码场景订阅，不与按量 API 余额通用。[官方方案](https://mimo.mi.com/docs/zh-CN/tokenplan)
+- **推荐模型更新**：开放权重性价比由 GLM-5.3 Flash（42 / $0.25）改为 MiMo V2.6 Pro（46 / $0.13），原前沿性价比 GPT-6.1 Sol Medium 与绝对能力 Claude Opus 5.5 Max 不变。原有 Plan 推荐不变，新增 MiMo 四个 Plan 供对比，暂不跨厂商换算 Credits 为使用次数。
+- **浅色主题**：新增「浅色 / 深色 / 跟随系统」设置，并可持久化选择；图表轴、标签、表格与 hover 同步适配浅色背景。
 
 ## 2026-10-12 官方政策补录（AA 实测值沿用 10/10 快照）
 
