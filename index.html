@@ -1,29 +1,52 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#08090c" />
   <title>Frontier Model Efficiency Map — 能力 × 消耗</title>
-  <meta name="description" content="OpenAI、Anthropic、Google、DeepSeek、Z.ai、Kimi 前沿模型能力、Reasoning 档位与消耗对比。" />
+  <meta name="description" content="OpenAI、Anthropic、Google、DeepSeek、Z.ai、Kimi、Xiaomi 前沿模型能力、Reasoning 档位与消耗对比。" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <meta name="apple-mobile-web-app-title" content="Frontier Model Map" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <script>
+    (() => {
+      try {
+        const choice = localStorage.getItem("frontier-theme-v1");
+        const mode = ["light", "dark", "system"].includes(choice) ? choice : "system";
+        document.documentElement.dataset.theme = mode === "system" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
+      } catch (_) {
+        document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="shell">
     <header class="hero">
+      <div class="hero-heading-layout">
       <div class="hero-title-row">
         <img class="hero-logo" src="assets/logo.svg" alt="Frontier Model Efficiency Map logo" />
         <div class="hero-title-copy">
-          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-10-12</div>
+          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-10-15</div>
           <h1>模型 × Reasoning：<span>能力 / 消耗 / Plan</span></h1>
         </div>
       </div>
+      <div class="theme-switcher" id="themeSwitcher">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="选择外观主题" aria-expanded="false" aria-controls="themeMenu" aria-haspopup="true">
+          <span class="theme-glyph" aria-hidden="true">◐</span><span id="themeCurrentLabel">跟随系统</span><span aria-hidden="true">⌄</span>
+        </button>
+        <div class="theme-menu" id="themeMenu" role="group" aria-label="外观主题" hidden>
+          <button type="button" data-theme-choice="light" aria-pressed="false"><span aria-hidden="true">☀</span> 浅色</button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false"><span aria-hidden="true">☾</span> 深色</button>
+          <button type="button" data-theme-choice="system" aria-pressed="true"><span aria-hidden="true">◐</span> 跟随系统</button>
+        </div>
+      </div>
+      </div>
       <p>跨厂商统一口径：纵轴默认使用 Artificial Analysis Intelligence Index 相对归一化；横轴使用每项 Intelligence Index 任务的实际成本，并以 <strong>GPT‑6 Luna Max = 1×</strong> 归一。High / XHigh / Max 可叠加长任务 Agent 消耗修正。</p>
       <div class="hero-badges">
-        <span>6 providers</span><span id="pointCount">— points</span><span>AA v4.3.2</span><span>Measured + explicit estimates</span>
+        <span>7 providers</span><span id="pointCount">— points</span><span>AA v4.3.2</span><span>Measured + explicit estimates</span>
       </div>
     </header>
 
@@ -42,9 +65,9 @@
       </article>
       <article class="card rec-card accent-yellow">
         <div class="card-label">开放权重性价比</div>
-        <h2>GLM‑5.3 Flash</h2>
-        <p>AA Index 42、约 $0.25/task，是当前开放权重阵营里非常靠近 Pareto 前沿的点。</p>
-        <div class="metric-row"><span>AA Index <b>42</b></span><span>AA cost <b>$0.25/task</b></span></div>
+        <h2>MiMo V2.6 Pro</h2>
+        <p>小米开放权重旗舰，AA Index 46、$0.13/task；与原推荐 GLM-5.3 Flash 相比能力更高、单任务成本更低。</p>
+        <div class="metric-row"><span>AA Index <b>46</b></span><span>AA cost <b>$0.13/task</b></span></div>
       </article>
     </section>
 
@@ -138,12 +161,13 @@
         <div><span>纯编码最低门槛</span><b>GLM Coding Lite</b><small>$12.6/月促销价，10k credits/week</small></div>
         <div><span>国内综合</span><b>Kimi Moderato</b><small>¥99/月，Code + Agent + 2 并行</small></div>
       </div>
+      <p class="disclaimer"><strong>Xiaomi MiMo V2.6（9/22 发布）：</strong>主图新增 Pro 与 Flash 的 AA 实测点（分别为 46 / $0.13、38 / $0.06）。Pro UltraSpeed 输出速度最高 20 倍，但海外 API 价格为普通 Pro 的 10 倍，缺少独立 AA 实测，不作为第三个能力点。官方海外实时 API（每百万 tokens）：Pro 输入 $0.435 / 输出 $0.87；Flash $0.14 / $0.28；UltraSpeed $4.35 / $8.70。Token Plan 与按量 API 余额互不通用，原 V2.5-Pro / V2.5 将于 10/21 停用。<a href="https://mimo.mi.com/docs/pricing" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://mimo.mi.com/docs/en-US/updates/model" target="_blank" rel="noopener noreferrer">模型发布</a>。</p>
       <p class="disclaimer"><strong>OpenAI Ultrafast 政策更新（10/8）：</strong>GPT-6.1 Sol 已新增 Ultrafast 服务档位；API 标价 $12/M input、$60/M output（Standard 的 6×）。Work/Codex 仅 Pro $500 和符合资格的 Enterprise/Edu 可用；Pro $500 内含用量消耗 8×、后续 credits 消耗 6×。此为速度与计费模式变更，不是新模型或独立 AA 实测点。<a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex" target="_blank" rel="noopener noreferrer">Work/Codex 用量</a>。</p>
       <p class="disclaimer">Google 订阅已按官方重整：AI Plus $4.99、AI Pro $19.99、AI Ultra 5x $99.99、Ultra 20x $199.99（美国月费）。2026-10-09 起个人 Gemini App 模型权限陆续调整；手动模型选择、自动路由与 Developer API 额度须分别看待。</p>
       <div class="table-scroll"><table id="planTable">
         <thead><tr><th>Provider</th><th>Plan</th><th>价格</th><th>适合</th><th>说明</th></tr></thead><tbody></tbody>
       </table></div>
-      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-10-12 可核实信息。购买前以各厂商结算页为准。</p>
+      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-10-15 可核实信息。购买前以各厂商结算页为准。</p>
     </section>
 
     <section class="card methodology-card">
@@ -161,7 +185,7 @@
       </details>
     </section>
 
-    <footer>Data snapshot: 2026-10-12 · Static site · No tracking · Built for GitHub Pages</footer>
+    <footer>Data snapshot: 2026-10-15 · Static site · No tracking · Built for GitHub Pages</footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
