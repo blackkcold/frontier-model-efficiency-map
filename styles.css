@@ -83,3 +83,17 @@ tr[role="button"]:hover td{background:color-mix(in srgb,var(--blue) 8%,transpare
 .model-orbit.is-list .orbit-core{display:none}
 @media(max-width:420px){.orbit-choice-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.orbit-choice,.orbit-core,.model-orbit.is-list .orbit-choice{transition:none!important;will-change:auto}}
+
+/* Spatially mapped model orbit: numbered leaders from original points. */
+.orbit-leaders{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.orbit-link{stroke-width:1.7;stroke-linecap:round;opacity:.85;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 330ms cubic-bezier(.22,.85,.36,1),opacity 140ms ease}
+.model-orbit.is-open .orbit-link{stroke-dashoffset:0}
+.orbit-source{opacity:0;transition:opacity 150ms ease}
+.orbit-marker{fill:var(--orbit-card);stroke-width:1.8;opacity:0;transition:opacity 170ms ease}
+.orbit-marker-text{fill:var(--orbit-text);font-size:10px;font-weight:750;text-anchor:middle;dominant-baseline:central;opacity:0;transition:opacity 170ms ease}
+.model-orbit.is-open .orbit-source,.model-orbit.is-open .orbit-marker,.model-orbit.is-open .orbit-marker-text{opacity:1}
+.orbit-choice{width:188px;min-height:52px}
+.orbit-number{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:22px;height:22px;border:1px solid var(--provider-color);border-radius:50%;background:color-mix(in srgb,var(--provider-color) 16%,var(--orbit-card));color:var(--orbit-text);font-weight:750;font-size:11px}
+.orbit-choice-text small{overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.model-orbit.is-list .orbit-choice{width:auto;min-height:52px}
+@media(prefers-reduced-motion:reduce){.orbit-link,.orbit-source,.orbit-marker,.orbit-marker-text{transition:none!important}}
