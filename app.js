@@ -227,7 +227,28 @@
           if(score<bestScore){best=box;bestScore=score;}
         }
       }
-      if(!best)return null; // List fallback, never wrongly associate a label.
+      if(!best) {
+        // Edge fallback: occupy a free nearby cell, but never reinterpret
+        // a point's identity. Numbered lines still lead to the source dot.
+        const xs=[],ys=[];
+        for(let x=hw+pad;x<=width-hw-pad;x+=ORBIT_CARD_W+gap)xs.push(x);
+        for(let y=hh+pad;y<=height-hh-pad;y+=ORBIT_CARD_H+gap)ys.push(y);
+        xs.push(width-hw-pad);
+        ys.push(height-hh-pad);
+        for(const x of xs)for(const y of ys) {
+          const box={x,y,left:x-hw,right:x+hw,top:y-hh,bottom:y+hh};
+          if(placed.some(o=>box.left<o.right+gap&&box.right>o.left-gap&&
+            box.top<o.bottom+gap&&box.bottom>o.top-gap))continue;
+          const covers=points.reduce((sum,d)=>sum+
+            (d.x>box.left-5&&d.x<box.right+5&&d.y>box.top-5&&d.y<box.bottom+5?1:0),0);
+          const a=Math.atan2(y-anchor.y,x-anchor.x);
+          const distance=Math.hypot(x-anchor.x,y-anchor.y);
+          const score=Math.abs(angleDelta(a,target))*95+Math.abs(distance-170)*.25+
+            covers*35;
+          if(score<bestScore){best=box;bestScore=score;}
+        }
+      }
+      if(!best)return null; // Fall back to a labeled list if nothing fits.
       placed.push({...best,originalIndex:p.originalIndex});
     }
     return placed.sort((a,b)=>a.originalIndex-b.originalIndex);
