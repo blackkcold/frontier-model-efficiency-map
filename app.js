@@ -196,35 +196,58 @@
   // Collision-aware "mechanical petals": no card may cover a sibling.
   // Choose positions along concentric arcs; clamp to the chart container.
   function layoutOrbit(anchor, count, width, height, otherPoints) {
-    const positions=[], cardW=168,cardH=46, pad=8;
+    const placed=[], cardW=168,cardH=46,pad=8,gap=8;
+    const limits={minX:cardW/2+pad,maxX:width-cardW/2-pad,minY:cardH/2+pad,maxY:height-cardH/2-pad};
+    const allowed=(x,y) => {
+      if(x<limits.minX||x>limits.maxX||y<limits.minY||y>limits.maxY)return false;
+      const candidate={x,y,left:x-cardW/2,right:x+cardW/2,top:y-cardH/2,bottom:y+cardH/2};
+      if(placed.some(b => candidate.left<b.right+gap&&candidate.right>b.left-gap&&
+        candidate.top<b.bottom+gap&&candidate.bottom>b.top-gap))return false;
+      return candidate;
+    };
+    const softPenalty=box => otherPoints.reduce((score,p)=>
+      score+(p.x>box.left-8&&p.x<box.right+8&&p.y>box.top-8&&p.y<box.bottom+8?10:0),0);
     for(let i=0;i<count;i++) {
-      const phase = -Math.PI / 2 + i * (Math.PI * 2 / Math.max(count,1));
-      let best=null;
-      for(const radius of [100,134,168,202,238,278]) {
-        for(const shift of [0,-.20,.20,-.40,.40,-.65,.65]) {
-          const angle=phase+shift;
-          const naturalX=anchor.x + Math.cos(angle)*radius;
-          const naturalY=anchor.y + Math.sin(angle)*radius;
-          const x=Math.max(cardW/2+pad,Math.min(width-cardW/2-pad,naturalX));
-          const y=Math.max(cardH/2+pad,Math.min(height-cardH/2-pad,naturalY));
-          const box={left:x-cardW/2,right:x+cardW/2,top:y-cardH/2,bottom:y+cardH/2};
-          let penalty=Math.hypot(naturalX-x,naturalY-y)*5+radius*.045;
-          for(const prev of positions) {
-            const ox=Math.max(0,Math.min(box.right,prev.right+7)-Math.max(box.left,prev.left-7));
-            const oy=Math.max(0,Math.min(box.bottom,prev.bottom+7)-Math.max(box.top,prev.top-7));
-            penalty+=ox*oy*20;
-          }
-          for(const p of otherPoints) {
-            if(p.x>box.left-8&&p.x<box.right+8&&p.y>box.top-8&&p.y<box.bottom+8)penalty+=10;
-          }
-          if(!best||penalty<best.penalty)best={x,y,...box,penalty};
-          if(penalty<18)break;
+      const phase=-Math.PI/2+i*Math.PI*2/Math.max(count,1);
+      let best=null,bestScore=Infinity;
+      for(const radius of [100,134,168,202,238,278,320]) {
+        for(const skew of [0,-.2,.2,-.4,.4,-.65,.65,-.95,.95]) {
+          const angle=phase+skew;
+          const targetX=anchor.x+Math.cos(angle)*radius, targetY=anchor.y+Math.sin(angle)*radius;
+          const x=Math.max(limits.minX,Math.min(limits.maxX,targetX));
+          const y=Math.max(limits.minY,Math.min(limits.maxY,targetY));
+          const box=allowed(x,y);
+          if(!box)continue;
+          const score=Math.hypot(targetX-x,targetY-y)*8+radius*.045+Math.abs(skew)*14+softPenalty(box);
+          if(score<bestScore){best=box;bestScore=score;}
         }
-        if(best&&best.penalty<18)break;
+        if(best&&bestScore<20)break;
       }
-      positions.push(best);
+      // Near edges, a petal may have no collision-free arc. Pack it into
+      // the nearest unused position instead of permitting text overlap.
+      if(!best) {
+        const candidates=[];
+        const dx=cardW+gap, dy=cardH+gap;
+        for(let y=limits.minY;y<=limits.maxY;y+=dy)
+          for(let x=limits.minX;x<=limits.maxX;x+=dx){
+            const box=allowed(x,y);
+            if(box)candidates.push({box,score:Math.hypot(x-anchor.x,y-anchor.y)+softPenalty(box)*2});
+          }
+        // Always consider the right/bottom edges as well as regular cells.
+        for(const x of [limits.minX,limits.maxX])
+          for(const y of [limits.minY,limits.maxY]) {
+            const box=allowed(x,y);if(box)candidates.push({box,score:Math.hypot(x-anchor.x,y-anchor.y)+softPenalty(box)*2});
+          }
+        candidates.sort((a,b)=>a.score-b.score);
+        best=candidates[0]?.box||null;
+      }
+      if(!best) {
+        // A too-small viewport is handled as a list before layoutOrbit is called.
+        throw new Error("Insufficient desktop layout space for model orbit");
+      }
+      placed.push(best);
     }
-    return positions;
+    return placed;
   }
 
   function openOrbit(group) {
