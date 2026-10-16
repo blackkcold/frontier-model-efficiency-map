@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-15</strong> · 7 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-16</strong> · 8 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -51,9 +51,10 @@
 图表交互刻意做得更克制：
 
 - **外观设置**：右上角可选择「浅色 / 深色 / 跟随系统」；本地保存偏好，系统模式会响应系统配色变化；图表、卡片与数据表同步调整。
-- **Hover / 点击 / 触摸模型点**：图内只保留 `Model ID + 消耗倍率`，避免 tooltip 挡住附近点。
+- **密集点弹出选择环**：取消默认推荐模型常驻标签、关闭原生悬浮 Tooltip，避免文字遮挡邻近模型；鼠标靠近密集散点时，临近模型以弹簧曲线环形弹开，自动计算非重叠位置与画布边界。移动端点击密集点弹出可滚动的网格列表。
+- **点击才显示详情**：只有点击散点、展开的模型按钮或排名表的可访问行才更新模型详情；单纯悬停不会覆盖当前选择。支持 Escape 关闭、键盘选择和减少动画偏好。
 - **完整详情固定显示**在筛选器与图表之间，包括 AA Intelligence、归一化能力、AA 单任务成本、修正后倍率、实测 / 估算状态。
-- 点击后信息保持，手机端也不依赖 hover；如果筛选条件把当前模型隐藏，详情会自动清空。
+- 点击后信息保持，手机端也不依赖 hover；如果筛选条件把当前模型隐藏，详情会自动清空。浏览器窗口尺寸/筛选状态变化会清理展开环。
 
 ## 当前覆盖
 
@@ -66,6 +67,7 @@
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
 | Kimi | Kimi K3 |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
+| xAI | Grok 4.7 · Grok 4.6（官方 API + AA 独立测量档位） |
 
 ### 当前快照的三个锚点
 
@@ -136,6 +138,14 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 4. Plan 推荐与 API task cost 分开处理。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-10-16 xAI Grok 与密集点交互修复
+
+- **xAI Grok 模型**：新增第八家 Provider，覆盖 Grok 4.7（官方 9/21 发布）与 Grok 4.6（官方 8/12 发布），均支持 Low / Medium / High（默认）/ XHigh 推理深度，不能关闭推理；500K 上下文。官方全球 API 在提示输入 ≤200K 时每百万 token 为 $2 输入、$0.50 缓存输入、$6 输出；超过 200K 的输入 / 缓存 / 输出分别为 $4 / $1 / $12，区域端点另可能溢价。[xAI 发布记录](https://docs.x.ai/developers/release-notes) · [推理档位](https://docs.x.ai/developers/model-capabilities/text/reasoning) · [官方定价](https://docs.x.ai/developers/pricing)
+- **Grok AA 统一实测**：4.7 Low 42/$1.25、High 46/$2.73、XHigh 46/$3.74；4.6 Low 35/$0.38、Medium 43/$1.14、High 44/$1.48、XHigh 44/$1.75（AA Intelligence Index / 每任务 USD）。虽然 4.7 官方支持 Medium，但当前未确认可直接比较的 AA Medium 测量值，故不合成虚构数值。[AA 4.7 Low 对比](https://artificialanalysis.ai/models/comparisons/grok-4-7-low-vs-grok-4-7) · [AA 4.7 High 对比](https://artificialanalysis.ai/models/comparisons/grok-4-7-high-vs-grok-4-6) · [AA 4.6 对比](https://artificialanalysis.ai/models/comparisons/grok-4-6-low-vs-grok-4-6-medium)
+- **The X Subscription（10/12 发布）**：新用户包含 Free $0、Plus $8、Premium $30、Super $100、Ultra $200/月，以及 Teams $30+/席位/月、Enterprise 定制；Premium/Super/Ultra 按 Plus 共用基础额度的 4×/15×/50×计，不提供可跨厂商等价换算的固定 token 总量。周额度由 Grok（Chat/Imagine/Voice/Bot）、Cursor 等共享；第三方 Cursor 模型按 API 单独付费，xAI API 也另付费；现有 SuperGrok、Cursor 与 X Premium 用户仍可保留旧方案。[官方新方案公告](https://x.ai/news/x-subscription) · [官方套餐详情](https://x.ai/pricing)
+- **交互修复**：移除三张推荐模型的永久图表浮动标签；禁用原生 hover 提示与 hover 更新详情。新增密集点感知与“拟物弹簧式”模型选择环，进行画布边界约束和标签碰撞检测；仅点击按钮/散点才固定详情；触屏改为弹出列表，支持键盘操作、Esc 关闭及 reduced-motion。
+- **推荐保持**：当前纳入的 AA 数据未改变 GPT-6.1 Sol Medium 前沿性价比、Claude Opus 5.5 Max 绝对能力、MiMo V2.6 Pro 开放权重性价比。Grok Premium / Super 作为最新 Plan 参与比较，但由于官方仅给共享相对额度，暂不凭空估计等价 token 总数。
 
 ## 2026-10-15 小米 MiMo V2.6 与主题升级
 
