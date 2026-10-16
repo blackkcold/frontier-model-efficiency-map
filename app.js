@@ -137,181 +137,183 @@
 
 
   let chart;
-  let activeOrbitKey = "";
-  let activeOrbitAnchor = null;
-  let pendingOrbitFrame = 0;
-
+  const ORBIT_TRIGGER_RADIUS=12, ORBIT_GROUP_RADIUS=34, ORBIT_MAX_GROUP=9;
+  const ORBIT_CARD_W=188, ORBIT_CARD_H=52;
+  let activeOrbitKey="", pendingOrbitFrame=0;
+  function orbitKey(group) {
+    return group.neighbors.map(p=>p.d.provider+":"+p.d.family+":"+p.d.effort).sort().join("|");
+  }
   function pickModel(d) {
-    state.selectedModel = d;
+    state.selectedModel=d;
     renderModelDetail(d);
     closeOrbit();
   }
-
   function closeOrbit() {
-    activeOrbitKey = "";
-    activeOrbitAnchor = null;
-    if (pendingOrbitFrame) window.cancelAnimationFrame(pendingOrbitFrame);
-    pendingOrbitFrame = 0;
-    const layer = q("modelOrbit");
-    layer.classList.remove("is-open", "is-list");
+    activeOrbitKey="";
+    if(pendingOrbitFrame)window.cancelAnimationFrame(pendingOrbitFrame);
+    pendingOrbitFrame=0;
+    const layer=q("modelOrbit");
+    layer.classList.remove("is-open","is-list");
     layer.replaceChildren();
-    layer.setAttribute("aria-hidden", "true");
+    layer.setAttribute("aria-hidden","true");
   }
-
   function chartPoints() {
-    if (!chart) return [];
-    const canvas = q("modelChart");
-    const canvasRect = canvas.getBoundingClientRect();
-    const wrapRect = q("modelCanvasWrap").getBoundingClientRect();
-    const sx = canvasRect.width / Math.max(chart.width, 1);
-    const sy = canvasRect.height / Math.max(chart.height, 1);
-    const points = [];
-    chart.data.datasets.forEach((dataset, datasetIndex) => {
-      if (dataset._pareto) return;
-      const elements = chart.getDatasetMeta(datasetIndex).data;
-      elements.forEach((element, i) => {
-        const d = dataset._raw?.[i];
-        if (!d || element.skip || !Number.isFinite(element.x) || !Number.isFinite(element.y)) return;
-        points.push({
-          d,
-          x: canvasRect.left - wrapRect.left + element.x * sx,
-          y: canvasRect.top - wrapRect.top + element.y * sy
-        });
+    if(!chart)return [];
+    const canvas=q("modelChart"),rect=canvas.getBoundingClientRect();
+    const wrap=q("modelCanvasWrap").getBoundingClientRect();
+    const sx=rect.width/Math.max(chart.width,1),sy=rect.height/Math.max(chart.height,1);
+    const area=chart.chartArea,points=[];
+    chart.data.datasets.forEach((ds,idx)=>{
+      if(ds._pareto)return;
+      chart.getDatasetMeta(idx).data.forEach((el,i)=>{
+        const d=ds._raw?.[i];
+        if(!d||el.skip||!Number.isFinite(el.x)||!Number.isFinite(el.y))return;
+        if(area&&(el.x<area.left-7||el.x>area.right+7||el.y<area.top-7||el.y>area.bottom+7))return;
+        points.push({d,x:rect.left-wrap.left+el.x*sx,y:rect.top-wrap.top+el.y*sy});
       });
     });
     return points;
   }
-
-  function hitGroup(clientX, clientY) {
-    const rect = q("modelCanvasWrap").getBoundingClientRect();
-    const x = clientX - rect.left, y = clientY - rect.top;
-    const points = chartPoints().map(p => ({...p, distance: Math.hypot(p.x-x, p.y-y)}));
-    points.sort((a,b) => a.distance-b.distance);
-    const first = points[0];
-    if (!first || first.distance > 25) return null;
-    const neighbors = points.filter(p => Math.hypot(p.x-first.x,p.y-first.y) <= 53).slice(0,12);
-    return {first,neighbors,anchor:{x:first.x,y:first.y},points};
+  function hitGroup(clientX,clientY,trigger=ORBIT_TRIGGER_RADIUS) {
+    const rect=q("modelCanvasWrap").getBoundingClientRect();
+    const x=clientX-rect.left,y=clientY-rect.top,points=chartPoints();
+    let first=null,nearest=Infinity;
+    for(const p of points) {
+      const distance=Math.hypot(p.x-x,p.y-y);
+      if(distance<nearest){first=p;nearest=distance;}
+    }
+    if(!first||nearest>trigger)return null;
+    const neighbors=points.map(p=>({...p,distance:Math.hypot(p.x-first.x,p.y-first.y)}))
+      .filter(p=>p.distance<=ORBIT_GROUP_RADIUS).sort((a,b)=>a.distance-b.distance)
+      .slice(0,ORBIT_MAX_GROUP);
+    const anchor={x:neighbors.reduce((v,p)=>v+p.x,0)/neighbors.length,
+      y:neighbors.reduce((v,p)=>v+p.y,0)/neighbors.length};
+    return {first,neighbors,anchor,points};
   }
-
-  // Collision-aware "mechanical petals": no card may cover a sibling.
-  // Choose positions along concentric arcs; clamp to the chart container.
-  function layoutOrbit(anchor, count, width, height, otherPoints) {
-    const placed=[], cardW=168,cardH=46,pad=8,gap=8;
-    const limits={minX:cardW/2+pad,maxX:width-cardW/2-pad,minY:cardH/2+pad,maxY:height-cardH/2-pad};
-    const allowed=(x,y) => {
-      if(x<limits.minX||x>limits.maxX||y<limits.minY||y>limits.maxY)return false;
-      const candidate={x,y,left:x-cardW/2,right:x+cardW/2,top:y-cardH/2,bottom:y+cardH/2};
-      if(placed.some(b => candidate.left<b.right+gap&&candidate.right>b.left-gap&&
-        candidate.top<b.bottom+gap&&candidate.bottom>b.top-gap))return false;
-      return candidate;
-    };
-    const softPenalty=box => otherPoints.reduce((score,p)=>
-      score+(p.x>box.left-8&&p.x<box.right+8&&p.y>box.top-8&&p.y<box.bottom+8?10:0),0);
-    for(let i=0;i<count;i++) {
-      const phase=-Math.PI/2+i*Math.PI*2/Math.max(count,1);
+  function angleDelta(a,b){return Math.atan2(Math.sin(a-b),Math.cos(a-b));}
+  // Keep the angular order of original measured coordinates; attach a
+  // numbered leader from each true dot to the corresponding label.
+  function layoutOrbit(group,width,height) {
+    const {anchor,points,neighbors}=group,n=neighbors.length;
+    const hw=ORBIT_CARD_W/2,hh=ORBIT_CARD_H/2,gap=9,pad=8;
+    if(width<ORBIT_CARD_W+pad*2||height<ORBIT_CARD_H*3)return null;
+    const ordered=neighbors.map((p,i)=>({...p,originalIndex:i,
+      angle:Math.atan2(p.y-anchor.y,p.x-anchor.x),
+      radius:Math.hypot(p.x-anchor.x,p.y-anchor.y)}))
+      .sort((a,b)=>a.angle-b.angle||a.d.family.localeCompare(b.d.family));
+    const slots=Array.from({length:n},(_,i)=>-Math.PI+2*Math.PI*i/n);
+    let rotation=0,minScore=Infinity;
+    for(let k=0;k<n;k++){
+      const score=ordered.reduce((sum,p,i)=>sum+Math.max(.07,Math.min(1,p.radius/13))*
+        Math.pow(angleDelta(slots[(i+k)%n],p.angle),2),0);
+      if(score<minScore){minScore=score;rotation=k;}
+    }
+    const placed=[];
+    for(let i=0;i<n;i++){
+      const p=ordered[i],target=slots[(i+rotation)%n];
       let best=null,bestScore=Infinity;
-      for(const radius of [100,134,168,202,238,278,320]) {
-        for(const skew of [0,-.2,.2,-.4,.4,-.65,.65,-.95,.95]) {
-          const angle=phase+skew;
-          const targetX=anchor.x+Math.cos(angle)*radius, targetY=anchor.y+Math.sin(angle)*radius;
-          const x=Math.max(limits.minX,Math.min(limits.maxX,targetX));
-          const y=Math.max(limits.minY,Math.min(limits.maxY,targetY));
-          const box=allowed(x,y);
-          if(!box)continue;
-          const score=Math.hypot(targetX-x,targetY-y)*8+radius*.045+Math.abs(skew)*14+softPenalty(box);
+      for(const radius of [144,176,210,248,290,340,390]){
+        for(const skew of [0,-.14,.14,-.3,.3,-.48,.48,-.7,.7]){
+          const x=anchor.x+Math.cos(target+skew)*radius;
+          const y=anchor.y+Math.sin(target+skew)*radius;
+          const box={x,y,left:x-hw,right:x+hw,top:y-hh,bottom:y+hh};
+          if(box.left<pad||box.right>width-pad||box.top<pad||box.bottom>height-pad)continue;
+          if(placed.some(o=>box.left<o.right+gap&&box.right>o.left-gap&&
+            box.top<o.bottom+gap&&box.bottom>o.top-gap))continue;
+          const covers=points.reduce((sum,d)=>sum+
+            (d.x>box.left-5&&d.x<box.right+5&&d.y>box.top-5&&d.y<box.bottom+5?1:0),0);
+          const score=Math.abs(skew)*140+Math.abs(radius-170)*.18+covers*30+
+            Math.abs(angleDelta(target+skew,p.angle))*p.radius*.15;
           if(score<bestScore){best=box;bestScore=score;}
         }
-        if(best&&bestScore<20)break;
       }
-      // Near edges, a petal may have no collision-free arc. Pack it into
-      // the nearest unused position instead of permitting text overlap.
-      if(!best) {
-        const candidates=[];
-        const dx=cardW+gap, dy=cardH+gap;
-        for(let y=limits.minY;y<=limits.maxY;y+=dy)
-          for(let x=limits.minX;x<=limits.maxX;x+=dx){
-            const box=allowed(x,y);
-            if(box)candidates.push({box,score:Math.hypot(x-anchor.x,y-anchor.y)+softPenalty(box)*2});
-          }
-        // Always consider the right/bottom edges as well as regular cells.
-        for(const x of [limits.minX,limits.maxX])
-          for(const y of [limits.minY,limits.maxY]) {
-            const box=allowed(x,y);if(box)candidates.push({box,score:Math.hypot(x-anchor.x,y-anchor.y)+softPenalty(box)*2});
-          }
-        candidates.sort((a,b)=>a.score-b.score);
-        best=candidates[0]?.box||null;
-      }
-      if(!best) {
-        // A too-small viewport is handled as a list before layoutOrbit is called.
-        throw new Error("Insufficient desktop layout space for model orbit");
-      }
-      placed.push(best);
+      if(!best)return null; // List fallback, never wrongly associate a label.
+      placed.push({...best,originalIndex:p.originalIndex});
     }
-    return placed;
+    return placed.sort((a,b)=>a.originalIndex-b.originalIndex);
   }
-
+  function orbitSvg(group,positions,width,height) {
+    const ns="http://www.w3.org/2000/svg";
+    const make=(tag,attrs)=>{
+      const node=document.createElementNS(ns,tag);
+      Object.entries(attrs).forEach(([key,value])=>node.setAttribute(key,String(value)));
+      return node;
+    };
+    const svg=make("svg",{class:"orbit-leaders",viewBox:"0 0 "+width+" "+height,
+      width,height,"aria-hidden":"true",focusable:"false"});
+    group.neighbors.forEach((p,i)=>{
+      const target=positions[i],dx=p.x-target.x,dy=p.y-target.y;
+      const t=Math.min(.96,(ORBIT_CARD_W/2)/Math.max(Math.abs(dx),.00001),
+        (ORBIT_CARD_H/2)/Math.max(Math.abs(dy),.00001));
+      const color=D.providerColors[p.d.provider];
+      svg.appendChild(make("line",{class:"orbit-link",x1:p.x,y1:p.y,
+        x2:target.x+dx*t,y2:target.y+dy*t,stroke:color,pathLength:1}));
+      const distance=Math.hypot(dx,dy),offset=Math.min(18,distance*.25);
+      const mx=p.x-dx*offset/Math.max(distance,1),my=p.y-dy*offset/Math.max(distance,1);
+      svg.appendChild(make("circle",{class:"orbit-source",cx:p.x,cy:p.y,r:3,fill:color}));
+      svg.appendChild(make("circle",{class:"orbit-marker",cx:mx,cy:my,r:9,stroke:color}));
+      const number=make("text",{class:"orbit-marker-text",x:mx,y:my});
+      number.textContent=String(i+1);
+      svg.appendChild(number);
+    });
+    return svg;
+  }
   function openOrbit(group) {
-    const layer=q("modelOrbit");
-    const narrow=q("modelCanvasWrap").clientWidth < 660;
-    const signature=group.neighbors.map(p=>p.d.provider+":"+p.d.family+":"+p.d.effort).sort().join("|");
-    if(signature===activeOrbitKey)return;
+    const layer=q("modelOrbit"),chartWrap=q("modelCanvasWrap");
+    const key=orbitKey(group);
+    if(key===activeOrbitKey)return;
     closeOrbit();
-    activeOrbitKey=signature;
-    activeOrbitAnchor=group.anchor;
-    layer.setAttribute("aria-hidden", "false");
-    if(narrow)layer.classList.add("is-list");
-
-    const positions=narrow?[]:layoutOrbit(group.anchor,group.neighbors.length,
-      q("modelCanvasWrap").clientWidth,q("modelCanvasWrap").clientHeight,group.points);
-    const wrap=document.createElement("div");
-    wrap.className=narrow?"orbit-choice-grid":"orbit-choice-layer";
-    wrap.setAttribute("role","group");
-    wrap.setAttribute("aria-label","选择附近模型");
-    for(const [i,p] of group.neighbors.entries()) {
+    const width=chartWrap.clientWidth,height=chartWrap.clientHeight;
+    const positions=width<660?null:layoutOrbit(group,width,height);
+    const listMode=!positions;
+    activeOrbitKey=key;
+    layer.setAttribute("aria-hidden","false");
+    if(listMode)layer.classList.add("is-list");
+    if(positions)layer.appendChild(orbitSvg(group,positions,width,height));
+    const panel=document.createElement("div");
+    panel.className=listMode?"orbit-choice-grid":"orbit-choice-layer";
+    panel.setAttribute("role","group");
+    panel.setAttribute("aria-label","按编号选择模型；连线指向原始散点");
+    group.neighbors.forEach((p,i)=>{
       const button=document.createElement("button");
-      button.type="button";
-      button.className="orbit-choice";
+      button.type="button";button.className="orbit-choice";
       button.style.setProperty("--provider-color",D.providerColors[p.d.provider]);
-      button.innerHTML='<span class="orbit-provider-dot" aria-hidden="true"></span><span class="orbit-choice-text"><strong>'+
-        p.d.family+'</strong><small>'+effortLabel[p.d.effort]+' · '+ratio(p.d).toFixed(2)+'× Luna</small></span>';
-      button.setAttribute("aria-label","查看 "+p.d.family+" "+effortLabel[p.d.effort]+" 的详情");
-      if(!narrow){
+      button.innerHTML='<span class="orbit-number" aria-hidden="true">'+(i+1)+'</span>'+
+        '<span class="orbit-choice-text"><strong>'+p.d.family+'</strong><small>'+
+        p.d.provider+' · '+effortLabel[p.d.effort]+' · '+ratio(p.d).toFixed(2)+'× Luna</small></span>';
+      button.setAttribute("aria-label",(i+1)+" 号：查看 "+p.d.family+" "+effortLabel[p.d.effort]+" 的详情");
+      if(positions){
         button.style.left=group.anchor.x+"px";button.style.top=group.anchor.y+"px";
         button.style.setProperty("--orbit-x",(positions[i].x-group.anchor.x)+"px");
         button.style.setProperty("--orbit-y",(positions[i].y-group.anchor.y)+"px");
       }
-      button.addEventListener("click",event=>{
-        event.stopPropagation();
-        pickModel(p.d);
-      });
-      wrap.appendChild(button);
+      button.addEventListener("click",event=>{event.stopPropagation();pickModel(p.d);});
+      panel.appendChild(button);
+    });
+    layer.appendChild(panel);
+    if(positions){
+      const core=document.createElement("span");
+      core.className="orbit-core";core.setAttribute("aria-hidden","true");
+      core.style.left=group.anchor.x+"px";core.style.top=group.anchor.y+"px";
+      layer.appendChild(core);
     }
-    layer.appendChild(wrap);
-    const core=document.createElement("span");
-    core.className="orbit-core"; core.setAttribute("aria-hidden","true");
-    if(!narrow){core.style.left=group.anchor.x+"px";core.style.top=group.anchor.y+"px";}
-    layer.appendChild(core);
     pendingOrbitFrame=window.requestAnimationFrame(()=>{
-      pendingOrbitFrame=0;
-      layer.classList.add("is-open");
+      pendingOrbitFrame=0;layer.classList.add("is-open");
     });
   }
-
   function bindModelOrbit() {
-    const canvas=q("modelChart");
-    const wrap=q("modelCanvasWrap");
-    canvas.setAttribute("aria-label","模型能力与成本散点图；点击散点查看详情，靠近密集点时选择展开的模型按钮");
+    const canvas=q("modelChart"),wrap=q("modelCanvasWrap");
+    canvas.setAttribute("aria-label","模型散点图；悬停密集点可展开连接线和带编号标签，点击选择详情");
     canvas.addEventListener("pointermove",event=>{
       if(event.pointerType==="touch")return;
-      const rect=wrap.getBoundingClientRect();
-      const x=event.clientX-rect.left,y=event.clientY-rect.top;
-      if(activeOrbitAnchor&&Math.hypot(x-activeOrbitAnchor.x,y-activeOrbitAnchor.y)<185)return;
       const group=hitGroup(event.clientX,event.clientY);
-      if(group&&group.neighbors.length>1)openOrbit(group);
-      else closeOrbit();
+      if(!group)return; // Do not collapse before the pointer reaches a petal.
+      if(group.neighbors.length>1){
+        if(orbitKey(group)!==activeOrbitKey)openOrbit(group);
+      }else if(activeOrbitKey)closeOrbit();
     });
     canvas.addEventListener("click",event=>{
-      const group=hitGroup(event.clientX,event.clientY);
+      const group=hitGroup(event.clientX,event.clientY,event.pointerType==="touch"?20:14);
       if(!group){closeOrbit();return;}
       if(group.neighbors.length>1)openOrbit(group);
       else pickModel(group.first.d);
