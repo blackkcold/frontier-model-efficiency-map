@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#08090c" />
   <title>Frontier Model Efficiency Map — 能力 × 消耗</title>
-  <meta name="description" content="OpenAI、Anthropic、Google、DeepSeek、Z.ai、Kimi、Xiaomi 前沿模型能力、Reasoning 档位与消耗对比。" />
+  <meta name="description" content="OpenAI、Anthropic、Google、DeepSeek、Z.ai、Kimi、Xiaomi、xAI Grok 前沿模型能力、Reasoning 档位与消耗对比。" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <meta name="apple-mobile-web-app-title" content="Frontier Model Map" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
@@ -29,7 +29,7 @@
       <div class="hero-title-row">
         <img class="hero-logo" src="assets/logo.svg" alt="Frontier Model Efficiency Map logo" />
         <div class="hero-title-copy">
-          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-10-15</div>
+          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-10-16</div>
           <h1>模型 × Reasoning：<span>能力 / 消耗 / Plan</span></h1>
         </div>
       </div>
@@ -46,7 +46,7 @@
       </div>
       <p>跨厂商统一口径：纵轴默认使用 Artificial Analysis Intelligence Index 相对归一化；横轴使用每项 Intelligence Index 任务的实际成本，并以 <strong>GPT‑6 Luna Max = 1×</strong> 归一。High / XHigh / Max 可叠加长任务 Agent 消耗修正。</p>
       <div class="hero-badges">
-        <span>7 providers</span><span id="pointCount">— points</span><span>AA v4.3.2</span><span>Measured + explicit estimates</span>
+        <span>8 providers</span><span id="pointCount">— points</span><span>AA v4.3.2</span><span>Measured + explicit estimates</span>
       </div>
     </header>
 
@@ -76,7 +76,7 @@
         <div>
           <div class="card-label">INTERACTIVE SCATTER</div>
           <h2>能力 × 消耗</h2>
-          <p id="chartSubtitle">越靠左上越优；叉形空心点 = 估算档位。</p>
+          <p id="chartSubtitle">越靠左上越优；密集散点悬停展开选择环，点击模型才显示详情；触屏点击散点展开。叉形点 = 估算。</p>
         </div>
         <div class="chart-actions">
           <label class="toggle"><input type="checkbox" id="agentCorrection" checked><span></span>长任务修正</label>
@@ -112,11 +112,11 @@
       </div>
 
       <div class="model-detail" id="modelDetail" aria-live="polite">
-        <div class="model-detail-empty">悬停或点击图中的模型点查看详细信息</div>
+        <div class="model-detail-empty">点击散点或展开后的模型标签查看详情（悬浮不改变选择）</div>
       </div>
 
-      <div class="canvas-wrap"><canvas id="modelChart"></canvas></div>
-      <div class="legend-note"><span class="dot measured"></span>第三方统一实测（AA） <span class="dot estimated"></span>估算 / 插值点 <span class="rule"></span>Pareto 前沿</div>
+      <div class="canvas-wrap" id="modelCanvasWrap"><canvas id="modelChart"></canvas><div class="model-orbit" id="modelOrbit" aria-hidden="true"></div></div>
+      <div class="legend-note"><span class="dot measured"></span>第三方统一实测（AA） <span class="dot estimated"></span>估算 / 插值点 <span class="rule"></span>Pareto 前沿 · 密集点悬停弹开选择环 / 触屏点按展开；点击名称后固定详情</div>
     </section>
 
     <section class="cards insight-grid">
@@ -153,7 +153,7 @@
     <section class="card plan-card">
       <div class="section-heading">
         <div><div class="card-label">SUBSCRIPTION PLANS</div><h2>Plan 推荐</h2></div>
-        <p>API 单价和订阅额度不是同一件事，因此单独比较。</p>
+        <p>API 单价和订阅额度不是同一件事，因此单独比较；xAI 的 Grok / Cursor 套餐使用共享周额度。</p>
       </div>
       <div class="plan-summary">
         <div><span>通用 $20 档</span><b>ChatGPT Plus</b><small>Chat 已进入 GPT-6 Sol；Work/Codex 含有限 Astra 用量</small></div>
@@ -161,13 +161,14 @@
         <div><span>纯编码最低门槛</span><b>GLM Coding Lite</b><small>$12.6/月促销价，10k credits/week</small></div>
         <div><span>国内综合</span><b>Kimi Moderato</b><small>¥99/月，Code + Agent + 2 并行</small></div>
       </div>
+      <p class="disclaimer"><strong>xAI / Grok（2026-10）：</strong>新增 Grok 4.7 与 4.6 独立 AA 实测档位；官方 API 支持 Low / Medium / High（默认）/ XHigh，4.7 Medium 暂无已核实统一 AA 成本数据，故不生成估算点。新 X Subscription：Plus $8、Premium $30、Super $100、Ultra $200/月，分别为 Plus 1×、4×、15×、50× 共享每周使用额度；Grok / Cursor 共用，API 调用单独收费。旧 SuperGrok 订户可保留原订阅。<a href="https://x.ai/pricing" target="_blank" rel="noopener noreferrer">官方套餐</a> · <a href="https://docs.x.ai/developers/release-notes" target="_blank" rel="noopener noreferrer">官方模型更新</a>。</p>
       <p class="disclaimer"><strong>Xiaomi MiMo V2.6（9/22 发布）：</strong>主图新增 Pro 与 Flash 的 AA 实测点（分别为 46 / $0.13、38 / $0.06）。Pro UltraSpeed 输出速度最高 20 倍，但海外 API 价格为普通 Pro 的 10 倍，缺少独立 AA 实测，不作为第三个能力点。官方海外实时 API（每百万 tokens）：Pro 输入 $0.435 / 输出 $0.87；Flash $0.14 / $0.28；UltraSpeed $4.35 / $8.70。Token Plan 与按量 API 余额互不通用，原 V2.5-Pro / V2.5 将于 10/21 停用。<a href="https://mimo.mi.com/docs/pricing" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://mimo.mi.com/docs/en-US/updates/model" target="_blank" rel="noopener noreferrer">模型发布</a>。</p>
       <p class="disclaimer"><strong>OpenAI Ultrafast 政策更新（10/8）：</strong>GPT-6.1 Sol 已新增 Ultrafast 服务档位；API 标价 $12/M input、$60/M output（Standard 的 6×）。Work/Codex 仅 Pro $500 和符合资格的 Enterprise/Edu 可用；Pro $500 内含用量消耗 8×、后续 credits 消耗 6×。此为速度与计费模式变更，不是新模型或独立 AA 实测点。<a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex" target="_blank" rel="noopener noreferrer">Work/Codex 用量</a>。</p>
       <p class="disclaimer">Google 订阅已按官方重整：AI Plus $4.99、AI Pro $19.99、AI Ultra 5x $99.99、Ultra 20x $199.99（美国月费）。2026-10-09 起个人 Gemini App 模型权限陆续调整；手动模型选择、自动路由与 Developer API 额度须分别看待。</p>
       <div class="table-scroll"><table id="planTable">
         <thead><tr><th>Provider</th><th>Plan</th><th>价格</th><th>适合</th><th>说明</th></tr></thead><tbody></tbody>
       </table></div>
-      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-10-15 可核实信息。购买前以各厂商结算页为准。</p>
+      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-10-16 可核实信息。购买前以各厂商结算页为准。</p>
     </section>
 
     <section class="card methodology-card">
@@ -185,7 +186,7 @@
       </details>
     </section>
 
-    <footer>Data snapshot: 2026-10-15 · Static site · No tracking · Built for GitHub Pages</footer>
+    <footer>Data snapshot: 2026-10-16 · Static site · No tracking · Built for GitHub Pages</footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
