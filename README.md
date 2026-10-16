@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-16</strong> · 8 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-17</strong> · 8 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -139,6 +139,15 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
 
+## 2026-10-17 Gemini 4 Argon GA 与 Kimi 中国区新套餐
+
+本轮只录入已有厂商**官方生效的模型可用性与订阅额度政策**。Artificial Analysis 指标继续沿用可比实测快照，不因官方自报指标或服务速度上升而擅自生成新散点。
+
+- **Google · Gemini 4 Argon（10 月 13 日 GA）**：Google Gemini API 已正式提供 `gemini-4-argon`；官方确认 Low / Medium / High 思考强度，默认 Medium。付费 API 目前为引导价：**$2/百万输入 tokens、$10/百万输出 tokens（含思考输出）**，隐式缓存命中可享输入 95% 折扣；**2026-12-01** 起将变为 **$4/$20**。Gemini App 与 Search AI Mode 对符合条件的 **Google AI Pro / Ultra** 开放；在 **Antigravity** 中的 Argon 为 **Google AI Ultra** 专属，不能把 App 订阅权益解释为 API 赠送额度。当前主图保留此前可比的 **High AA 实测 53 / $1.99/task**，将生命周期由 preview 改为 current；缺少同口径 Low/Medium AA 测量，**不造估算点**。[Google 官方 GA 发布](https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/) · [Gemini API 官方模型文档与价格](https://ai.google.dev/gemini-api/docs/latest-model) · [Gemini App 访问政策](https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/)
+- **Kimi · 国内新会员档（10 月 12 日官方页面核实）**：Go **¥49/月**、Plus **¥99/月**、Pro **¥199/月**、Max **¥699/月**；年付折算月费另有优惠，不能当作实际月扣费。Go 无 Kimi Code，Plus 及以上含 Kimi Code，新会员 Kimi Code **取消周限额**，仍有滚动 5 小时限额与全产品共享的月度 token 额度；同一额度池覆盖 Agent、Kimi Code、Kimi Work 等，未用完月度额度不结转。Andante、Moderato、Allegretto、Allegro 是**旧版存量订阅**，允许旧用户继续使用及续订，旧版保留 5 小时与每周限额；本次在 Plan 表保留并明确标注，不能混为新方案。[Kimi 官方中国区价格](https://www.kimi.com/help/membership/membership-pricing) · [会员权益](https://www.kimi.com/help/membership/membership-overview) · [Kimi Code 新旧规则](https://www.kimi.com/help/kimi-code/benefits)
+- **推荐变化**：Kimi 国内推荐由旧版 **Moderato ¥99/月** 调整为新订阅 **Plus ¥99/月**（保留旧版供存量订户对照）；其他推荐不变：前沿性价比 GPT-6.1 Sol Medium、绝对能力 Claude Opus 5.5 Max、开放权重性价比 MiMo V2.6 Pro。API 单任务成本、订阅额和滚动限流单独标记，不能推导保证的 token 或任务次数。
+- **来源时间与范围**：本页数据快照记录至 10 月 17 日，**AA 实测数值并未在本次刷新**；Google 价格按公开 API 美元价，Kimi 价格按中国区连续包月价；不同地区、老用户的购买/续订资格以各自官方结算页为准。
+
 ## 2026-10-16 xAI Grok 与密集点交互修复
 
 - **xAI Grok 模型**：新增第八家 Provider，覆盖 Grok 4.7（官方 9/21 发布）与 Grok 4.6（官方 8/12 发布），均支持 Low / Medium / High（默认）/ XHigh 推理深度，不能关闭推理；500K 上下文。官方全球 API 在提示输入 ≤200K 时每百万 token 为 $2 输入、$0.50 缓存输入、$6 输出；超过 200K 的输入 / 缓存 / 输出分别为 $4 / $1 / $12，区域端点另可能溢价。[xAI 发布记录](https://docs.x.ai/developers/release-notes) · [推理档位](https://docs.x.ai/developers/model-capabilities/text/reasoning) · [官方定价](https://docs.x.ai/developers/pricing)
@@ -175,7 +184,7 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 - **GPT-6 in ChatGPT（10/7）**：Plus / Pro / Business / Enterprise 的 Chat 默认进入 GPT-6 Sol；Pro 的 Pro reasoning 继续使用 GPT-6 Astra。Work / Codex 模型未因这次 Chat 发布而替换。
 - **OpenAI Pro policy**：Pro 200 已重新开放新订阅；官方同时注明非 grandfathered 的新 Pro 订阅内含用量低于旧档。Pro 500 仍是唯一包含 Astra Ultrafast 的自助 Pro 档。
 - **Claude Fable 5.1**：继续保留当前实测前沿点。
-- **Gemini 4 Argon**：继续以 limited rollout / preview 状态纳入，不视为全面可用。
+- **Gemini 4 Argon（当时状态）**：10 月 10 日快照仍为 limited rollout / preview；该状态已被 **2026-10-13 GA** 的官方发布取代，现以页面顶部新章节为准。
 - **GPT-6 Sol**：保留历史对比，但默认隐藏，由 GPT-6.1 Sol 取代当前位置。
 
 **推荐结论未变化**：前沿性价比仍为 **GPT-6.1 Sol · Medium**；绝对能力仍为 **Claude Opus 5.5 · Max**。原有跨厂商 Plan 推荐不变；Google 的新 Ultra 5x 现在提供介于 AI Pro 与最高 Ultra 之间的重度使用选项。Claude Max 新增 API credit 价值仍保留。
