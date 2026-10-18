@@ -75,10 +75,11 @@
       el.innerHTML = '<div class="model-detail-empty">点击散点或展开后的模型标签查看详情（悬浮不改变选择）</div>';
       return;
     }
-    const dataTag = d.measured
+    const pending = d.benchmarkStatus === "pending";
+    const dataTag = pending ? '<span class="tag est">当前版 · 待 AA 实测</span>' : d.measured
       ? '<span class="tag">第三方统一实测</span>'
       : '<span class="tag est">估算 / 插值</span>';
-    const statusTag = d.status === "deprecated" ? '<span class="tag dep">已弃用</span>' : '';
+    const statusTag = d.status === "deprecated" ? '<span class="tag dep">已弃用</span>' : d.status === "historical" ? '<span class="tag dep">历史版本</span>' : '';
     const note = d.estimateNote
       || (d.measured ? '能力与单任务成本采用 Artificial Analysis 当前统一实测口径。' : '该点为官方存在档位的估算值，不作为最高能力结论依据。');
     el.innerHTML = `
@@ -87,10 +88,10 @@
         <h3>${d.family} · ${effortLabel[d.effort]}</h3>${d.modelId ? `<small class="model-id">${d.modelId}</small>` : ""}
         <p>${d.provider} ${dataTag} ${statusTag}</p>
       </div>
-      <div class="detail-metric"><span>AA Intelligence</span><b>${d.intelligence}</b></div>
-      <div class="detail-metric"><span>综合能力</span><b>${normalized(d).toFixed(1)}</b></div>
-      <div class="detail-metric"><span>AA 单任务成本</span><b>${d.cost.toFixed(d.cost < 0.01 ? 4 : 2)}</b></div>
-      <div class="detail-metric"><span>调整后消耗倍率</span><b>${ratio(d).toFixed(2)}×</b></div>
+      <div class="detail-metric"><span>AA Intelligence</span><b>${pending ? 'N/A' : d.intelligence}</b></div>
+      <div class="detail-metric"><span>综合能力</span><b>${pending ? 'N/A' : normalized(d).toFixed(1)}</b></div>
+      <div class="detail-metric"><span>AA 单任务成本</span><b>${pending ? 'N/A' : d.cost.toFixed(d.cost < 0.01 ? 4 : 2)}</b></div>
+      <div class="detail-metric"><span>调整后消耗倍率</span><b>${pending ? 'N/A' : ratio(d).toFixed(2) + '×'}</b></div>
       <div class="detail-note">${note}</div>
     `;
   }
@@ -100,6 +101,27 @@
       && state.efforts.has(d.effort)
       && (state.showEstimated || d.measured)
       && (state.showDeprecated || d.status !== "deprecated"));
+  }
+
+  function visiblePending() {
+    return (D.unbenchmarkedModels || []).filter(d => state.providers.has(d.provider) && state.efforts.has(d.effort));
+  }
+  function renderVersionCards() {
+    const box=q('deepseekVersions');
+    const newest=visiblePending().find(d=>d.provider==='DeepSeek');
+    const former=visibleModels().find(d=>d.provider==='DeepSeek' && d.status==='historical' && d.effort==='max');
+    box.replaceChildren();
+    box.hidden=!(newest||former);
+    const add=(model,title,desc)=>{
+      const btn=document.createElement('button');
+      btn.type='button';btn.className='deepseek-version-card';
+      const label=document.createElement('span');label.className='version-label';label.textContent=title;
+      const name=document.createElement('b');name.textContent=model.family;
+      const note=document.createElement('small');note.textContent=desc;
+      btn.append(label,name,note);btn.addEventListener('click',()=>pickModel(model));box.appendChild(btn);
+    };
+    if(newest)add(newest,'现行版本 · 1017','官方已上线；AA 能力与每任务成本待测（N/A）');
+    if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
   function makeFilters() {
@@ -365,7 +387,7 @@
         pointHitRadius: 10
       };
     });
-    const p = pareto(points.filter(d=>d.measured));
+    const p = pareto(points.filter(d=>d.measured && d.status !== 'historical' && d.status !== 'deprecated'));
     if(p.length>1) sets.push({
       label:"Pareto frontier", _pareto:true, data:p.map(d=>({x:xValue(d),y:yValue(d),raw:d})), parsing:false,
       borderColor:document.documentElement.dataset.theme === 'light'?'rgba(78,100,141,.55)':'rgba(210,218,231,.42)', borderDash:[6,5], borderWidth:1.2, pointRadius:0, pointHoverRadius:0, showLine:true, tension:.05, order:99
@@ -411,13 +433,21 @@
       const av=sortValue(a,state.sort.key),bv=sortValue(b,state.sort.key);
       return typeof av==='number'?(av-bv)*state.sort.dir:String(av).localeCompare(String(bv))*state.sort.dir;
     });
+    visiblePending().forEach(d=>{
+      const tr=document.createElement('tr');tr.tabIndex=0;tr.className='unbenchmarked-row';tr.setAttribute('role','button');
+      tr.setAttribute('aria-label',d.family+'，官方已发布，AA 待测');
+      tr.onclick=()=>pickModel(d);
+      tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pickModel(d);}};
+      tr.innerHTML=`<td>DeepSeek</td><td>${d.family} <span class="tag est">当前版 · 待测</span></td><td>High（默认）</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>待 AA 独立测量</td>`;
+      tbody.appendChild(tr);
+    });
     arr.forEach(d=>{
       const tr=document.createElement('tr');
       tr.tabIndex=0; tr.setAttribute('role','button'); tr.setAttribute('aria-label',`查看 ${d.family} ${effortLabel[d.effort]} 的详情`);
       tr.addEventListener('click',()=>pickModel(d));
       tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pickModel(d);}});
       tr.innerHTML=`<td><span class="tag"><i style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${D.providerColors[d.provider]};margin-right:5px"></i>${d.provider}</span></td>
-      <td>${d.family}${d.status==='deprecated'?' <span class="tag dep">deprecated</span>':''}</td><td>${effortLabel[d.effort]}</td>
+      <td>${d.family}${d.status==='deprecated'?' <span class="tag dep">deprecated</span>':d.status==='historical'?' <span class="tag dep">历史 AA</span>':''}</td><td>${effortLabel[d.effort]}</td>
       <td class="num">${d.intelligence}</td><td class="num">${normalized(d).toFixed(1)}</td><td class="num">$${d.cost.toFixed(d.cost<.01?4:2)}</td><td class="num">${ratio(d).toFixed(2)}×</td>
       <td>${d.measured?'<span class="tag">实测</span>':'<span class="tag est" title="'+(d.estimateNote||'')+'">估算</span>'}</td>`;
       tbody.appendChild(tr);
@@ -434,8 +464,9 @@
 
   function update(){
     const visible=visibleModels();
-    if(state.selectedModel && !visible.includes(state.selectedModel)) state.selectedModel=null;
+    if(state.selectedModel && !visible.includes(state.selectedModel) && !visiblePending().includes(state.selectedModel)) state.selectedModel=null;
     renderChart();
+    renderVersionCards();
     renderTable();
     renderModelDetail(state.selectedModel);
   }

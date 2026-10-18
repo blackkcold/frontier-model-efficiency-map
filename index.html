@@ -45,7 +45,7 @@
       </div>
       </div>
       <p>跨厂商统一口径：纵轴默认使用 Artificial Analysis Intelligence Index 相对归一化；横轴使用每项 Intelligence Index 任务的实际成本，并以 <strong>GPT‑6 Luna Max = 1×</strong> 归一。High / XHigh / Max 可叠加长任务 Agent 消耗修正。</p>
-      <p><strong>DeepSeek V4.1 Flash · 1017：</strong>10 月 17 日已同步替换网页、App 和 API；调用 ID 仍是 <code>deepseek-flash</code>，模型 Token 价格不变。新版尚无可核验的独立 AA 1017 数据，历史 0910 AA 数据默认隐藏，避免旧分数冒充新版本。<a href="https://api-docs.deepseek.com/zh-cn/updates/" target="_blank" rel="noopener noreferrer">官方更新日志</a></p>
+      <p><strong>DeepSeek V4.1 Flash · 1017：</strong>10 月 17 日已同步替换网页、App 和 API；调用 ID 仍是 <code>deepseek-flash</code>，模型 Token 价格不变。新版尚无可核验的独立 AA 1017 数据，0910 版旧 AA 数据在图中默认展示并标明历史版本，1017 版另列为待测，避免混用。<a href="https://api-docs.deepseek.com/zh-cn/updates/" target="_blank" rel="noopener noreferrer">官方更新日志</a></p>
       <div class="hero-badges">
         <span>8 providers</span><span id="pointCount">— points</span><span>AA v4.3.2</span><span>Measured + explicit estimates</span>
       </div>
@@ -83,7 +83,7 @@
           <label class="toggle"><input type="checkbox" id="agentCorrection" checked><span></span>长任务修正</label>
           <label class="toggle"><input type="checkbox" id="logScale" checked><span></span>横轴 Log</label>
           <label class="toggle"><input type="checkbox" id="showEstimated" checked><span></span>显示估算</label>
-          <label class="toggle"><input type="checkbox" id="showDeprecated"><span></span>显示历史模型（GPT-6 Sol / DeepSeek 0910）</label>
+          <label class="toggle"><input type="checkbox" id="showDeprecated"><span></span>显示已弃用 GPT-6 Sol</label>
         </div>
       </div>
 
@@ -112,6 +112,7 @@
         </div>
       </div>
 
+      <div class="deepseek-versions" id="deepseekVersions" aria-label="DeepSeek 1017 和 0910 版本对照"></div>
       <div class="model-detail" id="modelDetail" aria-live="polite">
         <div class="model-detail-empty">点击散点或展开后的模型标签查看详情（悬浮不改变选择）</div>
       </div>
@@ -141,7 +142,7 @@
     <section class="card table-card">
       <div class="section-heading">
         <div><div class="card-label">RANKING</div><h2>当前筛选结果</h2></div>
-        <div class="table-hint">按能力降序；点击表头切换排序</div>
+        <div class="table-hint">新版 1017 在表中显示 N/A、等待独立实测；旧版 0910 仍可比较</div>
       </div>
       <div class="table-scroll"><table id="modelTable">
         <thead><tr>
