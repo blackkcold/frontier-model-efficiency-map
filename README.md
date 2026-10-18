@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-10-17</strong> · 8 providers · AA v4.3.2 · No tracking
+  Data snapshot: <strong>2026-10-18</strong> · 8 providers · AA v4.3.2 · No tracking
 </p>
 
 ---
@@ -63,7 +63,7 @@
 | OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6 Sol（历史） |
 | Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.1 |
 | Google | Gemini 3.8 Flash · Gemini 4 Argon |
-| DeepSeek | DeepSeek V4.1 Flash |
+| DeepSeek | V4.1 Flash-1017（现行；尚无独立 AA 1017 实测）· V4.1 Flash 0910（历史 AA） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
 | Kimi | Kimi K3 |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
@@ -126,7 +126,7 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 **显式估算**  
 只有在“官方确认该档位存在、但当前 AA 没有对应统一测量”时才补点；UI 使用叉形空心点，并允许一键隐藏。
 
-当前估算点包括 Gemini 3.8 Flash Low、DeepSeek V4.1 Flash Low / High、GLM-5.3 High、Kimi K3 High。
+当前估算点包括 Gemini 3.8 Flash Low、历史版 DeepSeek V4.1 Flash 0910 Low / High、GLM-5.3 High、Kimi K3 High。1017 版暂无可验证的独立 AA 数据，不生成模型能力或成本插值。
 
 ## 方法论
 
@@ -138,6 +138,15 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 4. Plan 推荐与 API task cost 分开处理。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-10-18 DeepSeek V4.1 Flash 1017（10 月 17 日官方发布）
+
+- **现行模型**：DeepSeek 已将 `DeepSeek-V4.1-Flash` 升级至 **`DeepSeek-V4.1-Flash-1017`**，其网页、App 及 API 全部使用新模型；正式 API 名称仍为 **`deepseek-flash`**，旧 `deepseek-v4-flash` 与 `deepseek-v4-flash-vision-exp` 兼容别名也已路由至新版本。权重已在 Hugging Face 发布。[官方更新日志](https://api-docs.deepseek.com/zh-cn/updates/) · [官方发布](https://api-docs.deepseek.com/zh-cn/news/news261017/) · [开源权重](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017)
+- **Token 价格与 effort 不变**：高峰期每百万 tokens 的缓存命中输入 **$0.006**、非缓存输入 **$0.30**、输出 **$1.20**；低谷依次 **$0.003 / $0.15 / $0.60**。高峰期为 UTC 工作日 01:00–04:00 与 06:00–10:00（不含中国公众假日），其余时间均为谷段。仍提供非思考与 low/high/max 思考档位；暂无新增 reasoning 档位证据。[官方价格 / 高峰时段](https://api-docs.deepseek.com/quick_start/pricing/) · [Thinking Mode](https://api-docs.deepseek.com/guides/thinking_mode/)
+- **官方公布能力（不能等同 AA 复测）**：Terminal-Bench 4.0 **31.2 → 42.3**、DeepSWE v1.1 **74.2 → 77.0**、ProgramBench **20.3 → 29.1**、NL2Repo-Bench **65.4 → 68.2**、Automation-Bench **54.8 → 60.5**。厂商还报告更短输出与更快任务完成，但因测试 Harness 与统计口径不同，不据此推算 AA Intelligence Index 或每任务美元成本。[DeepSeek 原始成绩及测试说明](https://api-docs.deepseek.com/zh-cn/updates/)
+- **新增 Search / Fetch（10/17）**：两个独立工具接口均收费 **$0.75/1000 次成功调用**，通过 DeepSeek Harness、Claude Code、Codex 的服务端 Search / Fetch 请求当前免请求费，**北京时间 2026-11-01 00:00** 起按次计费；模型 tokens 单独收费。[官方计费与日期](https://api-docs.deepseek.com/quick_start/pricing/) · [工具 API 使用指南](https://api-docs.deepseek.com/zh-cn/guides/search/)
+- **AA 版本隔离**：目前已确认 AA 的 None **25 / $0.15**、Max **39 / $0.27** 及 Low/High 插值仍属于 **2026-09-10 旧 checkpoint**，不是 1017 的独立测量。保留这四个旧散点并标为 **0910 (historical AA)**，默认隐藏、可通过“显示历史模型”查看。新 1017 版的正式能力与单任务消耗待 AA 同口径测量后再补入，**不使用官方得分填充第三方能力坐标**。[AA 历史模型发布页](https://artificialanalysis.ai/models/releases/deepseek-v4-1-flash)
+- **推荐与算法**：前沿性价比 GPT-6.1 Sol Medium、绝对能力 Claude Opus 5.5 Max、开放权重性价比 MiMo V2.6 Pro，以及现有 Plan 推荐暂不变化；High 1.05×、XHigh 1.10×、Max 1.18× 修正保留。本轮更新正式模型和政策，未刷新 AA 统一实测分数。
 
 ## 2026-10-17 Gemini 4 Argon GA 与 Kimi 中国区新套餐
 
