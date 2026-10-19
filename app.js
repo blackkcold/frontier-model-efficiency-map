@@ -108,7 +108,8 @@
   }
   function renderVersionCards() {
     const box=q('deepseekVersions');
-    const newest=visiblePending().find(d=>d.provider==='DeepSeek');
+    const newest=visibleModels().find(d=>d.provider==='DeepSeek' && d.status==='current' && d.family.includes('1017') && d.effort==='max')
+      || visiblePending().find(d=>d.provider==='DeepSeek');
     const former=visibleModels().find(d=>d.provider==='DeepSeek' && d.status==='historical' && d.effort==='max');
     box.replaceChildren();
     box.hidden=!(newest||former);
@@ -120,7 +121,9 @@
       const note=document.createElement('small');note.textContent=desc;
       btn.append(label,name,note);btn.addEventListener('click',()=>pickModel(model));box.appendChild(btn);
     };
-    if(newest)add(newest,'现行版本 · 1017','官方已上线；AA 能力与每任务成本待测（N/A）');
+    if(newest)add(newest,'现行版本 · 1017',newest.benchmarkStatus==='pending'
+      ? 'High 档仍待测；Max 已有 AA 实测 45 / $0.26（可切换至 Max 查看）'
+      : 'Max 独立 AA 实测：Index 45，$0.26/任务 · 230 tokens/s');
     if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
