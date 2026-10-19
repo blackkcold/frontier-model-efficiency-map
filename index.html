@@ -77,7 +77,7 @@
         <div>
           <div class="card-label">INTERACTIVE SCATTER</div>
           <h2>能力 × 消耗</h2>
-          <p id="chartSubtitle">越靠左上越优；密集散点悬停展开选择环，点击模型才显示详情；触屏点击散点展开。叉形点 = 估算。</p>
+          <p id="chartSubtitle">越靠左上越优；点击图表下方「筛选」中的厂商可单选、多选或恢复全部；点击模型显示详情，触屏可展开密集点。叉形点 = 估算。</p>
         </div>
         <div class="chart-actions">
           <label class="toggle"><input type="checkbox" id="agentCorrection" checked><span></span>长任务修正</label>
@@ -88,10 +88,6 @@
       </div>
 
       <div class="filters">
-        <div class="filter-block">
-          <span class="filter-title">Provider</span>
-          <div class="pills" id="providerFilters"></div>
-        </div>
         <div class="filter-block">
           <span class="filter-title">Reasoning</span>
           <div class="pills" id="effortFilters"></div>
@@ -118,6 +114,16 @@
       </div>
 
       <div class="canvas-wrap" id="modelCanvasWrap"><canvas id="modelChart"></canvas><div class="model-orbit" id="modelOrbit" aria-hidden="true"></div></div>
+      <div class="provider-legend" role="group" aria-label="按厂商筛选模型图表">
+        <div class="provider-legend-heading">
+          <div class="provider-legend-title"><strong>筛选</strong><span>按厂商 · 支持多选</span></div>
+          <div class="provider-legend-actions">
+            <span id="providerSelectionStatus" class="provider-selection-status" role="status" aria-live="polite">全部 8 家厂商</span>
+            <button type="button" id="showAllProviders" class="provider-reset" disabled>显示全部</button>
+          </div>
+        </div>
+        <div class="provider-legend-pills" id="providerFilters" aria-label="选择要显示的厂商"></div>
+      </div>
       <div class="legend-note"><span class="dot measured"></span>第三方统一实测（AA） <span class="dot estimated"></span>估算 / 插值点 <span class="rule"></span>Pareto 前沿 · 精准触点展开；按原始点位方位分布，同编号连线对应模型；点击名称固定详情</div>
     </section>
 
