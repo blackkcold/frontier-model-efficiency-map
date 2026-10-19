@@ -127,14 +127,55 @@
     if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
+  const providerNames = Object.keys(D.providerColors);
+  // A default all-provider selection is neutral. First click isolates one,
+  // subsequent clicks add or remove vendors. Click the last one to reset.
+  function toggleProvider(provider) {
+    if (state.providers.size === providerNames.length) {
+      state.providers = new Set([provider]);
+    } else if (state.providers.has(provider)) {
+      if (state.providers.size === 1) state.providers = new Set(providerNames);
+      else state.providers.delete(provider);
+    } else {
+      state.providers.add(provider);
+    }
+    update();
+  }
+
+  function syncProviderLegend() {
+    const selected = providerNames.filter(provider => state.providers.has(provider));
+    const isAll = selected.length === providerNames.length;
+    q("providerSelectionStatus").textContent = isAll
+      ? `全部 ${providerNames.length} 家厂商`
+      : `已筛选 ${selected.length}/${providerNames.length} 家：${selected.join("、")}`;
+    q("showAllProviders").disabled = isAll;
+    q("providerFilters").querySelectorAll("button[data-provider]").forEach(button => {
+      const active = state.providers.has(button.dataset.provider);
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+      button.title = isAll ? "点击仅显示该厂商" : active ? "点击取消该厂商" : "点击加入多选";
+    });
+  }
+
   function makeFilters() {
     const pf = q("providerFilters");
-    Object.keys(D.providerColors).forEach(provider => {
+    providerNames.forEach(provider => {
       const b = document.createElement("button");
-      b.className = "pill active";
-      b.innerHTML = `<i style="--c:${D.providerColors[provider]}"></i>${provider}`;
-      b.onclick = () => { state.providers.has(provider) ? state.providers.delete(provider) : state.providers.add(provider); b.classList.toggle("active"); update(); };
+      b.type = "button";
+      b.className = "provider-filter-chip active";
+      b.dataset.provider = provider;
+      b.setAttribute("aria-pressed", "true");
+      b.setAttribute("aria-label", "筛选厂商：" + provider);
+      const dot = document.createElement("i");
+      dot.style.backgroundColor = D.providerColors[provider];
+      dot.setAttribute("aria-hidden", "true");
+      b.append(dot, document.createTextNode(provider));
+      b.addEventListener("click", () => toggleProvider(provider));
       pf.appendChild(b);
+    });
+    q("showAllProviders").addEventListener("click", () => {
+      state.providers = new Set(providerNames);
+      update();
     });
     const ef = q("effortFilters");
     ["none","low","medium","high","xhigh","max","default"].forEach(effort => {
@@ -409,7 +450,8 @@
       responsive:true, maintainAspectRatio:false, interaction:{mode:'nearest',intersect:true},
       animation:{duration:260},
       plugins:{
-        legend:{display:true,position:'bottom',labels:{color:axisColor,boxWidth:10,boxHeight:10,usePointStyle:true,padding:18,font:{size:11},filter:item=>item.text!=="Pareto frontier"}},
+        // Vendor chips in the accessible HTML filter replace per-family Chart.js labels.
+        legend:{display:false},
         tooltip:{enabled:false}
       },
       scales:{
@@ -466,6 +508,7 @@
   }
 
   function update(){
+    syncProviderLegend();
     const visible=visibleModels();
     if(state.selectedModel && !visible.includes(state.selectedModel) && !visiblePending().includes(state.selectedModel)) state.selectedModel=null;
     renderChart();
