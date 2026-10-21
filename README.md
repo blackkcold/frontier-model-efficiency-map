@@ -209,6 +209,10 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 
 更完整的来源链接在网页的 **Methodology & Sources** 区域以及 `data.js` 中。
 
+## 2026-10-19 Anthropic Fast Mode 政策核实
+
+- **Claude Opus 5.5 Fast Mode（10 月 15 日）**：Anthropic 已将 Fast Mode 从研究预览转为正式开放；Claude Platform 与 Claude Code 可使用，速度最高约为标准模式的 2.5×。官方 API 价格为 **$8/百万输入 tokens、$40/百万输出 tokens**，标准模式仍为 **$4/$20**。Fast Mode 是速度/计费服务模式，**不是新的模型能力或 reasoning effort 档位**；不新增 AA 能力点，也不将订阅额度换算为 API token 成本。[Anthropic 官方模型与定价](https://www.anthropic.com/claude-opus-5-5)
+
 ## 本地运行
 
 这是纯静态站点，不需要构建步骤：
