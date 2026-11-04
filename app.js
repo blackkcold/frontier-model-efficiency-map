@@ -100,7 +100,7 @@
     return D.models.filter(d => state.providers.has(d.provider)
       && state.efforts.has(d.effort)
       && (state.showEstimated || d.measured)
-      && (state.showDeprecated || d.status !== "deprecated"));
+      && (state.showDeprecated || (d.status !== "deprecated" && d.status !== "historical")));
   }
 
   function visiblePending() {
@@ -122,8 +122,8 @@
       btn.append(label,name,note);btn.addEventListener('click',()=>pickModel(model));box.appendChild(btn);
     };
     if(newest)add(newest,'现行版本 · 1017',newest.benchmarkStatus==='pending'
-      ? 'High 档仍待测；Max 已有 AA 实测 45 / $0.26（可切换至 Max 查看）'
-      : 'Max 独立 AA 实测：Index 45，$0.26/任务 · 230 tokens/s');
+      ? 'High 档仍待测；Max 已有 AA 实测 33 / $0.60（可切换至 Max 查看）'
+      : 'Max 独立 AA 实测：Index 33，$0.60/任务');
     if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
@@ -515,6 +515,8 @@
     renderVersionCards();
     renderTable();
     renderModelDetail(state.selectedModel);
+    const rec = D.models.find(d=>d.featured==='frontier-value');
+    if(rec) q('frontierRatio').textContent=`≈${ratio(rec).toFixed(2)}× Luna Max`;
   }
   function bind(){
     q('agentCorrection').onchange=e=>{state.correction=e.target.checked;update();};
