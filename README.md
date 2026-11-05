@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-04</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-05</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -67,7 +67,7 @@
 | Google | Gemini 3.8 Flash · Gemini 4 Argon（Gemini 4 Carbon 为 selected-users，观察项） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
-| Kimi | Kimi K3.1 Pro（Kimi K3 在 v5 为 N/A，已移除） |
+| Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；Kimi K3 在 v5 为 N/A，已移除） |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
 | xAI | Grok 4.7（Grok 4.6 在 v5 为 N/A，已移除） |
 
@@ -77,7 +77,7 @@
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
 | 绝对能力 | **Claude Opus 5.5 · Max** | 59 | $10.04 | 公开可用最高；Gemini 4 Carbon 60 为 selected-users，不计入 |
-| 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；DeepSeek 33 / $0.60 更高但贵 2.3×；K3.1 Pro 为 proprietary |
+| 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；DeepSeek 33 / $0.60 更高但贵 2.3×；K3.1 Pro 权重 11-04 已开放，但 AA 仍按 proprietary 计（46 / $3.68） |
 
 ## 怎么读这张图
 
@@ -142,6 +142,19 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 v5 下 Sol Medium 为 46 / $0.36，已低于门槛；满足 ≥48 的最低实测成本点是 **Sol High 50 / $0.59**，因此前沿性价比推荐随之变化。绝对能力仍是公开可用的 **Opus 5.5 Max 59 / $10.04**。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-11-05 套餐政策核验（AA 无变化）
+
+AA Intelligence Index 仍为 **v5.0.1**（11 月未换版），52 个 `current` 点的能力与 task cost 全部未动。本轮只修正官方套餐、额度与权重状态：
+
+- **Anthropic · Max 20x → Ultra（10-30）**：$200/月档更名为 **Ultra**，价格不变，存量 Max 20x 自动迁移。额度口径从“20× Pro”改为 **每周 10× Pro**，且**认证账户不再有 5 小时上限**（未认证账户仍有临时限制）；月 API credit 仍为 **$200**。$100 档定名 **Claude Max**：5× Pro（每 5 小时与每周）+ $100/月 API credit。**Fable 5 / 5.1** 在 Max / Ultra 属套餐内额度、最多占周额度 50%，Pro 与 Team 标准席需 usage credits。API credit 只能用于 Claude Platform / Agent SDK（含自行用 API key 跑的 `claude -p`），不能用于 Claude、Claude Code、Cowork 的额外交互用量。
+- **OpenAI · Work/Codex 额度翻倍（10-29）**：Pro 100 与 Pro 500 的内含 Work/Codex 用量翻倍；9-29 宣布的 Pro 200 削减**已取消**，Pro 200 一并翻倍到同一上限。旧表述“新 Pro 200 内含用量低于旧档”作废。Pro 500 仍是唯一支持 GPT-6 Astra 与 GPT-6.1 Sol Ultrafast 的自助 Pro 档。
+- **OpenAI · API credits（10-28）**：符合条件的 ChatGPT Pro / Business 可领月度 API credits——Pro 100 / 200 / 500 分别 **$100 / $200 / $500**，Business Standard **$20/席**、Premium **$100/席**，池化上限 **$500/工作区/月**；订阅需满 7 天，按月发放、当月到期不结转，只能绑定一个 API org。它与 ChatGPT 用量额度（含 Ultrafast credits）**互不通用**。
+- **Kimi · 新增 Ultra 档**：中国区新套餐现为 Go **¥49**、Plus **¥99**、Pro **¥199**、Max **¥699**、**Ultra ¥1,399/月**（连续包年 ¥13,428，折合 ¥1,119/月）。Ultra 为 28× Agent 额度（Max 的 2 倍）、4 个 Agent 并行、定时任务与小组件任务各 25 个、100 个项目、50GB 项目存储；新套餐仍无周限额，保留滚动 5 小时与共享月度额度，旧版 Andante–Allegro 规则不变。
+- **Kimi K3.1 Pro 开放权重（11-04）**：官方权重已在 Hugging Face 发布（2.8T MoE、自定义 Kimi K3.1 Pro 许可，1M 上下文）。AA 目前仍把该模型标为 proprietary，指数与成本保持 **46 / $3.68** 不变；即便改判为开放权重，也约为 MiMo V2.6 Pro（30 / $0.26）的 14 倍任务成本，开放权重性价比推荐不变。
+- **无变化项**：xAI Grok 4.7 与 X Subscription 五档（Free/Plus/Premium/Super/Ultra 为 $0/$8/$30/$100/$200，周额度刷新、Grok API 另计、第三方 Cursor 模型按 API 价另付）未变，Grok 4.6 仍为 v5 N/A；Google 11-04 只更新 TTS 语音重混，Gemini 3.8 Flash / 4 Argon 数据未变；DeepSeek 自 10-17 无新公告，峰谷 token 价未变；Z.ai 价格表新增 GLM-5.3-FlashX（$0.37 输入 / $1.25 输出）与 FlashX-Legal，两者**没有 AA 实测**，不建点；MiMo 自 9-22 无新模型。Gemini 4 Carbon（60）仍为 selected-users，GPT-6 Rosalind（10-30，trusted-access 受限）同为观察项，均不进主图。
+- **推荐**：前沿性价比 **GPT-6.1 Sol · High（50 / $0.59）**、绝对能力 **Claude Opus 5.5 · Max（59 / $10.04）**、开放权重性价比 **MiMo V2.6 Pro（30 / $0.26）** 均不变；跨厂商 Plan 推荐（ChatGPT Pro 100、Claude Max、GLM Coding Lite、Kimi Plus）也不变。
+- **来源**：[Anthropic Ultra 说明](https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan) · [Anthropic Max/Ultra/Team API credits](https://support.claude.com/en/articles/17154008) · [Anthropic Fable 套餐规则](https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan) · [Claude 定价页](https://www.anthropic.com/pricing) · [OpenAI ChatGPT release notes](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) · [OpenAI API credits](https://developers.openai.com/api/docs/guides/chatgpt-api-credits) · [Kimi 中国区价格](https://www.kimi.com/help/membership/membership-pricing) · [Kimi K3.1 Pro 权重](https://huggingface.co/moonshotai/Kimi-K3.1-Pro) · [Z.ai 价格](https://docs.z.ai/guides/overview/pricing)
 
 ## 2026-11-04 AA Intelligence Index v5 整表刷新
 
