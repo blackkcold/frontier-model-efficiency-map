@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-05</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-08</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -67,7 +67,7 @@
 | Google | Gemini 3.8 Flash · Gemini 4 Argon（Gemini 4 Carbon 为 selected-users，观察项） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
-| Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；Kimi K3 在 v5 为 N/A，已移除） |
+| Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；AA 于 11-08 前改标为开放权重；Kimi K3 在 v5 为 N/A，已移除） |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
 | xAI | Grok 4.7（Grok 4.6 在 v5 为 N/A，已移除） |
 
@@ -77,7 +77,7 @@
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
 | 绝对能力 | **Claude Opus 5.5 · Max** | 59 | $10.04 | 公开可用最高；Gemini 4 Carbon 60 为 selected-users，不计入 |
-| 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；DeepSeek 33 / $0.60 更高但贵 2.3×；K3.1 Pro 权重 11-04 已开放，但 AA 仍按 proprietary 计（46 / $3.68） |
+| 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，46 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 33 / $0.60 也贵 2.3× |
 
 ## 怎么读这张图
 
@@ -143,6 +143,15 @@ v5 下 Sol Medium 为 46 / $0.36，已低于门槛；满足 ≥48 的最低实�
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
 
+## 2026-11-08 AA 权重口径更正（Index 未换版）
+
+AA Intelligence Index 仍为 **v5.0.1**，52 个 `current` 点的能力与 task cost 全部未动；本轮只更正 AA 对 Kimi K3.1 Pro 的权重分类。
+
+- **AA 改标 K3.1 Pro 为 open weights**：AA 模型页现标 “Open weights model”，并给出 2.8T 总参数 / 104B 激活与 Kimi K3.1-Pro 许可；榜单 FAQ 亦称其为 “highest-ranked open weights model”（46，99 个模型中 40 个为开放权重）。11-05 快照当时 AA 仍按 proprietary 计，本页已同步更正，避免与 AA 源互相矛盾。
+- **影响**：K3.1 Pro 现为 v5.0.1 开放权重最高指数点（46），但 **$3.68/task** 约为 MiMo V2.6 Pro（30 / $0.26）的 **14 倍**，开放权重性价比推荐仍为 **MiMo V2.6 Pro**；前沿性价比 **GPT-6.1 Sol · High（50 / $0.59）** 与绝对能力 **Claude Opus 5.5 · Max（59 / $10.04）** 不变；Plan 表不动。
+- **同日核验的无变化项**：OpenAI 11-04 只发布 Images 2.6、11-05 发布 GPT-6 Cyber（Daybreak 受限访问，非公开 API）与安全合作，无新 LLM、无价格变化，Pro 100/200/500 的 Work/Codex 额度仍是 10-29 版本；Anthropic 定价页仍为 Pro $20、Max $100（5× Pro）、Ultra $200（认证账户无 5 小时上限、每周 10× Pro、$200/月 API credits），无新模型；Google Gemini API 模型列表仍只有 `gemini-4-argon`，Gemini 4 Carbon 未开放，Argon 仍按引导价 $2/$10 计（12-01 起 $4/$20，AA 已按标准价算 $9.95，本页 11-30 前保留引导价口径）；DeepSeek changelog 自 10-17 未更新，峰谷 token 价与 Search/Fetch 计费未变；Z.ai 模型价目未变（GLM-5.3 $1.4/$4.4、GLM-5.3-Flash $0.15/$0.50、FlashX $0.37/$1.25）；Kimi 中国区 Go/Plus/Pro/Max/Ultra 与旧版 Andante–Allegro 存量规则未变；MiMo 仍为 V2.6 系列（V2.5 已于 10-21 退役），无新模型或新价格；xAI X Subscription 五档（$0/$8/$30/$100/$200）、Grok 4.7 API 价与旧 SuperGrok 保留规则未变，Grok 4.6 仍为 v5 N/A。Gemini 4 Carbon（60）仍为 selected-users，GPT-6 Cyber / Rosalind 仍为受限访问，均不进主图。
+- **来源**：[AA Kimi K3.1 Pro 模型页](https://artificialanalysis.ai/models/kimi-k3-1-pro) · [AA 榜单](https://artificialanalysis.ai/leaderboards/models) · [Kimi 权重（Hugging Face）](https://huggingface.co/moonshotai/Kimi-K3.1-Pro)
+
 ## 2026-11-05 套餐政策核验（AA 无变化）
 
 AA Intelligence Index 仍为 **v5.0.1**（11 月未换版），52 个 `current` 点的能力与 task cost 全部未动。本轮只修正官方套餐、额度与权重状态：
@@ -151,7 +160,7 @@ AA Intelligence Index 仍为 **v5.0.1**（11 月未换版），52 个 `current` 
 - **OpenAI · Work/Codex 额度翻倍（10-29）**：Pro 100 与 Pro 500 的内含 Work/Codex 用量翻倍；9-29 宣布的 Pro 200 削减**已取消**，Pro 200 一并翻倍到同一上限。旧表述“新 Pro 200 内含用量低于旧档”作废。Pro 500 仍是唯一支持 GPT-6 Astra 与 GPT-6.1 Sol Ultrafast 的自助 Pro 档。
 - **OpenAI · API credits（10-28）**：符合条件的 ChatGPT Pro / Business 可领月度 API credits——Pro 100 / 200 / 500 分别 **$100 / $200 / $500**，Business Standard **$20/席**、Premium **$100/席**，池化上限 **$500/工作区/月**；订阅需满 7 天，按月发放、当月到期不结转，只能绑定一个 API org。它与 ChatGPT 用量额度（含 Ultrafast credits）**互不通用**。
 - **Kimi · 新增 Ultra 档**：中国区新套餐现为 Go **¥49**、Plus **¥99**、Pro **¥199**、Max **¥699**、**Ultra ¥1,399/月**（连续包年 ¥13,428，折合 ¥1,119/月）。Ultra 为 28× Agent 额度（Max 的 2 倍）、4 个 Agent 并行、定时任务与小组件任务各 25 个、100 个项目、50GB 项目存储；新套餐仍无周限额，保留滚动 5 小时与共享月度额度，旧版 Andante–Allegro 规则不变。
-- **Kimi K3.1 Pro 开放权重（11-04）**：官方权重已在 Hugging Face 发布（2.8T MoE、自定义 Kimi K3.1 Pro 许可，1M 上下文）。AA 目前仍把该模型标为 proprietary，指数与成本保持 **46 / $3.68** 不变；即便改判为开放权重，也约为 MiMo V2.6 Pro（30 / $0.26）的 14 倍任务成本，开放权重性价比推荐不变。
+- **Kimi K3.1 Pro 开放权重（11-04）**：官方权重已在 Hugging Face 发布（2.8T MoE、自定义 Kimi K3.1 Pro 许可，1M 上下文）。AA 目前仍把该模型标为 proprietary，指数与成本保持 **46 / $3.68** 不变；即便改判为开放权重，也约为 MiMo V2.6 Pro（30 / $0.26）的 14 倍任务成本，开放权重性价比推荐不变。（**11-08 更正**：AA 已改标为 open weights，结论不变，详见上节。）
 - **无变化项**：xAI Grok 4.7 与 X Subscription 五档（Free/Plus/Premium/Super/Ultra 为 $0/$8/$30/$100/$200，周额度刷新、Grok API 另计、第三方 Cursor 模型按 API 价另付）未变，Grok 4.6 仍为 v5 N/A；Google 11-04 只更新 TTS 语音重混，Gemini 3.8 Flash / 4 Argon 数据未变；DeepSeek 自 10-17 无新公告，峰谷 token 价未变；Z.ai 价格表新增 GLM-5.3-FlashX（$0.37 输入 / $1.25 输出）与 FlashX-Legal，两者**没有 AA 实测**，不建点；MiMo 自 9-22 无新模型。Gemini 4 Carbon（60）仍为 selected-users，GPT-6 Rosalind（10-30，trusted-access 受限）同为观察项，均不进主图。
 - **推荐**：前沿性价比 **GPT-6.1 Sol · High（50 / $0.59）**、绝对能力 **Claude Opus 5.5 · Max（59 / $10.04）**、开放权重性价比 **MiMo V2.6 Pro（30 / $0.26）** 均不变；跨厂商 Plan 推荐（ChatGPT Pro 100、Claude Max、GLM Coding Lite、Kimi Plus）也不变。
 - **来源**：[Anthropic Ultra 说明](https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan) · [Anthropic Max/Ultra/Team API credits](https://support.claude.com/en/articles/17154008) · [Anthropic Fable 套餐规则](https://support.claude.com/en/articles/15424964-claude-fable-models-on-your-plan) · [Claude 定价页](https://www.anthropic.com/pricing) · [OpenAI ChatGPT release notes](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) · [OpenAI API credits](https://developers.openai.com/api/docs/guides/chatgpt-api-credits) · [Kimi 中国区价格](https://www.kimi.com/help/membership/membership-pricing) · [Kimi K3.1 Pro 权重](https://huggingface.co/moonshotai/Kimi-K3.1-Pro) · [Z.ai 价格](https://docs.z.ai/guides/overview/pricing)
@@ -161,7 +170,7 @@ AA Intelligence Index 仍为 **v5.0.1**（11 月未换版），52 个 `current` 
 Artificial Analysis 于 **2026-10-27 发布 Intelligence Index v5**，并于 **2026-11-03 更新到 v5.0.1**。v5 由 9 项评测组成：AA-Briefcase v1.1、AutomationBench-AA、Terminal-Bench 4.0、FrontierCode 2.0、AA-Omniscience v1.1、GDP.pdf、HLE-Diamond、CritPt v2 (Hard)、Terminal-Bench-Science 0.1；四个大类各 25%，约 60% 权重来自私有/留出集。AA 明确说明**跨版本分数不可直接比较**，因此本轮不是单点更新，而是把旧快照整表 re-base 到 v5.0.1。
 
 - **范围与结果**：52 个 `current` 点全部换成 v5.0.1 的 AA Intelligence 与 Cost per Task；没有 v5 测量的档位不补、不插值。旧版 GPT-6 Sol（6 点）与 DeepSeek 0910（4 点）保留为隐藏历史数据，默认不出现在图表/排名表；打开「显示历史/弃用点」才显示，并注记 v4.3.2、不能与 v5 同图比较。Grok 4.6、Kimi K3 在 v5 为 N/A 且已有后继，直接从 current 移除。
-- **新增模型**：**GPT-6.1 Terra**（OpenAI，10-26 发布；API $1/M input、$5/M output、$0.05 cache；AA v5 Max 51 / $0.96）与 **Kimi K3.1 Pro**（Kimi，10-23 发布；$2/M input、$10/M output、$0.20 cache；AA 46 / $3.68）。K3.1 Pro 被 AA 标为 proprietary（权重未发布），因此只作能力/成本点，不计入开放权重性价比。
+- **新增模型**：**GPT-6.1 Terra**（OpenAI，10-26 发布；API $1/M input、$5/M output、$0.05 cache；AA v5 Max 51 / $0.96）与 **Kimi K3.1 Pro**（Kimi，10-23 发布；$2/M input、$10/M output、$0.20 cache；AA 46 / $3.68）。K3.1 Pro 被 AA 标为 proprietary（权重未发布），因此只作能力/成本点，不计入开放权重性价比（11-08 AA 已改判为开放权重，见上节）。
 - **DeepSeek 1017 High 转正**：AA 于 11-01 新增 High 独立测量 **29 / $0.46**；Max 为 **33 / $0.60**。两条同时保留，互不推算。官方 API 仍是 `deepseek-flash`，峰谷 token 价格未变。
 - **Gemini 4 Carbon 观察项**：AA 给 Carbon high **60**，暂列第一，但 Google 仍为 selected-users、未公开可用；按“公开可用 + AA 实测”原则不进入主图，也不改绝对能力推荐。Gemini 4 Argon high 为 **50 / $7.68**。
 - **推荐变化**：绝对能力仍为 **Claude Opus 5.5 · Max（59 / $10.04）**；前沿性价比由 **GPT-6.1 Sol Medium（48 / $0.21）** 变为 **GPT-6.1 Sol High（50 / $0.59）**，因为 v5 下 Medium 降到 46，低于固定门槛 48；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**，已发布权重中 DeepSeek 33 / $0.60 指数更高但贵 2.3×，K3.1 Pro 为 proprietary，不计入。Plan 订阅表不变。
