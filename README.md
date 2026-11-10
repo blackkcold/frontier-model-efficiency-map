@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-08</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-10</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -41,7 +41,7 @@
 
 > 当前前沿性价比推荐：**GPT-6.1 Sol · High**。
 >
-> 当前绝对能力最高点：**Claude Opus 5.5 · Max**。
+> 当前绝对能力最高点：**Claude Fable 5.2 · Max**。
 
 ## 交互细节
 
@@ -63,7 +63,7 @@
 | Provider | 当前模型族 |
 | --- | --- |
 | OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6.1 Terra · GPT-6 Sol（历史，默认隐藏） |
-| Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.1 |
+| Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.2（Fable 5.1 已被 AA 标为 deprecated，默认隐藏） |
 | Google | Gemini 3.8 Flash · Gemini 4 Argon（Gemini 4 Carbon 为 selected-users，观察项） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
@@ -76,7 +76,7 @@
 | 目标 | 推荐 | AA Index | AA task cost | 备注 |
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
-| 绝对能力 | **Claude Opus 5.5 · Max** | 59 | $10.04 | 公开可用最高；Gemini 4 Carbon 60 为 selected-users，不计入 |
+| 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 60 为 selected-users，不计入。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
 | 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，46 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 33 / $0.60 也贵 2.3× |
 
 ## 怎么读这张图
@@ -89,7 +89,7 @@
 normalized capability = AA Intelligence Index / 当前图内最高点 × 100
 ```
 
-当前图内最高点为 Claude Opus 5.5 Max 59；代码用 `Math.max` 动态计算，不写死除数。这样不同 Provider 不需要混用各自的厂商 benchmark。
+当前图内最高点为 Claude Fable 5.2 Max 65；代码用 `Math.max` 动态计算，不写死除数。这样不同 Provider 不需要混用各自的厂商 benchmark。
 
 ### 2. 横轴：单任务消耗
 
@@ -139,9 +139,20 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 3. 估算点不参与“最高能力”结论；
 4. Plan 推荐与 API task cost 分开处理。
 
-v5 下 Sol Medium 为 46 / $0.36，已低于门槛；满足 ≥48 的最低实测成本点是 **Sol High 50 / $0.59**，因此前沿性价比推荐随之变化。绝对能力仍是公开可用的 **Opus 5.5 Max 59 / $10.04**。
+v5 下 Sol Medium 为 46 / $0.36，已低于门槛；满足 ≥48 的最低实测成本点是 **Sol High 50 / $0.59**，因此前沿性价比推荐随之变化。绝对能力现为公开可用的 **Fable 5.2 Max 65 / $26.54**（11-09 新发）。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-11-10 Claude Fable 5.2 发布（AA v5.0.1，绝对能力换点）
+
+AA Intelligence Index 仍为 **v5.0.1**；本轮唯一实质变化是 Anthropic 于 **11-09** 发布 Claude Fable 5.2 / Mythos 5.2，绝对能力推荐随之更换。
+
+- **官方（11-09，US，Claude API / Bedrock / Google Cloud / Foundry）**：Fable 5.2 与 Mythos 5.2 同底模，Fable 带 cyber/bio 护栏并对 **Pro、Max、Ultra、Team、Enterprise** 开放，Mythos 仍需 Cyber / Life Sciences 验证项目。API **$8/M 输入、$40/M 输出**（Fable 5.1 为 $10/$50），cache read $0.20、5m cache write $10、1h $16；**Fast mode $16/$80**（最高 2.5× 速度，Claude Code 与 Platform 可用）。默认 effort 为 `high`，adaptive thinking 常开，1M 上下文 / 128K 输出，知识截止 2026-06。
+- **AA v5.0.1 实测**（default-fallback 变体，与其他 Anthropic 行同口径）：Low **54 / $3.10**、Medium **56 / $3.80**、High **62 / $9.08**、XHigh **62 / $14.83**、Max **65 / $26.54**。AA 同时把 **Fable 5.1 标为 deprecated**（49 / $12.99），本页改为 `deprecated`、默认隐藏，不再与 current 点混排。
+- **推荐变化**：绝对能力由 **Opus 5.5 Max 59 / $10.04** 改为 **Fable 5.2 Max 65 / $26.54**。同时 Fable 5.2 **High 62 / $9.08** 已高于 Opus 5.5 Max 且更便宜，作为高价档的性价比替代写入卡片与注记；日常主力仍按 Anthropic 官方建议用 Opus 5.5。前沿性价比仍为 **GPT-6.1 Sol High 50 / $0.59**（Fable 5.2 Low 54 但 $3.10，约 5.3×）；开放权重性价比仍为 **MiMo V2.6 Pro 30 / $0.26**；Plan 推荐（ChatGPT Pro 100、Claude Max、GLM Coding Lite、Kimi Plus）不变。
+- **套餐口径**：Claude 定价页与 11-05 口径一致，仅模型名更新——Pro 的 Fable 走 **usage credits**，Max / Ultra 的 Fable 属套餐额度、**最多占周额度 50%**。Fable 5.2 的 API 降价不改变订阅额度规则，二者仍不互换。
+- **同日核验的无变化项**：OpenAI 无新 LLM（11-05 GPT-6 Cyber 仍为 Daybreak 受限访问）；Google Gemini API 仍只有 `gemini-4-argon`，Carbon 未开放，引导价 $2/$10 至 11-30；DeepSeek 峰谷价与 `deepseek-flash` 未变（11-01 的 High 实测沿用）；Z.ai GLM-5.3 / Flash 价目未变；Kimi K3 系列 $2/$10 与 K2 系列 2026 年底退役计划未变；Xiaomi 仍 V2.6 系列；xAI 仍以 Grok 4.7 为唯一主力，X Subscription 五档与旧 SuperGrok 保留规则未变。
+- **来源**：[Anthropic Fable 5.2 公告](https://www.anthropic.com/claude-fable-and-mythos-5-2) · [Claude Fable 产品页](https://www.anthropic.com/claude/fable) · [Fable 5.2 平台文档](https://platform.claude.com/docs/en/models/fable-5-2/overview) · [Claude 定价/套餐](https://claude.com/pricing) · [AA Fable 5.2](https://artificialanalysis.ai/models/claude-fable-5-2) · [AA 榜单](https://artificialanalysis.ai/leaderboards/models)
 
 ## 2026-11-08 AA 权重口径更正（Index 未换版）
 
