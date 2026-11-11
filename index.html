@@ -29,7 +29,7 @@
       <div class="hero-title-row">
         <img class="hero-logo" src="assets/logo.svg" alt="Frontier Model Efficiency Map logo" />
         <div class="hero-title-copy">
-          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-11-10</div>
+          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-11-11</div>
           <h1>模型 × Reasoning：<span>能力 / 消耗 / Plan</span></h1>
         </div>
       </div>
@@ -61,7 +61,7 @@
       <article class="card rec-card accent-orange">
         <div class="card-label">绝对能力</div>
         <h2>Claude Fable 5.2 · Max</h2>
-        <p>AA v5.0.1 公开可用最高：65（$26.54/task）。Gemini 4 Carbon 的 60 仍为 selected-users，不计入。日常仍建议 Opus 5.5；Fable 5.2 High 62 / $9.08 已同时超过 Opus 5.5 Max 的 59。</p>
+        <p>AA v5.0.1 公开可用最高：65（$26.54/task）。Gemini 4 Carbon 于 11/10 转正式可用，High 60 / $7.76 仍低 5 分。日常仍建议 Opus 5.5；Fable 5.2 High 62 / $9.08 已同时超过 Opus 5.5 Max 的 59。</p>
         <div class="metric-row"><span>AA Index <b>65</b></span><span>AA cost <b>$26.54/task</b></span></div>
       </article>
       <article class="card rec-card accent-yellow">
@@ -173,14 +173,15 @@
       <p class="disclaimer"><strong>Xiaomi MiMo V2.6（9/22 发布）：</strong>主图按 AA v5 更新 Pro 与 Flash（分别为 30 / $0.26、27 / $0.13）；v4.3.2 的 46 / 38 已不再使用。Pro UltraSpeed 输出速度最高 20 倍，但海外 API 价格为普通 Pro 的 10 倍，缺少独立 AA 实测，不作为第三个能力点。官方海外实时 API（每百万 tokens）：Pro 输入 $0.435 / 输出 $0.87；Flash $0.14 / $0.28；UltraSpeed $4.35 / $8.70。Token Plan 与按量 API 余额互不通用，原 V2.5-Pro / V2.5 将于 10/21 停用。<a href="https://mimo.mi.com/docs/pricing" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://mimo.mi.com/docs/en-US/updates/model" target="_blank" rel="noopener noreferrer">模型发布</a>。</p>
       <p class="disclaimer"><strong>DeepSeek 10/17：</strong>V4.1 Flash 已升级至 <code>DeepSeek-V4.1-Flash-1017</code>，默认调用名、Token 峰谷价格、非思考与 low/high/max 思考档位保持不变。官方 Terminal-Bench 4.0：31.2 → 42.3，属于厂商自测而非 AA 实测。新 Search / Fetch 工具 API 每 1000 次成功请求各 $0.75；通过 DeepSeek Harness / Claude Code / Codex 的服务端 Search / Fetch 调用在北京时间 2026-11-01 00:00 前免单独请求费，之后按次计费；模型 token 费用另计。<a href="https://api-docs.deepseek.com/zh-cn/news/news261017/" target="_blank" rel="noopener noreferrer">发布原文</a> · <a href="https://api-docs.deepseek.com/quick_start/pricing/" target="_blank" rel="noopener noreferrer">官方定价</a>。</p>
       <p class="disclaimer"><strong>OpenAI Ultrafast 政策更新（10/8）：</strong>GPT-6.1 Sol 已新增 Ultrafast 服务档位；API 标价 $12/M input、$60/M output（Standard 的 6×）。Work/Codex 仅 Pro $500 和符合资格的 Enterprise/Edu 可用；Pro $500 内含用量消耗 8×、后续 credits 消耗 6×。此为速度与计费模式变更，不是新模型或独立 AA 实测点。<a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol" target="_blank" rel="noopener noreferrer">官方 API 定价</a> · <a href="https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex" target="_blank" rel="noopener noreferrer">Work/Codex 用量</a>。</p>
-      <p class="disclaimer"><strong>Gemini 4 Argon（10/13 GA）：</strong>Google 将 <code>gemini-4-argon</code> 从限量预览转为正式开放。Gemini App 与搜索 AI Mode 向符合条件的 AI Pro / Ultra 订户开放，Antigravity 中的 Argon 面向 Ultra；付费 Gemini API 独立计费，不等同 App 订阅额度。API 价格至 11/30 为 $2/M 输入、$10/M 输出，12/1 起分别为 $4/M、$20/M；缓存命中输入优惠 95%。官方支持 Low / Medium / High 思考强度，但当前 AA 仅保留可对比的 High 实测，不补造其他点。<a href="https://ai.google.dev/gemini-api/docs/latest-model" target="_blank" rel="noopener noreferrer">Google API 官方文档</a> · <a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/" target="_blank" rel="noopener noreferrer">Gemini App 官方公告</a>。</p>
+      <p class="disclaimer"><strong>Gemini 4 Carbon（11/10 正式可用）：</strong>Google 把 <code>gemini-4-carbon</code> 从 selected-users 转为对所有付费开发者与企业开放（AI Studio 可直接调用），并同步向全部 AI Ultra 订户在 Antigravity、Gemini App 与 Search AI Mode 开放；官方未列出 AI Pro 的 Carbon 权益。引导价与 Argon 相同：$2/M 输入、$10/M 输出至 11/30，12/1 起 $4/$20，隐式缓存 $0.10 → $0.20，不支持显式缓存；1M 上下文，默认 thinking 为 medium，无免费层。AA v5.0.1 实测（按标准价 $4/$20 计）：High <strong>60 / $7.76</strong>、Medium <strong>58 / $6.59</strong>、Low <strong>54 / $7.19</strong>；三条均入主图，不做插值。<a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/" target="_blank" rel="noopener noreferrer">Google 官方公告</a> · <a href="https://aistudio.google.com/docs/pricing" target="_blank" rel="noopener noreferrer">Gemini API 定价</a> · <a href="https://artificialanalysis.ai/models/gemini-4-carbon" target="_blank" rel="noopener noreferrer">AA Carbon</a>。</p>
+      <p class="disclaimer"><strong>Gemini 4 Argon（10/13 GA）：</strong>Google 将 <code>gemini-4-argon</code> 从限量预览转为正式开放。Gemini App 与搜索 AI Mode 向符合条件的 AI Pro / Ultra 订户开放，Antigravity 中的 Argon 面向 Ultra；付费 Gemini API 独立计费，不等同 App 订阅额度。API 价格至 11/30 为 $2/M 输入、$10/M 输出，12/1 起分别为 $4/M、$20/M；缓存命中输入优惠 95%。官方支持 Low / Medium / High 思考强度，但当前 AA 仅保留可对比的 High 实测，不补造其他点。主图的 Argon 与 Carbon 统一采用 AA 的<b>标准价 $4/$20</b> 口径（Argon <strong>50 / $9.95</strong>）；11/30 前官方仍在引导价，实际支出约为图上的一半。<a href="https://ai.google.dev/gemini-api/docs/latest-model" target="_blank" rel="noopener noreferrer">Google API 官方文档</a> · <a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/" target="_blank" rel="noopener noreferrer">Gemini App 官方公告</a>。</p>
       <p class="disclaimer"><strong>Kimi 中国区新套餐（11/05 更新）：</strong>Go ¥49、Plus ¥99、Pro ¥199、Max ¥699、Ultra ¥1,399/月（连续包年 ¥13,428，折合 ¥1,119/月；Ultra 为 28× Agent 额度、4 个 Agent 并行）；新 Go 不含 Kimi Code，Plus 起支持 Kimi Code。新套餐 Kimi Code 取消每周限额，但滚动 5 小时限额及所有功能共享的月度额度仍生效；Andante / Moderato / Allegretto / Allegro 属于继续可用的旧版存量订阅，未自动迁移。<a href="https://www.kimi.com/help/membership/membership-pricing" target="_blank" rel="noopener noreferrer">官方定价</a> · <a href="https://www.kimi.com/help/kimi-code/benefits" target="_blank" rel="noopener noreferrer">新旧限额规则</a>。</p>
       <p class="disclaimer">Google 订阅已按官方重整：AI Plus $4.99、AI Pro $19.99、AI Ultra 5x $99.99、Ultra 20x $199.99（美国月费）。2026-10-09 起个人 Gemini App 模型权限陆续调整；手动模型选择、自动路由与 Developer API 额度须分别看待。</p>
       <div class="table-scroll"><table id="planTable">
         <thead><tr><th>Provider</th><th>Plan</th><th>价格</th><th>适合</th><th>说明</th></tr></thead><tbody></tbody>
       </table></div>
       <p class="disclaimer"><strong>Anthropic / OpenAI 套餐政策（10-28 至 10-30）：</strong>Claude 的 $200 档已由 <strong>Max 20x 更名为 Ultra</strong>（价格不变、存量自动迁移）：每周 10× Pro、认证账户无 5 小时上限、含 $200/月 API credit；$100 档定名 <strong>Claude Max</strong>（5× Pro + $100/月 credit）。Fable（5.2）在 Max/Ultra 内最多占周额度 50%，Pro 需 usage credits。OpenAI 于 10-29 将 Pro 100/Pro 500 的 Work/Codex 内含用量翻倍，并取消 9-29 的 Pro 200 削减，Pro 200 一并翻倍到同一上限；10-28 起 Pro/Business 另可领月度 API credits（Pro 100/200/500 为 $100/$200/$500，按量到期不结转，与 ChatGPT 用量分开）。<a href="https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan" target="_blank" rel="noopener noreferrer">Anthropic Ultra</a> · <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" rel="noopener noreferrer">OpenAI 发布说明</a> · <a href="https://developers.openai.com/api/docs/guides/chatgpt-api-credits" target="_blank" rel="noopener noreferrer">OpenAI API credits</a>。</p>
-      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-11-10 可核实信息。购买前以各厂商结算页为准。</p>
+      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-11-11 可核实信息。购买前以各厂商结算页为准。</p>
     </section>
 
     <section class="card methodology-card">
@@ -198,7 +199,7 @@
       </details>
     </section>
 
-    <footer>Data snapshot: 2026-11-10 · Static site · No tracking · Built for GitHub Pages</footer>
+    <footer>Data snapshot: 2026-11-11 · Static site · No tracking · Built for GitHub Pages</footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>

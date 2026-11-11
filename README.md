@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-10</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-11</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -64,7 +64,7 @@
 | --- | --- |
 | OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6.1 Terra · GPT-6 Sol（历史，默认隐藏） |
 | Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.2（Fable 5.1 已被 AA 标为 deprecated，默认隐藏） |
-| Google | Gemini 3.8 Flash · Gemini 4 Argon（Gemini 4 Carbon 为 selected-users，观察项） |
+| Google | Gemini 3.8 Flash · Gemini 4 Argon · Gemini 4 Carbon（High / Medium / Low；11-10 转正式可用） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
 | Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；AA 于 11-08 前改标为开放权重；Kimi K3 在 v5 为 N/A，已移除） |
@@ -76,7 +76,7 @@
 | 目标 | 推荐 | AA Index | AA task cost | 备注 |
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
-| 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 60 为 selected-users，不计入。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
+| 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 11-10 转正式可用后 High 60 / $7.76，仍低 5 分。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
 | 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，46 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 33 / $0.60 也贵 2.3× |
 
 ## 怎么读这张图
@@ -100,6 +100,8 @@ consumption ratio = corrected task cost / corrected GPT-6 Luna Max task cost
 ```
 
 跨厂商的 ChatGPT allowance、Claude session cap、Kimi credits 等内部额度并不等价，所以主图不直接把订阅额度强行换算到同一条轴上。
+
+Google Gemini 4 系列（Argon / Carbon）的 task cost 使用 AA 当前的**标准价 $4/$20** 口径。Google 官方的引导价 $2/$10 到 11-30 为止，这段时间实际支出约为图上的一半；12-01 起官方价与图一致。Carbon 与 Argon 同为该口径，避免同厂两点落在不同价格基准上。
 
 ### 3. 长 Agent 修正
 
@@ -142,6 +144,17 @@ Artificial Analysis 用于跨厂商能力与单任务成本的统一比较。
 v5 下 Sol Medium 为 46 / $0.36，已低于门槛；满足 ≥48 的最低实测成本点是 **Sol High 50 / $0.59**，因此前沿性价比推荐随之变化。绝对能力现为公开可用的 **Fable 5.2 Max 65 / $26.54**（11-09 新发）。
 
 这让推荐更接近“这个模型能不能完成目标任务，以及完成它要消耗多少资源”。
+
+## 2026-11-11 Gemini 4 Carbon GA（AA v5.0.1，新增 3 点并把 Google 4 系列统一到标准价）
+
+AA Intelligence Index 仍为 **v5.0.1**；本轮实质变化是 Google 于 **11-10** 把 Gemini 4 Carbon 从 selected-users 转为正式可用，主图新增 3 个 Carbon 实测点，并把 Gemini 4 系列的计价口径统一到 AA 当前的标准价。
+
+- **官方（11-10，US，Gemini API / AI Studio / Gemini for business）**：`gemini-4-carbon` 对全部付费开发者与企业开放，AI Studio 可直接调用；引导价 **$2/M 输入、$10/M 输出** 至 **11-30**，**12-01 起 $4/$20**；隐式缓存 $0.10 → $0.20（不支持显式缓存）；1M 上下文、默认 thinking 为 **medium**；Carbon **不提供免费层**。同时向全部 **Google AI Ultra** 订户在 Antigravity、Gemini App 与 Search AI Mode 开放，官方未列出 AI Pro 的 Carbon 权益。
+- **AA v5.0.1 实测（标准价 $4/$20 口径）**：High **60 / $7.76**、Medium **58 / $6.59**、Low **54 / $7.19**。Medium 是最便宜的 Carbon 档；Low 因输入更冗长反而贵于 Medium。AA 标注 Carbon 全系偏慢（22–26 分钟/任务）、偏啰嗦。
+- **口径调整**：AA 已改为按标准价 $4/$20 计 Google 4 系列，Argon 由早期引导价口径的 **50 / $7.68** 变为 **50 / $9.95**。11-06 时曾决定先保留 7.68 到 12-01；本轮新增的 Carbon 只有 AA 标准价实测，若继续保留 7.68 会让同一家的两个点落在不同价格基准上、直接造成误读，因此两条一并对齐到 AA 当前数值。11-30 前实际支出约为图上的一半，README 与页面注记均已写明。
+- **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**（Carbon High 60 / $7.76，低 5 分）；前沿性价比仍为 **GPT-6.1 Sol · High 50 / $0.59**（Carbon High 成本约 13×，Medium 58 / $6.59 也约 11×）；开放权重性价比仍为 **MiMo V2.6 Pro 30 / $0.26**。Plan 推荐不变，仅 Google AI Ultra 两档补记 Carbon 权益。
+- **同日核验的无变化项**：OpenAI 11-10 仅宣布 12-11 退役 Advanced/Standard voice 与 Business Hub，无新 LLM、无 API 价格变化；Anthropic 11-09 Fable 5.2 后无新公告，套餐与 $8/$40 价未变；DeepSeek changelog 自 10-17 未更新，峰谷价与 `deepseek-flash` 未变；Z.ai 自 8-26 无新模型，GLM-5.3 / Flash 价目未变；Kimi K3.1 Pro 价目与中国区套餐未变；MiMo 仍为 V2.6 系列；xAI 最新仍是 11-02 Grok Bot 与 9-21 Grok 4.7，X Subscription 五档、共用周额度与 API 独立计费未变，Grok 4.6 仍为 v5 N/A。
+- **来源**：[Google — Gemini 4 Carbon is now available（11-10）](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/) · [Gemini 4 Carbon 模型页](https://aistudio.google.com/docs/models/gemini-4-carbon) · [Gemini Developer API 定价](https://aistudio.google.com/docs/pricing) · [AA Gemini 4 Carbon](https://artificialanalysis.ai/models/gemini-4-carbon) · [AA v5.0.1 方法与版本历史](https://artificialanalysis.ai/methodology/intelligence-benchmarking)
 
 ## 2026-11-10 Claude Fable 5.2 发布（AA v5.0.1，绝对能力换点）
 
