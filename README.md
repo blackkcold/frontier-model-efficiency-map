@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-11</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-15</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -76,7 +76,7 @@
 | 目标 | 推荐 | AA Index | AA task cost | 备注 |
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
-| 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 11-10 转正式可用后 High 60 / $7.76，仍低 5 分。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
+| 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 11-10 转正式可用后 High 60 / $5.48，仍低 5 分。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
 | 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，46 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 33 / $0.60 也贵 2.3× |
 
 ## 怎么读这张图
