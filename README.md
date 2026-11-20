@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-15</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-20</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -39,7 +39,7 @@
 - 主图下方的「筛选 · 按厂商」将原先按模型逐项排列的图例合并为 **8 家厂商**：默认全部；首次点击单选、继续点击可多选、再次点击选中项可取消，点击「显示全部」可复位。图表、模型表格及选中详情同步筛选；Reasoning、Log 横轴、估算点、历史模型仍支持独立控制。
 - 排名表、Plan 推荐与方法论继续向下展开，不需要在多个 benchmark 页面之间来回切换。
 
-> 当前前沿性价比推荐：**GPT-6.1 Sol · High**。
+> 当前前沿性价比推荐：**GPT-6.2 Sol · High**。
 >
 > 当前绝对能力最高点：**Claude Fable 5.2 · Max**。
 
@@ -62,7 +62,7 @@
 
 | Provider | 当前模型族 |
 | --- | --- |
-| OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6.1 Terra · GPT-6 Sol（历史，默认隐藏） |
+| OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6.1 Terra · GPT-6.2 Astra · GPT-6.2 Sol · GPT-6 Sol（历史，默认隐藏） |
 | Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.2（Fable 5.1 已被 AA 标为 deprecated，默认隐藏） |
 | Google | Gemini 3.8 Flash · Gemini 4 Argon · Gemini 4 Carbon（High / Medium / Low；11-10 转正式可用） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
@@ -75,7 +75,7 @@
 
 | 目标 | 推荐 | AA Index | AA task cost | 备注 |
 | --- | --- | ---: | ---: | --- |
-| 前沿性价比 | **GPT-6.1 Sol · High** | 50 | $0.59 | 门槛 ≥48 下最低实测任务成本；Sol Medium 46 / $0.36 已低于门槛 |
+| 前沿性价比 | **GPT-6.2 Sol · High** | 55 | $0.56 | 门槛 ≥48 下最低实测任务成本；GPT-6.2 Sol Medium 53 / $0.41 已低于门槛 |
 | 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；Gemini 4 Carbon 11-10 转正式可用后 High 60 / $5.48，仍低 5 分。同族 High 62 / $9.08 已高于 Opus 5.5 Max 的 59 且更便宜 |
 | 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，46 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 33 / $0.60 也贵 2.3× |
 
@@ -155,6 +155,21 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮实质变化是 Google 于 **11-
 - **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**（Carbon High 60 / $7.76，低 5 分）；前沿性价比仍为 **GPT-6.1 Sol · High 50 / $0.59**（Carbon High 成本约 13×，Medium 58 / $6.59 也约 11×）；开放权重性价比仍为 **MiMo V2.6 Pro 30 / $0.26**。Plan 推荐不变，仅 Google AI Ultra 两档补记 Carbon 权益。
 - **同日核验的无变化项**：OpenAI 11-10 仅宣布 12-11 退役 Advanced/Standard voice 与 Business Hub，无新 LLM、无 API 价格变化；Anthropic 11-09 Fable 5.2 后无新公告，套餐与 $8/$40 价未变；DeepSeek changelog 自 10-17 未更新，峰谷价与 `deepseek-flash` 未变；Z.ai 自 8-26 无新模型，GLM-5.3 / Flash 价目未变；Kimi K3.1 Pro 价目与中国区套餐未变；MiMo 仍为 V2.6 系列；xAI 最新仍是 11-02 Grok Bot 与 9-21 Grok 4.7，X Subscription 五档、共用周额度与 API 独立计费未变，Grok 4.6 仍为 v5 N/A。
 - **来源**：[Google — Gemini 4 Carbon is now available（11-10）](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/) · [Gemini 4 Carbon 模型页](https://aistudio.google.com/docs/models/gemini-4-carbon) · [Gemini Developer API 定价](https://aistudio.google.com/docs/pricing) · [AA Gemini 4 Carbon](https://artificialanalysis.ai/models/gemini-4-carbon) · [AA v5.0.1 方法与版本历史](https://artificialanalysis.ai/methodology/intelligence-benchmarking)
+
+## 2026-11-20 OpenAI GPT-6.2 Astra 与 GPT-6.2 Sol 发布（AA v5.0.1）
+
+AA Intelligence Index 仍为 **v5.0.1**；本轮实质变化是 OpenAI 于 **2026-11 月**推出 **GPT-6.2 Astra**（前沿模型）与 **GPT-6.2 Sol**（高效日常模型），并得到 AA v5.0.1 的统一能力与单任务成本实测。
+
+- **官方（2026-11，美国，ChatGPT Work / Codex / API）**：`gpt-6.2-astra` 与 `gpt-6.2-sol` 均向所有 Plus / Pro / Enterprise / Edu 订户开放，Pro 500 与 10/8 起的 Pro 200 可用 Ultrafast；API 直接调用 `gpt-6.2-astra` / `gpt-6.2-sol`，两者均支持 Ultrafast。**GPT-6.2 Astra** 价格为 $8/M 输入、$0.40 缓存、$40/M 输出（输入/输出较 GPT-6 Astra 低 20%，缓存 60% 折扣）；**GPT-6.2 Sol** 沿用 GPT-6.1 Sol 价格：$2/M 输入、$0.10 缓存、$10/M 输出。两者均为推理模型（reasoning），1M 上下文。
+- **AA v5.0.1 实测**（v5 整表）：GPT-6.2 Astra 共 5 个档位：Low 46 / $0.66、Medium 57 / $1.62、High 60 / $2.07、XHigh 62 / $2.52、Max 62 / $4.00；GPT-6.2 Sol 共 5 个档位：Low 41 / $0.18、Medium 53 / $0.41、High 55 / $0.56、XHigh 56 / $0.65、Max 57 / $1.01。官方文案指出 GPT-6.2 Sol 相比 GPT-6.1 Sol 在 Agents Last Exam 提升 2 分（Max 57），且成本约为同档 GPT-6 Astra 的 15%。
+- **推荐变化**：前沿性价比从 **GPT-6.1 Sol · High（50 / $0.59）** 升级为 **GPT-6.2 Sol · High（55 / $0.56）**——指数更高且任务成本更低。绝对能力仍为 **Claude Fable 5.2 · Max（65 / $26.54）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**（GPT-6.2 Astra 为专有模型，不计入开放权重）。Plan 推荐（ChatGPT Plus/Pro/Ultra、Claude Max/Ultra）同步更新。
+
+> 当前前沿性价比推荐：**GPT-6.2 Sol · High**。
+> 当前绝对能力最高点：**Claude Fable 5.2 · Max**。
+> 开放权重性价比：**MiMo V2.6 Pro**。
+
+- **同日核验的无变化项**：AA 无换版（仍沿用 v5.0.1）；Anthropic、Google、DeepSeek、Z.ai、Kimi、Xiaomi、xAI 模型与套餐状态同 11-15 快照；GPT-6.2 的 Ultrafast 开放不等于新增 AA 实测点，不对旧档位补插值。
+- **来源**：[OpenAI — Introducing GPT-6.2 Astra & Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol/) · [AA — GPT-6.2 Astra](https://artificialanalysis.ai/models/gpt-6-2-astra) · [AA — GPT-6.2 Sol](https://artificialanalysis.ai/models/gpt-6-2-sol)
 
 ## 2026-11-10 Claude Fable 5.2 发布（AA v5.0.1，绝对能力换点）
 
