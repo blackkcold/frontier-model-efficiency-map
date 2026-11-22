@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-20</strong> · 8 providers · AA v5.0.1 · No tracking
+  Data snapshot: <strong>2026-11-22</strong> · 8 providers · AA v5.0.1 · No tracking
 </p>
 
 ---
@@ -64,7 +64,7 @@
 | --- | --- |
 | OpenAI | GPT-6 Luna · GPT-6.1 Sol · GPT-6 Astra · GPT-6.1 Terra · GPT-6.2 Astra · GPT-6.2 Sol · GPT-6 Sol（历史，默认隐藏） |
 | Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.2（Fable 5.1 已被 AA 标为 deprecated，默认隐藏） |
-| Google | Gemini 3.8 Flash · Gemini 4 Argon · Gemini 4 Carbon（High / Medium / Low；11-10 转正式可用） |
+|| Google | Gemini 3.8 Flash · Gemini 4 Argon · Gemini 4 Carbon（High / Medium / Low；11-10 转正式可用）· Gemini 4 Neon（XHigh 实测；11-18 发布） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（33 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
 | Z.ai | GLM-5.3 · GLM-5.3 Flash |
 | Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；AA 于 11-08 前改标为开放权重；Kimi K3 在 v5 为 N/A，已移除） |
@@ -169,7 +169,16 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮实质变化是 OpenAI 于 **202
 > 开放权重性价比：**MiMo V2.6 Pro**。
 
 - **同日核验的无变化项**：AA 无换版（仍沿用 v5.0.1）；Anthropic、Google、DeepSeek、Z.ai、Kimi、Xiaomi、xAI 模型与套餐状态同 11-15 快照；GPT-6.2 的 Ultrafast 开放不等于新增 AA 实测点，不对旧档位补插值。
-- **来源**：[OpenAI — Introducing GPT-6.2 Astra & Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol/) · [AA — GPT-6.2 Astra](https://artificialanalysis.ai/models/gpt-6-2-astra) · [AA — GPT-6.2 Sol](https://artificialanalysis.ai/models/gpt-6-2-sol)
+|- **来源**：[OpenAI — Introducing GPT-6.2 Astra & Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol/) · [AA — GPT-6.2 Astra](https://artificialanalysis.ai/models/gpt-6-2-astra) · [AA — GPT-6.2 Sol](https://artificialanalysis.ai/models/gpt-6-2-sol)
+
+## 2026-11-22 Gemini 4 Neon 发布（AA v5.0.1，新增 Google 实测点）
+
+AA Intelligence Index 仍为 **v5.0.1**；本轮新增 Google 于 **11-18** 发布的 **Gemini 4 Neon** 实测点。
+
+- **官方（11-18，US，Gemini API / Google AI / Antigravity）**：`gemini-4-neon` 正式发布，取代 Argon 在 Gemini App 中对 Pro/Ultra 订户的访问位置；API $3/M 输入、$15/M 输出，无免费层；1M 上下文；推理模型，默认 effort 为 high。
+- **AA v5.0.1 实测**：XHigh **61 / $6.44**，High 60 / 无匹配 task cost，Medium 55 / 无匹配 task cost，Low 44 / 无匹配 task cost。XHigh 是 v5.0.1 中所有 Google 模型的最高指数点，排名第 3（仅 GPT-6.2 Astra Max 62 与 Claude Fable 5.2 Max 65 更高）。
+- **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol · High（55 / $0.56）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**。Neon 过贵（$6.44/task）不参与任何锚点。
+- **来源**：[Google — Introducing Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA 最大值表](https://artificialanalysis.ai/leaderboards/models)
 
 ## 2026-11-10 Claude Fable 5.2 发布（AA v5.0.1，绝对能力换点）
 
