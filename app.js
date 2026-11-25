@@ -122,8 +122,8 @@
       btn.append(label,name,note);btn.addEventListener('click',()=>pickModel(model));box.appendChild(btn);
     };
     if(newest)add(newest,'现行版本 · 1017',newest.benchmarkStatus==='pending'
-      ? 'High 档仍待测；Max 已有 AA 实测 33 / $0.60（可切换至 Max 查看）'
-      : 'Max 独立 AA 实测：Index 33，$0.60/任务');
+      ? `High 档仍待测；Max 已有 AA 实测 ${newest.intelligence} / $${newest.cost.toFixed(2)}（可切换至 Max 查看）`
+      : `Max 独立 AA 实测：Index ${newest.intelligence}，$${newest.cost.toFixed(2)}/任务`);
     if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
