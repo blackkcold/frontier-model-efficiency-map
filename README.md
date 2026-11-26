@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-26</strong> · 8 providers · AA v5.0.2 · No tracking
+  Data snapshot: <strong>2026-11-27</strong> · 8 providers · AA v5.0.2 · No tracking
 </p>
 
 ---
@@ -70,6 +70,7 @@
 | Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；AA 于 11-08 前改标为开放权重；Kimi K3 在 v5 为 N/A，已移除） |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
 | xAI | Grok 4.7（Grok 4.6 在 v5 为 N/A，已移除） |
+| 聚合订阅 | OpenCode Go / Go Plus · CommandCode GOAT · Ollama Pro / Max（附每模型美元额度折算） |
 
 ### 当前快照的三个锚点
 
@@ -77,7 +78,7 @@
 | --- | --- | ---: | ---: | --- |
 | 前沿性价比 | **GPT-6.2 Sol · Medium** | 52 | $0.41 | 门槛 ≥48 下最低实测任务成本；同族 High 55 / $0.56 指数更高但贵 37% |
 | 绝对能力 | **Claude Fable 5.2 · Max** | 65 | $26.54 | 公开可用最高；次高为其同族 XHigh / High（62 / $14.83、$9.08）、GPT-6.2 Astra Max（62 / $4.00）与 Gemini 4 Neon XHigh（62 / $6.44）。日常主力仍建议 Opus 5.5 |
-| 开放权重性价比 | **MiMo V2.6 Pro** | 30 | $0.26 | 已发布权重；AA 已把 K3.1 Pro 改标开放权重，47 为最高指数但 $3.68 约为 MiMo 的 14×；DeepSeek 32 / $0.60 也贵 2.3× |
+| 开放权重性价比 | **DeepSeek V4.1 Flash 1017 · Max** | 32 | $0.60（折算 ≈$0.06） | 已发布权重；放进 OpenCode Go / CommandCode GOAT 后折算约 $0.06/task，指数高于 MiMo 的 30。纯 API 口径下 MiMo V2.6 Pro 仍是最低价（$0.26），折算后 $0.09–$0.17 |
 
 ## 怎么读这张图
 
@@ -179,6 +180,19 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮新增 Google 于 **11-18** 发�
 - **AA v5.0.1 实测**：XHigh **61 / $6.44**，High 60 / 无匹配 task cost，Medium 55 / 无匹配 task cost，Low 44 / 无匹配 task cost。XHigh 是 v5.0.1 中所有 Google 模型的最高指数点，排名第 3（仅 GPT-6.2 Astra Max 62 与 Claude Fable 5.2 Max 65 更高）。
 - **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol · High（55 / $0.56）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**。Neon 过贵（$6.44/task）不参与任何锚点。
 - **来源**：[Google — Introducing Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA 最大值表](https://artificialanalysis.ai/leaderboards/models)
+
+## 2026-11-27 接入聚合型 Token Plan 折算 + 首屏精简
+
+本轮不新增任何 AA 实测点（主图 66 个 current 点数值未动），改的是「订阅之后每个任务到底多少钱」，外加首屏与默认焦点。
+
+- **折算规则（新增，可审计）**：只折算**官方以美元标额度**的订阅，`折算成本 = AA 单任务成本 ÷ (额度 ÷ 月费)`。额度本身就是「按该模型标价能花掉多少美元」，与 AA 的 Cost per Task 同单位，换算合法。Kimi 月度共享额度、Xiaomi Credits、GLM 积分、xAI 共用周额度单位不可映射，**只列原值不折算**。所有折算值标注「推算」，不进主图纵轴结论、不参与任何推荐门槛。
+- **官方额度（11-27 核验）**：OpenCode Go $10/月，单模型月度上限 DeepSeek 1017 **$100**、GLM-5.3 **$200**、Kimi K3.1 Pro $60、MiMo Pro $15（折算 10×／20×／6×／1.5×；5 小时限 20%、周限 50%）；Go Plus $40 翻倍。CommandCode **GOAT** $10/月，DeepSeek 1017 **$100**、GLM-5.3 Flash $100（折算 10×，另有 $20/5h、$50/7d 窗口）。Ollama Pro $20 含 **$60** credits、Max $100 含 **$300**（折算 3×，且仅覆盖 Ollama 自己上架的模型）。
+- **折算结果**：DeepSeek 1017 Max 在 OpenCode Go 与 GOAT 上均为 **$0.06/task**（API $0.60 → 10×），$100 额度约 **167 次/月**；GLM-5.3 Flash 在 GOAT 上 $0.06、在 Go 上 $0.10；MiMo V2.6 Pro 折算 $0.09（Ollama）～$0.17（Go）；Kimi K3.1 Pro $0.61（Go）。
+- **推荐变化：开放权重性价比由 MiMo V2.6 Pro（30 / $0.26）改为 DeepSeek V4.1 Flash 1017 · Max（32 / $0.60，折算 ≈$0.06）**。理由：指数更高，且折算成本更低。绝对能力（Fable 5.2 Max 65 / $26.54）与前沿性价比（GPT-6.2 Sol Medium 52 / $0.41）不变。
+- **首屏**：hero 两段长文（524 可见字符，其中一整段是 DeepSeek 1017 说明）压成一行 `纵轴 AA 能力归一 · 横轴 AA 单任务成本 · 越靠左上越优`；DeepSeek 说明移入方法论折叠区。
+- **默认焦点**：删除图表上方的 **DeepSeek 专属版本卡**（`renderVersionCards`），DeepSeek 回到普通厂商，不再独占首屏。
+- **新增「Plan 折算点位」模式**：选中任一已实测模型后可开启，把该模型在各订阅 Plan 上的折算点位画到当前图表（旋转方块 + 同色连线）。折算后重合的 plan 会落在同一位置，页面如实写「N 个 plan，折算后重合为 M 个点位」，不假装有更多点。该模式不改变主图点、不参与 Pareto、不可点击选中（避免误当模型）。
+- **来源**：[OpenCode — Go 订阅与每模型额度](https://opencode.ai/console/go) · [CommandCode — GOAT Plan](https://commandcode.ai/docs/plans/goat) · [Ollama — Pricing](https://ollama.com/pricing) · [AA v5.0.2 方法](https://artificialanalysis.ai/methodology/intelligence-benchmarking)
 
 ## 2026-11-26 Z.ai GLM-5.4 发布与 Plan 政策核验（AA v5.0.2 不变）
 

@@ -13,6 +13,7 @@
     xMetric: "ratio",
     yMetric: "normalized",
     selectedModel: null,
+    planMode: false,
     sort: { key: "intelligence", dir: -1 }
   };
 
@@ -65,6 +66,27 @@
   function correctedCost(d) { return d.cost * corr(d); }
   function baselineCost() { return baselineRaw * (state.correction ? D.correction.max : 1); }
   function ratio(d) { return correctedCost(d) / baselineCost(); }
+
+  // A plan allowance is a dollar budget, so factor = allowance / monthly price
+  // and the plan's effective task cost is AA cost / factor. Only plans whose
+  // allowance is denominated in USD can be converted; credits/message pools cannot.
+  function planFactor(offer, d) {
+    // A credits plan applies a flat multiplier but only to models it actually serves.
+    if (offer.credits) {
+      if (offer.served && !offer.served[d.family]) return null;
+      return offer.credits / offer.monthly;
+    }
+    const limit = offer.limits?.[d.family];
+    return limit ? limit / offer.monthly : null;
+  }
+  function planPoints(d) {
+    return (D.planOffers || []).map(offer => {
+      const factor = planFactor(offer, d);
+      if (!factor) return null;
+      const budget = offer.limits?.[d.family] ?? (offer.credits ? offer.credits : null);
+      return { offer, factor, cost: d.cost / factor, tasks: budget };
+    }).filter(Boolean).sort((a, b) => b.factor - a.factor);
+  }
   function normalized(d) { return d.intelligence / leader * 100; }
   function xValue(d) { return state.xMetric === "ratio" ? ratio(d) : correctedCost(d); }
   function yValue(d) { return state.yMetric === "normalized" ? normalized(d) : d.intelligence; }
@@ -92,8 +114,26 @@
       <div class="detail-metric"><span>综合能力</span><b>${pending ? 'N/A' : normalized(d).toFixed(1)}</b></div>
       <div class="detail-metric"><span>AA 单任务成本</span><b>${pending ? 'N/A' : d.cost.toFixed(d.cost < 0.01 ? 4 : 2)}</b></div>
       <div class="detail-metric"><span>调整后消耗倍率</span><b>${pending ? 'N/A' : ratio(d).toFixed(2) + '×'}</b></div>
-      <div class="detail-note">${note}</div>
+      <div class="detail-note">${note}${planNote(d)}</div>
     `;
+  }
+
+  // One compact line per plan that publishes a USD allowance for this family.
+  function planNote(d) {
+    const pts = d.benchmarkStatus ? [] : planPoints(d);
+    if (!pts.length) return "";
+    const groups = new Map();
+    pts.forEach(p => {
+      const key = p.cost.toFixed(4);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(p);
+    });
+    const rows = [...groups.values()].map(g => {
+      const p = g[0], names = g.map(x => x.offer.name).join(" / ");
+      const per = Math.round((p.tasks ?? p.offer.monthly * p.factor) / d.cost);
+      return `${names} → $${p.cost.toFixed(p.cost < 0.01 ? 3 : 2)}/task · 约 ${per} 次/月`;
+    }).join(" ｜ ");
+    return `<span class="plan-line"><b>Plan 折算</b>（推算，非 AA 实测）${rows}</span>`;
   }
 
   function visibleModels() {
@@ -105,26 +145,6 @@
 
   function visiblePending() {
     return (D.unbenchmarkedModels || []).filter(d => state.providers.has(d.provider) && state.efforts.has(d.effort));
-  }
-  function renderVersionCards() {
-    const box=q('deepseekVersions');
-    const newest=visibleModels().find(d=>d.provider==='DeepSeek' && d.status==='current' && d.family.includes('1017') && d.effort==='max')
-      || visiblePending().find(d=>d.provider==='DeepSeek');
-    const former=visibleModels().find(d=>d.provider==='DeepSeek' && d.status==='historical' && d.effort==='max');
-    box.replaceChildren();
-    box.hidden=!(newest||former);
-    const add=(model,title,desc)=>{
-      const btn=document.createElement('button');
-      btn.type='button';btn.className='deepseek-version-card';
-      const label=document.createElement('span');label.className='version-label';label.textContent=title;
-      const name=document.createElement('b');name.textContent=model.family;
-      const note=document.createElement('small');note.textContent=desc;
-      btn.append(label,name,note);btn.addEventListener('click',()=>pickModel(model));box.appendChild(btn);
-    };
-    if(newest)add(newest,'现行版本 · 1017',newest.benchmarkStatus==='pending'
-      ? `High 档仍待测；Max 已有 AA 实测 ${newest.intelligence} / $${newest.cost.toFixed(2)}（可切换至 Max 查看）`
-      : `Max 独立 AA 实测：Index ${newest.intelligence}，$${newest.cost.toFixed(2)}/任务`);
-    if(former)add(former,'上代版本 · 0910','旧版 AA Max：Index 39，$0.27/任务；不代表 1017');
   }
 
   const providerNames = Object.keys(D.providerColors);
@@ -213,6 +233,8 @@
     state.selectedModel=d;
     renderModelDetail(d);
     closeOrbit();
+    if(state.planMode) renderChart();
+    syncPlanToggle();
   }
   function closeOrbit() {
     activeOrbitKey="";
@@ -230,7 +252,7 @@
     const sx=rect.width/Math.max(chart.width,1),sy=rect.height/Math.max(chart.height,1);
     const area=chart.chartArea,points=[];
     chart.data.datasets.forEach((ds,idx)=>{
-      if(ds._pareto)return;
+      if(ds._pareto||ds._plan)return;
       chart.getDatasetMeta(idx).data.forEach((el,i)=>{
         const d=ds._raw?.[i];
         if(!d||el.skip||!Number.isFinite(el.x)||!Number.isFinite(el.y))return;
@@ -431,6 +453,23 @@
         pointHitRadius: 10
       };
     });
+    const sel = state.planMode ? state.selectedModel : null;
+    if (sel && !sel.benchmarkStatus) {
+      const pts = planPoints(sel);
+      if (pts.length > 1) sets.push({
+        label: "Plan 折算", _plan: true, _raw: pts.map(p => p.offer),
+        data: pts.map(p => ({
+          x: state.xMetric === "ratio"
+            ? (p.cost * (state.correction ? D.correction[sel.effort] || 1 : 1)) / baselineCost()
+            : p.cost * (state.correction ? D.correction[sel.effort] || 1 : 1),
+          y: yValue(sel), raw: p
+        })),
+        parsing: false, showLine: true,
+        borderColor: pts.map(p => p.offer.color), backgroundColor: pts.map(p => p.offer.color + "cc"),
+        borderWidth: 1.4, pointRadius: 7, pointHoverRadius: 9, pointHitRadius: 12,
+        pointStyle: "rectRot", tension: 0, order: 0
+      });
+    }
     const p = pareto(points.filter(d=>d.measured && d.status !== 'historical' && d.status !== 'deprecated'));
     if(p.length>1) sets.push({
       label:"Pareto frontier", _pareto:true, data:p.map(d=>({x:xValue(d),y:yValue(d),raw:d})), parsing:false,
@@ -508,19 +547,47 @@
     q('sources').innerHTML=D.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noreferrer">${s.label}</a>`).join('');
   }
 
+  // Plan overlay only makes sense for one selected, AA-measured model.
+  function syncPlanToggle() {
+    const box = q('planMode'), hint = q('planModeHint');
+    if (!box) return;
+    const d = state.selectedModel;
+    const n = d && !d.benchmarkStatus ? planPoints(d).length : 0;
+    const usable = n > 1;
+    box.disabled = !usable;
+    if (!usable && state.planMode) {
+      state.planMode = false;
+      renderChart();
+    }
+    box.checked = usable && state.planMode;
+    if (hint) {
+      if (!usable) { hint.textContent = '先选一个已实测模型'; return; }
+      const pts = planPoints(d);
+      const slots = new Set(pts.map(p => p.cost.toFixed(4))).size;
+      hint.textContent = slots < n
+        ? `${d.family}：${n} 个 plan，折算后重合为 ${slots} 个点位（详见下方详情）`
+        : `${d.family} 在 ${n} 个 plan 上的折算点位`;
+    }
+  }
+
   function update(){
     syncProviderLegend();
     const visible=visibleModels();
     if(state.selectedModel && !visible.includes(state.selectedModel) && !visiblePending().includes(state.selectedModel)) state.selectedModel=null;
     renderChart();
-    renderVersionCards();
     renderTable();
     renderModelDetail(state.selectedModel);
+    syncPlanToggle();
     const rec = D.models.find(d=>d.featured==='frontier-value');
     if(rec) q('frontierRatio').textContent=`≈${ratio(rec).toFixed(2)}× Luna Max`;
   }
   function bind(){
     q('agentCorrection').onchange=e=>{state.correction=e.target.checked;update();};
+    q('planMode').onchange=e=>{
+      state.planMode=e.target.checked;
+      renderChart();
+      renderModelDetail(state.selectedModel);
+    };
     q('logScale').onchange=e=>{state.logScale=e.target.checked;update();};
     q('showEstimated').onchange=e=>{state.showEstimated=e.target.checked;update();};
     q('showDeprecated').onchange=e=>{state.showDeprecated=e.target.checked;update();};

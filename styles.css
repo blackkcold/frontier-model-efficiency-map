@@ -99,11 +99,11 @@ tr[role="button"]:hover td{background:color-mix(in srgb,var(--blue) 8%,transpare
 @media(prefers-reduced-motion:reduce){.orbit-link,.orbit-source,.orbit-marker,.orbit-marker-text{transition:none!important}}
 
 /* Unscored current model is visible beside its independently measured predecessor. */
-.deepseek-versions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 0}.deepseek-versions[hidden]{display:none}
-.deepseek-version-card{text-align:left;display:flex;flex-direction:column;gap:4px;min-width:0;padding:14px;background:var(--panel);border:1px solid var(--line);border-left:3px solid #8b6de9;border-radius:10px;color:var(--text);font:inherit;cursor:pointer}
-.deepseek-version-card:hover,.deepseek-version-card:focus-visible{border-color:#8b6de9;outline-offset:2px}.deepseek-version-card b{font-size:15px}.deepseek-version-card small{font-size:12px;color:var(--muted);line-height:1.5}.version-label{font-size:11px;font-weight:700;color:#a995ed}
+
+
+
 .unbenchmarked-row{background:color-mix(in srgb,#8b6de9 8%,var(--panel));cursor:pointer}.unbenchmarked-row:focus-visible{outline:2px solid #8b6de9}
-@media(max-width:720px){.deepseek-versions{grid-template-columns:1fr}}
+@media(max-width:720px){}
 
 /* Accessible vendor-only legend replaces Chart.js's per-family canvas legend. */
 .provider-legend{margin-top:14px;padding:13px 15px 14px;border:1px solid var(--line);background:var(--panel);border-radius:14px}
@@ -123,3 +123,11 @@ tr[role="button"]:hover td{background:color-mix(in srgb,var(--blue) 8%,transpare
 .provider-filter-chip:focus-visible,.provider-reset:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 @media(max-width:640px){.provider-legend{padding:12px}.provider-legend-heading{align-items:flex-start}.provider-legend-actions{gap:8px}.provider-legend-pills{justify-content:flex-start}.provider-filter-chip{min-height:36px}}
 @media(prefers-reduced-motion:reduce){.provider-filter-chip{transition:none}}
+
+/* plan conversion: derived, never mixed with AA measurements */
+.plan-line{display:block;margin-top:5px;color:#c9b787}
+.plan-line b{color:#e5c38d}
+.plan-mode-hint{margin:6px 0 0;font-size:11px;color:#7f8794;min-height:0}
+.plan-mode-hint:empty{display:none}
+html[data-theme="light"] .plan-line{color:#7a5c14}
+html[data-theme="light"] .plan-line b{color:#906018}
