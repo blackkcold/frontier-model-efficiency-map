@@ -29,7 +29,7 @@
       <div class="hero-title-row">
         <img class="hero-logo" src="assets/logo.svg" alt="Frontier Model Efficiency Map logo" />
         <div class="hero-title-copy">
-          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-11-26</div>
+          <div class="eyebrow">FRONTIER MODEL EFFICIENCY MAP · 2026-11-27</div>
           <h1>模型 × Reasoning：<span>能力 / 消耗 / Plan</span></h1>
         </div>
       </div>
@@ -44,8 +44,7 @@
         </div>
       </div>
       </div>
-      <p>跨厂商统一口径：纵轴默认使用 Artificial Analysis Intelligence Index 相对归一化；横轴使用每项 Intelligence Index 任务的实际成本，并以 <strong>GPT‑6 Luna Max = 1×</strong> 归一。High / XHigh / Max 可叠加长任务 Agent 消耗修正。</p>
-      <p><strong>DeepSeek V4.1 Flash · 1017：</strong>调用 ID 仍是 <code>deepseek-flash</code>，模型 Token 峰谷价格不变。AA v5.0.2 实测：Max <strong>32 / $0.60</strong>，High 于 11 月 1 日获得独立实测 <strong>29 / $0.46</strong>。0910 旧 AA 散点保留为隐藏历史点，不参与 v5 前沿；打开「显示历史/弃用点」可对照，不能与 v5 直接比较。<a href="https://artificialanalysis.ai/zh/models/deepseek-v4-1-flash-1017" target="_blank" rel="noopener noreferrer">AA 1017 页面</a>。<a href="https://api-docs.deepseek.com/zh-cn/updates/" target="_blank" rel="noopener noreferrer">官方更新日志</a></p>
+      <p>纵轴 AA 能力归一 · 横轴 AA 单任务成本（GPT‑6 Luna Max = 1×）· 越靠左上越优</p>
       <div class="hero-badges">
         <span>8 providers</span><span id="pointCount">— points</span><span>AA v5.0.2</span><span>v5 measured only · historical hidden</span>
       </div>
@@ -66,9 +65,9 @@
       </article>
       <article class="card rec-card accent-yellow">
         <div class="card-label">开放权重性价比</div>
-        <h2>MiMo V2.6 Pro</h2>
-        <p>小米开放权重旗舰，AA v5 Index 30、$0.26/task。AA 已把 Kimi K3.1 Pro 改标为开放权重（47 / $3.68，开放权重最高指数点），但任务成本约为 MiMo 的 14 倍；DeepSeek 1017 Max 为 32 / $0.60，也贵 2.3×。性价比仍取 MiMo。</p>
-        <div class="metric-row"><span>AA Index <b>30</b></span><span>AA cost <b>$0.26/task</b></span></div>
+        <h2>DeepSeek V4.1 Flash 1017 · Max</h2>
+        <p>AA v5 Index 32，API 现价 $0.60/task。放进订阅后便宜得多：OpenCode Go（$10/月含 $100 额度 = 10×）与 CommandCode GOAT 折算均 <b>$0.06/task</b>，同等额度下每月约 167 次。MiMo V2.6 Pro（30 / $0.26）在纯 API 上更便宜，折算后 $0.09–$0.17，指数低 2 分，故让位。</p>
+        <div class="metric-row"><span>AA Index <b>32</b></span><span>API <b>$0.60</b></span><span>Plan 折算 <b>≈$0.06</b></span></div>
       </article>
     </section>
 
@@ -78,12 +77,14 @@
           <div class="card-label">INTERACTIVE SCATTER</div>
           <h2>能力 × 消耗</h2>
           <p id="chartSubtitle">越靠左上越优；点击图表下方「筛选」中的厂商可单选、多选或恢复全部；点击模型显示详情，触屏可展开密集点。叉形点 = 估算。</p>
+          <p class="plan-mode-hint" id="planModeHint"></p>
         </div>
         <div class="chart-actions">
           <label class="toggle"><input type="checkbox" id="agentCorrection" checked><span></span>长任务修正</label>
           <label class="toggle"><input type="checkbox" id="logScale" checked><span></span>横轴 Log</label>
           <label class="toggle"><input type="checkbox" id="showEstimated" checked><span></span>显示估算</label>
           <label class="toggle"><input type="checkbox" id="showDeprecated"><span></span>显示历史/弃用点</label>
+          <label class="toggle" title="把选中模型在各订阅 Plan 上的折算点位画到同一张图上"><input type="checkbox" id="planMode"><span></span>Plan 折算点位</label>
         </div>
       </div>
 
@@ -108,7 +109,6 @@
         </div>
       </div>
 
-      <div class="deepseek-versions" id="deepseekVersions" aria-label="DeepSeek 1017 和 0910 版本对照"></div>
       <div class="model-detail" id="modelDetail" aria-live="polite">
         <div class="model-detail-empty">点击散点或展开后的模型标签查看详情（悬浮不改变选择）</div>
       </div>
@@ -184,7 +184,7 @@
         <thead><tr><th>Provider</th><th>Plan</th><th>价格</th><th>适合</th><th>说明</th></tr></thead><tbody></tbody>
       </table></div>
       <p class="disclaimer"><strong>Anthropic / OpenAI 套餐政策（10-28 至 10-30）：</strong>Claude 的 $200 档已由 <strong>Max 20x 更名为 Ultra</strong>（价格不变、存量自动迁移）：每周 10× Pro、认证账户无 5 小时上限、含 $200/月 API credit；$100 档定名 <strong>Claude Max</strong>（5× Pro + $100/月 credit）。Fable（5.2）在 Max/Ultra 内最多占周额度 50%，Pro 需 usage credits。OpenAI 于 10-29 将 Pro 100/Pro 500 的 Work/Codex 内含用量翻倍，并取消 9-29 的 Pro 200 削减，Pro 200 一并翻倍到同一上限；10-28 起 Pro/Business 另可领月度 API credits（Pro 100/200/500 为 $100/$200/$500，按量到期不结转，与 ChatGPT 用量分开）。<a href="https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan" target="_blank" rel="noopener noreferrer">Anthropic Ultra</a> · <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" rel="noopener noreferrer">OpenAI 发布说明</a> · <a href="https://developers.openai.com/api/docs/guides/chatgpt-api-credits" target="_blank" rel="noopener noreferrer">OpenAI API credits</a>。</p>
-      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-11-26 可核实信息。购买前以各厂商结算页为准。</p>
+      <p class="disclaimer">套餐、促销与限额变化频繁；本页记录的是 2026-11-27 可核实信息。购买前以各厂商结算页为准。</p>
     </section>
 
     <section class="card methodology-card">
@@ -195,6 +195,8 @@
           <p>能力优先采用 Artificial Analysis Intelligence Index v5.0.2：同一套跨厂商评测。图中“综合能力”仅做线性归一：<code>AA Index / 当前图内最高点 × 100</code>，当前为 Claude Fable 5.2 Max 65，代码按 <code>Math.max</code> 动态计算。没有把厂商自报 benchmark 混进纵轴。</p>
           <h3>统一消耗口径</h3>
           <p>跨厂商无法直接比较 ChatGPT Work allowance、Claude session cap、Kimi credits 等内部额度。因此主图采用 AA 的 <em>Cost per Intelligence Index Task</em>：它把输入、缓存、reasoning 与回答 token 按各 benchmark 权重汇总，更适合跨厂商。倍率以 GPT‑6 Luna Max 的 $0.15/task 为基准；启用长任务修正时基准也同步乘 Max 系数，因此仍严格等于 1×。</p>
+          <h3>Plan 折算（推算）</h3>
+          <p>只对<b>官方以美元标额度</b>的订阅折算：<code>折算成本 = AA 单任务成本 ÷ (额度 ÷ 月费)</code>。OpenCode Go、CommandCode GOAT、Ollama Pro/Max 属此类；Kimi 月度共享额度、Xiaomi Credits、GLM 积分、xAI 共用周额度单位不可映射，只列原值。折算值标「推算」，永不与 AA 实测混排，也不参与任何推荐门槛。</p>
           <h3>估算策略</h3>
           <p>只有当厂商官方确认某 reasoning 档位存在、但 AA 还没有当前统一成本测量时才插值。估算点不参与“最高能力”结论，并在 UI 中用叉形空心点与“估算”标签标识。v5 整表刷新后，当前没有需要保留的估算点；缺档直接不画。</p>
           <div id="sources" class="sources"></div>
@@ -202,7 +204,7 @@
       </details>
     </section>
 
-    <footer>Data snapshot: 2026-11-26 · Static site · No tracking · Built for GitHub Pages</footer>
+    <footer>Data snapshot: 2026-11-27 · Static site · No tracking · Built for GitHub Pages</footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
