@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-25</strong> · 8 providers · AA v5.0.2 · No tracking
+  Data snapshot: <strong>2026-11-26</strong> · 8 providers · AA v5.0.2 · No tracking
 </p>
 
 ---
@@ -66,7 +66,7 @@
 | Anthropic | Claude Haiku 5.5 · Claude Sonnet 5.5 · Claude Opus 5.5 · Claude Fable 5.2（Fable 5.1 已被 AA 标为 deprecated，默认隐藏） |
 | Google | Gemini 4 Argon · Gemini 4 Carbon（High / Medium / Low）· Gemini 4 Hydrogen（XHigh / High / Medium / Low）· Gemini 4 Neon（XHigh / High / Medium / Low）· Gemini 3.8 Flash（AA 标为 deprecated，默认隐藏） |
 | DeepSeek | V4.1 Flash-1017 High（AA v5 29 / $0.46）· Max（32 / $0.60） · V4.1 Flash 0910（历史，默认隐藏） |
-| Z.ai | GLM-5.3 · GLM-5.3 Flash |
+| Z.ai | GLM-5.3 · GLM-5.3 Flash（AA 实测）；GLM-5.4（11-23 官方发布，Model API 待开放，无 AA 实测点） |
 | Kimi | Kimi K3.1 Pro（权重 11-04 已在 Hugging Face 开放；AA 于 11-08 前改标为开放权重；Kimi K3 在 v5 为 N/A，已移除） |
 | Xiaomi | MiMo V2.6 Pro · MiMo V2.6 Flash（AA 实测）；Pro UltraSpeed（独立服务档，非 AA 实测点） |
 | xAI | Grok 4.7（Grok 4.6 在 v5 为 N/A，已移除） |
@@ -179,6 +179,19 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮新增 Google 于 **11-18** 发�
 - **AA v5.0.1 实测**：XHigh **61 / $6.44**，High 60 / 无匹配 task cost，Medium 55 / 无匹配 task cost，Low 44 / 无匹配 task cost。XHigh 是 v5.0.1 中所有 Google 模型的最高指数点，排名第 3（仅 GPT-6.2 Astra Max 62 与 Claude Fable 5.2 Max 65 更高）。
 - **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol · High（55 / $0.56）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**。Neon 过贵（$6.44/task）不参与任何锚点。
 - **来源**：[Google — Introducing Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA 最大值表](https://artificialanalysis.ai/leaderboards/models)
+
+## 2026-11-26 Z.ai GLM-5.4 发布与 Plan 政策核验（AA v5.0.2 不变）
+
+AA Intelligence Index 仍为 **v5.0.2**（11-24 起启用，未再换版）；本轮实质变化是 Z.ai 于 **11-23** 发布 **GLM-5.4**，并伴随 Coding Plan 额度政策更新；另修正两处此前页面与官方文档不符的 Plan 表述。
+
+- **官方（11-23，Z.ai / GLM Coding Plan / ZCode / Z.ai Chat）**：`GLM-5.4` 是 Z.ai 首个 **Loop Transformer** 旗舰，基座约 **750B** 参数（官方称达到 2T–3T 参数级智能），把 28 层共享权重跑两轮；1M 上下文、**128K 最大输出**、原生视觉（Video / Image / Text / File 输入）；官方承认仍存在「马拉松式思考」过长的问题。**现已面向全部 GLM Coding Plan 档位开放**（Lite / Pro / Max），周额度按 GLM-5.3 的 **1.5×** 计；**按量 Model API 需等安全评估完成后才开放，官方尚未公布 token 单价**；权重计划在安全加固后再开源。
+- **为什么不进主图**：主图只画「能力 + 单任务成本」成对的 AA 实测点。GLM-5.4 目前**没有任何 AA 测量**，且官方连 API 单价都未公布，无法推出可信的任务成本。按规则本轮**不造点、不插值**，只在「待测」表登记并注明原因。
+- **GLM Coding Plan 结构未变**：Lite $12.6 / Pro $56 / Max $117.6（月付促销价，标价 $18 / $80 / $168），credits 为 Lite 10,000/周（2,000/5h）、Pro 6×、Max 14×；非高峰时段按 50% 抵扣。
+- **MiMo Token Plan 更正（官方 11-19）**：平台 V2.2.3 宣布 **Token Plan 的 Pro / Max 两档限时支持 `mimo-v2.6-pro-ultraspeed`**。此前页面与 Plan 表写「UltraSpeed 未列入 Token Plan 支持模型」，与官方文档不符，本轮改为：Lite / Standard 不含，Pro / Max 含；其 token 抵扣为普通 Pro 的 10×（输入未命中 3,000 vs 300 Credits、输出 6,000 vs 600）。这属于**套餐覆盖范围**变化，仍不是新的能力点。
+- **xAI 表述补全**：官方 X Subscription 文档明确 **Grok Bot 只在 Premium / Super / Ultra 提供，Plus 不含**；且 Bot 用量**计入该席位的同一周额度池**，不是独立加成池。五档价格（$0 / $8 / $30 / $100 / $200）、4×/15×/50× 倍率、旧 SuperGrok 保留规则、API 单独计费均未变；Grok 4.7 API 仍为 $2/$6（≥200K 长上下文 $4/$12，Fast 仅限 Cursor 与 Grok Build），Grok 4.6 仍为 v5 N/A。
+- **AA 侧无新增**：v5.0.2 自 11-24 启用后，11-25 的榜单更新只是补 Amazon Bedrock / Together / Fireworks / DeepInfra / Nebius 等推理供应商的实测行，模型分数未动；AA 目前**没有 GLM-5.4 页面**。
+- **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol Medium 52 / $0.41**（≥48 门槛下最低实测成本）；开放权重性价比仍为 **MiMo V2.6 Pro 30 / $0.26**。Plan 推荐（ChatGPT Pro 100、Claude Max、GLM Coding Lite、Kimi Plus）不变，GLM Coding Lite 注记补上 GLM-5.4 的 1.5× 额度事实。
+- **来源**：[Z.ai — GLM-5.4 blog（11-23）](https://z.ai/blog/glm-5.4) · [Z.ai 文档 — GLM-5.4](https://docs.z.ai/guides/llm/glm-5.4) · [Z.ai — GLM Coding Plan 定价](https://z.ai/subscribe?plantype=individual) · [智谱 — 套餐概览（积分与抵扣系数）](https://docs.bigmodel.cn/cn/coding-plan/overview) · [Xiaomi — 平台更新 V2.2.3（11-19）](https://mimo.mi.com/docs/zh-CN/updates/feature/platform) · [Xiaomi — Token Plan](https://mimo.mi.com/docs/zh-CN/price/token-plan) · [xAI — X Subscription 定价](https://docs.x.ai/x-subscription/pricing) · [xAI — 用量与共用周额度](https://docs.x.ai/x-subscription/usage-limits) · [AA v5.0.2 方法](https://artificialanalysis.ai/methodology/intelligence-benchmarking)
 
 ## 2026-11-25 AA Intelligence Index v5.0.2 换版（整表 re-base，前沿性价比改 Sol Medium）
 

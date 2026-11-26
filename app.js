@@ -483,7 +483,8 @@
       tr.setAttribute('aria-label',d.family+'，官方已发布，AA 待测');
       tr.onclick=()=>pickModel(d);
       tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pickModel(d);}};
-      tr.innerHTML=`<td>DeepSeek</td><td>${d.family} <span class="tag est">当前版 · 待测</span></td><td>High（默认）</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>待 AA 独立测量</td>`;
+      const color = D.providerColors[d.provider] || "currentColor";
+      tr.innerHTML=`<td><span class="tag"><i style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${color};margin-right:5px"></i>${d.provider}</span></td><td>${d.family} <span class="tag est">当前版 · 待测</span></td><td>${effortLabel[d.effort]||d.effort}</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>待 AA 独立测量</td>`;
       tbody.appendChild(tr);
     });
     arr.forEach(d=>{
