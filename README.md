@@ -181,6 +181,19 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮新增 Google 于 **11-18** 发�
 - **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol · High（55 / $0.56）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**。Neon 过贵（$6.44/task）不参与任何锚点。
 - **来源**：[Google — Introducing Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA 最大值表](https://artificialanalysis.ai/leaderboards/models)
 
+## 2026-11-27 AA 重测 3 个 Google 档位成本（Index 仍 v5.0.2）
+
+AA 未换版，但线上把 **Gemini 4 三个档位的 Cost per Task 重新算过**，能力分数未动。本页按 AA 当前线上值更新，避免图表与来源互相矛盾。
+
+- **Argon High**：$9.95 → **$7.06**（同一 $4/$20 标准价口径，只是重算；此前 AA 还公布过引导价口径的 $7.68）
+- **Hydrogen Low**：$0.29 → **$0.37**
+- **Neon Low**：$0.75 → **$0.88**
+- **能力分数未变**：Argon High 仍 51、Hydrogen Low 仍 27、Neon Low 仍 44；Index 仍 **v5.0.2**，不涉及换版或混版。
+- **口径说明**：这三点是同一版本内的重测值，不是跨版本比较，因此直接替换数值而不 re-base 整表。其余 63 个 current 点已逐档与 AA 线上表核对，全部一致（0 处偏差）。
+- **推荐变化：无。** 绝对能力仍 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍 **GPT-6.2 Sol Medium 52 / $0.41**（≥48 门槛下最低）；开放权重性价比仍 **DeepSeek V4.1 Flash 1017 Max 32 / $0.60（折算 ≈$0.06）**。Argon High 即便按 $7.06 也远高于 $0.41，不进任何锚点。
+- **同日核验的官方侧无变化项**：OpenAI 11-23 起 Chat tab 用 GPT-6.2、11-17 起 Work/Codex 预览 GPT-6.2 Astra/Sol，无新价格；Anthropic 11-27 仍在 Fable 5.2 / Mythos 5.2（11-09 发布）框架内，$8/$40 价与 Pro $20 / Max $100 / Ultra $200 未变；Google 11-19 后无新文本模型，Argon 引导价 $2/$10 至 11-30、12-01 起 $4/$20；DeepSeek 11-13 后仅新增全家桶应用 API，峰谷价未变；Z.ai GLM-5.4 仍无 Model API 与 AA 实测；Kimi 新套餐 Go/Plus/Pro/Max/Ultra 与旧版存量规则未变；MiMo 仍无新模型；xAI X Subscription 五档 $0/$8/$30/$100/$200、Grok 4.7 $2/$6（≥200K 为 $4/$12）未变。
+- **来源**：[AA — Gemini 4 Argon](https://artificialanalysis.ai/models/gemini-4-argon) · [AA — Gemini 4 Hydrogen](https://artificialanalysis.ai/models/gemini-4-hydrogen) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA — 榜单（v5.0.2）](https://artificialanalysis.ai/leaderboards/models)
+
 ## 2026-11-27 接入聚合型 Token Plan 折算 + 首屏精简
 
 本轮不新增任何 AA 实测点（主图 66 个 current 点数值未动），改的是「订阅之后每个任务到底多少钱」，外加首屏与默认焦点。
@@ -213,7 +226,7 @@ AA 把 Intelligence Index 更新到 **v5.0.2**（11 月）：Terminal-Bench 4.0 
 
 - **官方侧核验（8 厂）**：OpenAI 11-23 起在 Chat tab 向 Plus/Pro/Business/Enterprise 推出 **GPT-6.2**（官方说明为 GPT-6.2 Sol 的对话调优版），Work/Codex 的模型未变；Anthropic 无新模型，套餐与 $8/$40 价未变；Google 11-19 只发 Genie 4 GA 与 tool retrieval 预览，文本模型仍是 Hydrogen / Carbon / Neon；DeepSeek 11-13 开放「全家桶应用 API」（联网搜索、文件输入、阅读链接、OCR/ASR/TTS），模型与峰谷价未变；Z.ai 最新仍为 8-26 GLM-5.3-Flash；Kimi、MiMo、xAI 模型与套餐未变（`grok-build-0.1` 11-19 停服，不属 8 厂主表模型）。
 - **AA 状态变化**：AA 现把 **GPT-6.1 Sol、GPT-6 Astra、Gemini 3.8 Flash** 标为 deprecated（仍低频复测）。本页同步改为 `deprecated`、默认隐藏（与 Fable 5.1、GPT-6 Sol 一致），数值保留最后一次实测并注明来源版本，不冒充 v5.0.2 新测。
-- **AA 新公布的实测（新增 7 点）**：Gemini 4 Neon 补齐 High 60 / $3.74、Medium 55 / $1.90、Low 44 / $0.75；Hydrogen 补齐 High 51 / $1.87、Medium 41 / $0.80、Low 27 / $0.29；Argon 补 Medium 48 / $8.63。Carbon High 的任务成本从 $5.48 改回 **$7.76**（AA 标准价 $4/$20 口径下的重测值）。
+- **AA 新公布的实测（新增 7 点）**：Gemini 4 Neon 补齐 High 60 / $3.74、Medium 55 / $1.90、Low 44 / $0.75（11-27 被 AA 重测为 $0.88）；Hydrogen 补齐 High 51 / $1.87、Medium 41 / $0.80、Low 27 / $0.29（11-27 重测为 $0.37）；Argon 补 Medium 48 / $8.63。Carbon High 的任务成本从 $5.48 改回 **$7.76**（AA 标准价 $4/$20 口径下的重测值）。
 - **逐点微调（±1，全部取自 v5.0.2）**：Neon XHigh 61→62、Argon High 50→51、Kimi K3.1 Pro 46→47、Opus 5.5 XHigh 57→58、Haiku 5.5 Max 36→37、Terra Non-reasoning 31→30 与 High 42→43、Sonnet 5.5 High 42→41、GPT-6.2 Sol Medium 53→52、DeepSeek 1017 Max 33→32。
 - **推荐变化**：前沿性价比由 **GPT-6.2 Sol · High（55 / $0.56）** 改为 **GPT-6.2 Sol · Medium（52 / $0.41）**。原因不是换版，而是此前页面把 Sol Medium 的 53 写成「低于门槛」——53 实际高于固定门槛 48，按「≥48 中取最低任务成本」应为 Medium。绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；开放权重性价比仍为 **MiMo V2.6 Pro 30 / $0.26**；Plan 表仅随 OpenAI 11-23 的 Chat 模型变化更新文案。
 - **来源**：[AA v5.0.2 方法/版本历史](https://artificialanalysis.ai/methodology/intelligence-benchmarking) · [AA 榜单（v5.0.2）](https://artificialanalysis.ai/leaderboards/models) · [OpenAI — ChatGPT release notes（11-23 GPT-6.2 in Chat）](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA — Gemini 4 Hydrogen](https://artificialanalysis.ai/models/gemini-4-hydrogen) · [DeepSeek — 2026-11-13 更新日志](https://api-docs.deepseek.com/zh-cn/updates/)
