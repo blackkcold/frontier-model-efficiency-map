@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Data snapshot: <strong>2026-11-27</strong> · 8 providers · AA v5.0.2 · No tracking
+  Data snapshot: <strong>2026-11-28</strong> · 8 providers · AA v5.0.2 · No tracking
 </p>
 
 ---
@@ -180,6 +180,20 @@ AA Intelligence Index 仍为 **v5.0.1**；本轮新增 Google 于 **11-18** 发�
 - **AA v5.0.1 实测**：XHigh **61 / $6.44**，High 60 / 无匹配 task cost，Medium 55 / 无匹配 task cost，Low 44 / 无匹配 task cost。XHigh 是 v5.0.1 中所有 Google 模型的最高指数点，排名第 3（仅 GPT-6.2 Astra Max 62 与 Claude Fable 5.2 Max 65 更高）。
 - **推荐变化：无。** 绝对能力仍为 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍为 **GPT-6.2 Sol · High（55 / $0.56）**；开放权重性价比仍为 **MiMo V2.6 Pro（30 / $0.26）**。Neon 过贵（$6.44/task）不参与任何锚点。
 - **来源**：[Google — Introducing Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/) · [AA — Gemini 4 Neon](https://artificialanalysis.ai/models/gemini-4-neon) · [AA 最大值表](https://artificialanalysis.ai/leaderboards/models)
+
+---
+
+## 2026-11-28 OpenAI Pro 200 纳入 GPT-6.2 Sol Ultrafast（AA v5.0.2 不变）
+
+AA Intelligence Index 仍为 **v5.0.2**，主图 66 个 `current` 点与 11-27 完全一致（0 处变动）；本轮唯一实质变化是 OpenAI 的 **Pro 200 档 Ultrafast 开放范围**，此前页面写「不包含 Ultrafast」，与官方帮助中心不符。
+
+- **官方（2026-11-17 起，美国，ChatGPT Work / Codex）**：GPT-6.2 Astra 与 GPT-6.2 Sol 上线时同步把 **Ultrafast 首次下放到 Pro 200**，但**仅限 GPT-6.2 Sol、仅限 Codex**，用现有套餐额度。Pro 500 则覆盖 GPT-6.2 两档以及 GPT-6 Astra、GPT-6.1 Sol。Pro 100 与「买 credits」均不解锁 Ultrafast。来源：[Pro 档位说明](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)、[GPT-6.2 发布页](https://learn.chatgpt.com/docs/whats-new/gpt-62-astra-sol)、[Speed 文档](https://learn.chatgpt.com/docs/agent-configuration/speed)。
+- **倍率（官方 Speed 表）**：Ultrafast 的**内含用量**按 Standard 的 **6×** 计（GPT-6.2 两档；旧档 GPT-6 Astra / GPT-6.1 Sol 为 8×）；**credits / PAYG** 对 GPT-6.2 两档为 **3×**（至 2027-02-28，太平洋时间）、**之后 6×**。速度最高约 **4.5×**（GPT-6.2 两档），旧档 8× 速度提升不作为能力分数。
+- **API 侧价目未变**：`gpt-6.2-astra` $8/$40、`gpt-6.2-sol` $2/$10（长上下文档位 $16/$60、$4/$15）；Ultrafast API 对 GPT-6.2 两档 2027-02-28 前为 Standard 的 3×、之后 6×；`gpt-6.1-sol` Ultrafast $12/$60、`gpt-6-astra` Ultrafast $60/$300 不变。
+- **为什么不改主图**：Ultrafast 是**速度与计费档位**，不是新的 reasoning effort 档位，AA 也未对它单独测量。按「只画同版成对实测」规则，不新增坐标、不给旧档补插值。
+- **推荐变化：无。** 绝对能力仍 **Claude Fable 5.2 Max 65 / $26.54**；前沿性价比仍 **GPT-6.2 Sol Medium 52 / $0.41**（≥48 门槛下最低实测成本）；开放权重性价比仍 **DeepSeek V4.1 Flash 1017 Max 32 / $0.60（折算 ≈$0.06）**。Plan 推荐（ChatGPT Pro 100、Claude Max、GLM Coding Lite、Kimi Plus）不变——Pro 200 多出的 Ultrafast 只在 Codex 提速，不改变任务能力或每任务成本。
+- **同日核验的无变化项**：AA 未换版，榜单 19 个覆盖点逐项与 `data.js` 对齐（0 处偏差），榜单仍称 Kimi K3.1 Pro 为最高开放权重模型（47）；Anthropic 11-09 Fable 5.2 / Mythos 5.2 后无新模型，$8/$40、Fast $16/$80、Pro $20 / Max $100 / Ultra $200 未变，Ultra 为每周 10× Pro 且认证账户无 5 小时上限；Google 11-19 后无新文本模型，Argon 引导价 $2/$10 至 11/30、12/1 起 $4/$20，Hydrogen 引导价至 12/1；DeepSeek 11-13 后无新公告，`deepseek-flash` 峰谷价（$0.15/$0.30 输入、$0.60/$1.20 输出）未变；Z.ai GLM-5.4 仍无 Model API 与 AA 实测，价目表仍无 GLM-5.4；Kimi 新套餐 Go/Plus/Pro/Max/Ultra 与旧版存量规则未变，K3.1 Pro 仍 $2/$10；MiMo 仍 V2.6 系列，Token Plan 四档额度未变；xAI 最新仍为 11-11 Grok Bot 1.0，X Subscription 五档 $0/$8/$30/$100/$200、Grok 4.7 $2/$6（≥200K 为 $4/$12）、API 独立计费未变，`grok-build-0.1` 已于 11-19 停服（非主表模型）。
+- **来源**：[OpenAI Pro 档位与 Ultrafast](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers) · [OpenAI Speed 倍率表](https://learn.chatgpt.com/docs/pricing) · [OpenAI GPT-6.2 发布说明](https://learn.chatgpt.com/docs/whats-new/gpt-62-astra-sol) · [OpenAI API 定价](https://developers.openai.com/api/docs/pricing) · [AA 榜单（v5.0.2）](https://artificialanalysis.ai/leaderboards/models)
 
 ## 2026-11-27 AA 重测 3 个 Google 档位成本（Index 仍 v5.0.2）
 
